@@ -1,5 +1,6 @@
 package com.byteshaft.doctor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.byteshaft.doctor.doctors.Dashboard;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        startActivity(new Intent(this, Dashboard.class));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
