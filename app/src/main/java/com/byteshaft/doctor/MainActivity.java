@@ -30,12 +30,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Menu menu = navigationView.getMenu();
-        menu.add("Search Doctor").setIcon(android.R.drawable.ic_search_category_default);
-        menu.add("My Appointments");
-        menu.add("Profile");
-
-        navigationView.invalidate();
+        navigationView.inflateMenu(R.menu.patient_menu);
     }
 
     @Override
@@ -76,9 +71,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_search) {
+            // Handle the camera action
+        } else if (id == R.id.nav_appointment) {
 
         } else if (id == R.id.nav_slideshow) {
 

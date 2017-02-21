@@ -2,6 +2,7 @@ package com.byteshaft.doctor.utils;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
 /**
@@ -10,6 +11,8 @@ import android.graphics.Typeface;
 
 public class AppGlobals extends Application {
 
+
+    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     private static Context sContext;
     public static final String IS_DOCTOR = "is_doctor";
     public static Typeface typefaceBold;
@@ -45,6 +48,20 @@ public class AppGlobals extends Application {
         robotoRegular = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Regular.ttf");
         robotoThin = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Thin.ttf");
         robotoThinItalic = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_ThinItalic.ttf");
+    }
+
+    public static SharedPreferences getPreferenceManager() {
+        return getContext().getSharedPreferences("shared_prefs", MODE_PRIVATE);
+    }
+
+    public static void firstTimeLaunch(boolean value) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().putBoolean(AppGlobals.IS_FIRST_TIME_LAUNCH, value).apply();
+    }
+
+    public static boolean isFirstTimeLaunch() {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        return sharedPreferences.getBoolean(AppGlobals.IS_FIRST_TIME_LAUNCH, true);
     }
 
     public static Context getContext() {
