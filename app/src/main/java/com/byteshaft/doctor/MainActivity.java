@@ -1,11 +1,9 @@
 package com.byteshaft.doctor;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,8 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.byteshaft.doctor.accountFragments.Login;
+import com.byteshaft.doctor.doctors.Dashboard;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,12 +32,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Menu menu = navigationView.getMenu();
-        menu.add("Search Doctor").setIcon(android.R.drawable.ic_search_category_default);
-        menu.add("My Appointments");
-        menu.add("Profile");
-
-        navigationView.invalidate();
+        navigationView.inflateMenu(R.menu.patient_menu);
     }
 
     @Override
@@ -80,15 +73,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_search) {
             // Handle the camera action
-        }
-        if (id == R.id.nav_property_details) {
+        } else if (id == R.id.nav_appointment) {
             loadFragment(new Login());
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        }  else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
