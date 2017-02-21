@@ -31,20 +31,20 @@ public class AppGlobals extends Application {
     public void onCreate() {
         super.onCreate();
         sContext = getApplicationContext();
-        typefaceBold = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/bold.ttf");
-        typefaceNormal = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/normal.ttf");
-        robotoBlack = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_Black.ttf");
-        robotoBlackItalic = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_BlackItalic.ttf");
-        robotoBold = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_Bold.ttf");
-        robotoBoldItalic = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_BoldItalic.ttf");
-        robotoItalic = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_Italic.ttf");
-        robotoLight = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_Light.ttf");
-        robotoLightItalic = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_LightItalic.ttf");
-        robotoMedium = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_Medium.ttf");
-        robotoMediumItalic = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_MediumItalic.ttf");
-        robotoRegular = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_Regular.ttf");
-        robotoThin = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_Thin.ttf");
-        robotoThinItalic = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/Roboto_ThinItalic.ttf");
+        typefaceBold = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/bold.ttf");
+        typefaceNormal = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/normal.ttf");
+        robotoBlack = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Black.ttf");
+        robotoBlackItalic = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_BlackItalic.ttf");
+        robotoBold = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Bold.ttf");
+        robotoBoldItalic = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_BoldItalic.ttf");
+        robotoItalic = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Italic.ttf");
+        robotoLight = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Light.ttf");
+        robotoLightItalic = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_LightItalic.ttf");
+        robotoMedium = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Medium.ttf");
+        robotoMediumItalic = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_MediumItalic.ttf");
+        robotoRegular = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Regular.ttf");
+        robotoThin = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Thin.ttf");
+        robotoThinItalic = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_ThinItalic.ttf");
     }
 
     public static Context getContext() {
