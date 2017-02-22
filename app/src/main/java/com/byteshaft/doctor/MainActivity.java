@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
 import com.byteshaft.doctor.accountFragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.doctor.intro_screen.IntroScreen;
@@ -36,9 +36,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        View headerView;
         if (Helpers.isDoctor()) {
+            headerView = getLayoutInflater().inflate(R.layout.nav_header_doctor, navigationView, false);
+            navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.doctor_menus);
         } else {
+            headerView = getLayoutInflater().inflate(R.layout.nav_header_patient, navigationView, false);
+            navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.patient_menu);
         }
     }
@@ -85,13 +90,6 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_appointment) {
             loadFragment(new DoctorsBasicInfo());
-
-        }  else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
