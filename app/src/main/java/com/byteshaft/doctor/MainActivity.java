@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
+import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.doctor.introscreen.IntroScreen;
 
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_search) {
             // Handle the camera action
+            loadFragment(new DoctorsList());
         } else if (id == R.id.nav_appointment) {
             loadFragment(new DoctorsBasicInfo());
         }
