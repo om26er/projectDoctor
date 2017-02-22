@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.byteshaft.doctor.patients.DoctorsLocator;
 import android.view.View;
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.utils.Helpers;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_search) {
             // Handle the camera action
+            startActivity(new Intent(getApplicationContext(), DoctorsLocator.class));
         } else if (id == R.id.nav_appointment) {
             loadFragment(new DoctorsBasicInfo());
         }
