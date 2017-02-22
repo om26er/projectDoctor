@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.accountFragments;
+package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
