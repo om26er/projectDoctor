@@ -75,9 +75,9 @@ public class DoctorsList extends Fragment {
 
             viewHolder.name.setText(doctorsList.get(position)[0]);
             viewHolder.specialist.setText(doctorsList.get(position)[1]);
-            viewHolder.distance.setText(doctorsList.get(position)[2]+"km");
+            viewHolder.distance.setText(doctorsList.get(position)[2]+" km");
             viewHolder.review.setRating(Float.parseFloat(doctorsList.get(position)[3]));
-            viewHolder.availableTime.setText(String.valueOf(doctorsList.get(position)[4]+ "am"));
+            viewHolder.availableTime.setText(String.valueOf(doctorsList.get(position)[4]+ " am"));
             return convertView;
         }
 
