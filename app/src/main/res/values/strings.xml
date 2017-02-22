@@ -4,6 +4,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+       AIzaSyDZg2uOsPeHemP8fsl3MROGC8waG9dVsTI
+    </string>
+
     <string name="action_settings">Settings</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
