@@ -5,10 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
-/**
- * Created by s9iper1 on 2/20/17.
- */
-
 public class AppGlobals extends Application {
 
 
@@ -61,7 +57,7 @@ public class AppGlobals extends Application {
 
     public static boolean isFirstTimeLaunch() {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        return sharedPreferences.getBoolean(AppGlobals.IS_FIRST_TIME_LAUNCH, true);
+        return sharedPreferences.getBoolean(AppGlobals.IS_FIRST_TIME_LAUNCH, false);
     }
 
     public static Context getContext() {

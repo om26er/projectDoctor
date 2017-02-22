@@ -45,7 +45,7 @@ public class Dashboard extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.dashboard_delegate, parent, false);
+                convertView = getLayoutInflater().inflate(R.layout.delegate_dashboard, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.nextButton = (ImageButton) convertView.findViewById(R.id.button_next);
                 viewHolder.tvAchievementTitle = (TextView) convertView.findViewById(R.id.achievement_title);
