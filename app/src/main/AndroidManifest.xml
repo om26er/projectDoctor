@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".doctors.Dashboard" />
         <activity
-            android:name=".intro_screen.IntroScreen"
+            android:name=".introscreen.IntroScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".doctors.DoctorDetailsActivity"></activity>

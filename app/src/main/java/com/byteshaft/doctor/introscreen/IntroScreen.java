@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.intro_screen;
+package com.byteshaft.doctor.introscreen;
 
 import android.content.Context;
 import android.content.Intent;

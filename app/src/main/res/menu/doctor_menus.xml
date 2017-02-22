@@ -4,32 +4,43 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_search"
-            android:icon="@android:drawable/ic_menu_search"
-            android:title="Search Doctor" />
+            android:icon="@mipmap/ic_pulse"
+            android:title="Dashboard" />
         <item
             android:id="@+id/nav_appointment"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="My Appointments" />
+            android:icon="@mipmap/sidebar_appoint"
+            android:title="Appointments" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_patients"
+            android:icon="@mipmap/sidebar_user_icon"
+            android:title="My Patients" />
+
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Options">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_schedule"
+                android:icon="@mipmap/ic_schedule"
+                android:title="Schedules" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_messages"
+                android:icon="@mipmap/message_icon"
+                android:title="Messages" />
+
+            <item
+                android:id="@+id/nav_my_services"
+                android:icon="@mipmap/ic_services"
+                android:title="My Services" />
+
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@mipmap/sidebar_user_icon"
+                android:title="Profile" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@mipmap/exit"
+                android:title="Exit" />
         </menu>
     </item>
 </menu>
