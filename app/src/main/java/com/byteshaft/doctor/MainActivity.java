@@ -12,7 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.byteshaft.doctor.accountFragments.AccountActivationCode;
+import com.byteshaft.doctor.accountFragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.accountFragments.Login;
+import com.byteshaft.doctor.accountFragments.SignUp;
+import com.byteshaft.doctor.accountFragments.UserBasicInfoStepOne;
+import com.byteshaft.doctor.accountFragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.doctors.Dashboard;
 
 public class MainActivity extends AppCompatActivity
@@ -76,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_search) {
             // Handle the camera action
         } else if (id == R.id.nav_appointment) {
-            loadFragment(new Login());
+            loadFragment(new DoctorsBasicInfo());
 
         }  else if (id == R.id.nav_manage) {
 
