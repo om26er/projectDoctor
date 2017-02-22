@@ -13,9 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.byteshaft.doctor.accountFragments.DoctorsBasicInfo;
+import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.utils.Helpers;
-import com.byteshaft.doctor.intro_screen.IntroScreen;
+import com.byteshaft.doctor.introscreen.IntroScreen;
 
 
 public class MainActivity extends AppCompatActivity
