@@ -13,13 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.byteshaft.doctor.accountFragments.AccountActivationCode;
 import com.byteshaft.doctor.accountFragments.DoctorsBasicInfo;
-import com.byteshaft.doctor.accountFragments.Login;
-import com.byteshaft.doctor.accountFragments.SignUp;
-import com.byteshaft.doctor.accountFragments.UserBasicInfoStepOne;
-import com.byteshaft.doctor.accountFragments.UserBasicInfoStepTwo;
-import com.byteshaft.doctor.doctors.Dashboard;
+import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.doctor.intro_screen.IntroScreen;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,7 +35,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.inflateMenu(R.menu.patient_menu);
+        navigationView.setItemIconTintList(null);
+        if (Helpers.isDoctor()) {
+            navigationView.inflateMenu(R.menu.doctor_menus);
+        } else {
+            navigationView.inflateMenu(R.menu.patient_menu);
+        }
     }
 
     @Override
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, IntroScreen.class));
             return true;
         }
 
@@ -78,7 +81,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_search) {
             // Handle the camera action
         } else if (id == R.id.nav_appointment) {
