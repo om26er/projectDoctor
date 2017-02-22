@@ -2,6 +2,8 @@ package com.byteshaft.doctor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,9 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.byteshaft.doctor.intro_screen.IntroScreen;
+import com.byteshaft.doctor.accountFragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.doctor.intro_screen.IntroScreen;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,11 +89,16 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_search) {
             // Handle the camera action
         } else if (id == R.id.nav_appointment) {
-
+            loadFragment(new DoctorsBasicInfo());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        tx.replace(R.id.container, fragment);
+        tx.commit();
     }
 }

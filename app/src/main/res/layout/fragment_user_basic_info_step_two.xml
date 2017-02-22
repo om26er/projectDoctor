@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/camera" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/main_rel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2.0">
+
+            <RelativeLayout
+                android:id="@+id/child_one"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:padding="5dp">
+
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/spinner1"
+                    android:background="#000" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/child_two"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:padding="5dp">
+
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/spinner2"
+                    android:background="#000" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/spinner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2.0">
+
+            <RelativeLayout
+                android:id="@+id/child_three"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:padding="5dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp">
+
+                    <EditText
+                        android:id="@+id/username_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone-1"
+                        android:inputType="textPersonName" />
+                </android.support.design.widget.TextInputLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/child_four"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:padding="5dp">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp">
+
+                    <EditText
+                        android:id="@+id/password_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone-2"
+                        android:inputType="textPersonName" />
+                </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/emergency_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Emergency Contact"
+                android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/insurance_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/insurance_spinner"
+            android:background="#000" />
+
+        <Spinner
+            android:layout_marginTop="10dp"
+            android:id="@+id/clinic_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/clinic_spinner"
+            android:background="#000" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/check_box_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:weightSum="2.0">
+
+            <RelativeLayout
+
+                android:id="@+id/notifications_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:padding="5dp">
+
+                <CheckBox
+                    android:id="@+id/radio_button_male"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Notifications" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/news_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:padding="5dp">
+
+                <CheckBox
+                    android:id="@+id/news_check_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="News" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_marginLeft="5dp"
+            android:id="@+id/terms_check_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I accept the terms and conditions" />
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/login_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="15dp"
+            android:background="#FF5252"
+            android:text="Save"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/sign_up_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:text="Terms and conditions of the services"
+            android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>
