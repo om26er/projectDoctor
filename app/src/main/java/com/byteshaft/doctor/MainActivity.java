@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.doctor.intro_screen.IntroScreen;
 
 public class MainActivity extends AppCompatActivity
@@ -30,7 +30,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.inflateMenu(R.menu.patient_menu);
+        navigationView.setItemIconTintList(null);
+        if (Helpers.isDoctor()) {
+            navigationView.inflateMenu(R.menu.doctor_menus);
+        } else {
+            navigationView.inflateMenu(R.menu.patient_menu);
+        }
     }
 
     @Override
