@@ -18,7 +18,7 @@ import android.widget.CompoundButton;
 
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.doctors.DoctorsList;
-import com.byteshaft.doctor.introscreen.IntroScreen;
+import com.byteshaft.doctor.patients.PatientDetails;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -55,15 +55,15 @@ public class MainActivity extends AppCompatActivity
         onlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    switch (compoundButton.getId()) {
-                        case R.id.online_switch:
-                            if (b) {
-                                onlineSwitch.setText("On-line");
-                            } else {
-                                onlineSwitch.setText("Off-line");
-                            }
-                            break;
-                    }
+                switch (compoundButton.getId()) {
+                    case R.id.online_switch:
+                        if (b) {
+                            onlineSwitch.setText("On-line");
+                        } else {
+                            onlineSwitch.setText("Off-line");
+                        }
+                        break;
+                }
             }
         });
     }
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, IntroScreen.class));
+            startActivity(new Intent(this, PatientDetails.class));
             return true;
         }
 
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void loadFragment(Fragment fragment) {
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.container, fragment);

@@ -28,4 +28,9 @@
         <item name="android:colorForeground">#f1f1f1</item>
     </style>
 
+    <style name="MyButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/buttonColor</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
