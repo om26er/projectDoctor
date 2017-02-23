@@ -52,15 +52,15 @@ public class MainActivity extends AppCompatActivity
         onlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    switch (compoundButton.getId()) {
-                        case R.id.online_switch:
-                            if (b) {
-                                onlineSwitch.setText("On-line");
-                            } else {
-                                onlineSwitch.setText("Off-line");
-                            }
-                            break;
-                    }
+                switch (compoundButton.getId()) {
+                    case R.id.online_switch:
+                        if (b) {
+                            onlineSwitch.setText("On-line");
+                        } else {
+                            onlineSwitch.setText("Off-line");
+                        }
+                        break;
+                }
             }
         });
     }
@@ -74,8 +74,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
@@ -115,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void loadFragment(Fragment fragment) {
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.container, fragment);

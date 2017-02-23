@@ -77,14 +77,12 @@
             android:layout_below="@+id/board"
             android:padding="15dp">
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button_appointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/buttonColor"
-                android:text="Appointment"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:theme="@style/MyButton"
+                android:text="Appointment" />
         </RelativeLayout>
 
         <LinearLayout
@@ -113,7 +111,7 @@
                     android:id="@+id/doc_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
+                    android:editable="false"
                     android:text="12121212" />
 
             </LinearLayout>
@@ -136,7 +134,7 @@
                     android:id="@+id/birth_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
+                    android:editable="false"
                     android:text="12121212" />
             </LinearLayout>
         </LinearLayout>
@@ -159,7 +157,7 @@
                 android:id="@+id/patient_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
+                android:editable="false"
                 android:text="Some Address" />
         </LinearLayout>
 
@@ -188,7 +186,7 @@
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
+                    android:editable="false"
                     android:text="12121212" />
 
                 <EditText
@@ -215,7 +213,7 @@
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
+                    android:editable="false"
                     android:text="12121212" />
 
 
