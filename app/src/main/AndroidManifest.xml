@@ -33,7 +33,8 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".patients.DoctorsLocator" />
-        <activity android:name=".patients.PatientsRecentHistory"></activity>
+        <activity android:name=".patients.PatientsRecentHistory" />
+        <activity android:name=".patients.PatientDetails"></activity>
     </application>
 
 </manifest>
