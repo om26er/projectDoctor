@@ -2,23 +2,24 @@ package com.byteshaft.doctor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.byteshaft.doctor.patients.DoctorsLocator;
 import android.view.View;
+import android.widget.CompoundButton;
+
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.doctors.DoctorsList;
-import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.doctor.introscreen.IntroScreen;
+import com.byteshaft.doctor.utils.Helpers;
 
 
 public class MainActivity extends AppCompatActivity
@@ -49,6 +50,22 @@ public class MainActivity extends AppCompatActivity
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.patient_menu);
         }
+
+        final SwitchCompat onlineSwitch = (SwitchCompat) headerView.findViewById(R.id.online_switch);
+        onlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    switch (compoundButton.getId()) {
+                        case R.id.online_switch:
+                            if (b) {
+                                onlineSwitch.setText("On-line");
+                            } else {
+                                onlineSwitch.setText("Off-line");
+                            }
+                            break;
+                    }
+            }
+        });
     }
 
     @Override
