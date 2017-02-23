@@ -169,7 +169,18 @@ public class DoctorsList extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_search:
+
+                return true;
+            case R.id.action_filter:
+
+                return true;
+            case R.id.action_location:
+
+                return true;
+            default:return false;
+        }
     }
 
     class CustomAdapter extends ArrayAdapter<HashMap<Integer, String[]>> {
