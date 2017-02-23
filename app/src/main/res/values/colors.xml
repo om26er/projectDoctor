@@ -6,4 +6,5 @@
     <color name="header_background">#4A4A4A</color>
     <color name="buttonColor">#FF5252</color>
     <color name="orange">#FFA500</color>
+    <color name="date_background">#4A4A4A</color>
 </resources>
