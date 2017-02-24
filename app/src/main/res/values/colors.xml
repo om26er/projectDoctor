@@ -8,4 +8,5 @@
     <color name="orange">#FFA500</color>
     <color name="date_background">#4A4A4A</color>
     <color name="search_background">#737579</color>
+    <color name="seek_bar_background">#FF5252</color>
 </resources>
