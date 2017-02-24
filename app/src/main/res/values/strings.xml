@@ -46,4 +46,8 @@
         <item>@color/dot_dark_screen4</item>
     </array>
 
+    <string-array name="date_array">
+        <item>12–2–2017</item>
+    </string-array>
+
 </resources>
