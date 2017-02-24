@@ -41,5 +41,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rating_layout"
         android:layout_marginTop="6dp"
-        android:text="The best doctor In this area, The best doctor In this area. Ok kr k doctor hai ye!" />
+        android:text="@string/review" />
 </RelativeLayout>
