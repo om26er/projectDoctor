@@ -30,6 +30,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.utils.FilterDialog;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -174,7 +175,8 @@ public class DoctorsList extends Fragment {
 
                 return true;
             case R.id.action_filter:
-
+                FilterDialog filterDialog = new FilterDialog(getActivity());
+                filterDialog.show();
                 return true;
             case R.id.action_location:
 
