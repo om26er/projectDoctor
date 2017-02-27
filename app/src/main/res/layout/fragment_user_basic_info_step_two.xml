@@ -99,6 +99,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
                 android:padding="5dp">
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,10 +142,10 @@
             android:background="#000" />
 
         <Spinner
-            android:layout_marginTop="10dp"
             android:id="@+id/clinic_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <View
             android:layout_width="match_parent"
@@ -156,8 +157,8 @@
             android:id="@+id/check_box_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:layout_marginTop="10dp"
+            android:orientation="horizontal"
             android:weightSum="2.0">
 
             <RelativeLayout
@@ -191,10 +192,10 @@
         </LinearLayout>
 
         <CheckBox
-            android:layout_marginLeft="5dp"
             android:id="@+id/terms_check_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="I accept the terms and conditions" />
 
 
@@ -204,9 +205,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="15dp"
-            android:background="#FF5252"
             android:text="Save"
-            android:textColor="#ffffff" />
+            android:theme="@style/MyButton" />
 
         <TextView
             android:id="@+id/sign_up_text_view"

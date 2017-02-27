@@ -3,6 +3,7 @@
     package="com.byteshaft.doctor">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".utils.AppGlobals"
         android:allowBackup="true"
@@ -33,6 +34,12 @@
         <activity android:name=".patients.DoctorsLocator"/>
         <activity android:name=".patients.DoctorsRoute"/>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity android:name=".patients.PatientsRecentHistory" />
+        <activity android:name=".patients.PatientDetails"></activity>
     </application>
 
 </manifest>

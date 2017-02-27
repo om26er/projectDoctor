@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatRatingBar
-            android:id="@+id/doctor_ratings"
+            android:id="@+id/user_ratings"
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,8 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/doctor_ratings"
-            android:layout_toRightOf="@+id/doctor_ratings"
+            android:layout_toEndOf="@+id/user_ratings"
+            android:layout_toRightOf="@+id/user_ratings"
             android:text="username" />
 
         <TextView
@@ -41,5 +41,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rating_layout"
         android:layout_marginTop="6dp"
-        android:text="The best doctor In this area, The best doctor In this area. Ok kr k doctor hai ye!" />
+        android:text="@string/review" />
 </RelativeLayout>

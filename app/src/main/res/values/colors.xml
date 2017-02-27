@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#525252</color>
+    <color name="colorPrimary">#474A4F</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
     <color name="header_background">#4A4A4A</color>
     <color name="buttonColor">#FF5252</color>
     <color name="orange">#FFA500</color>
+    <color name="date_background">#4A4A4A</color>
+    <color name="search_background">#737579</color>
+    <color name="seek_bar_background">#FF5252</color>
 </resources>

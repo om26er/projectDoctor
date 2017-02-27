@@ -87,9 +87,9 @@
                         android:id="@+id/phone_one_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="15sp"
                         android:hint="Phone-1"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:textSize="15sp" />
                 </android.support.design.widget.TextInputLayout>
 
             </RelativeLayout>
@@ -111,9 +111,9 @@
                         android:id="@+id/phone_two_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="15sp"
                         android:hint="Phone-2"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:textSize="15sp" />
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -143,8 +143,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="College ID"
-                        android:textSize="15sp"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:textSize="15sp" />
                 </android.support.design.widget.TextInputLayout>
 
             </RelativeLayout>
@@ -167,8 +167,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Consultation Time"
-                        android:textSize="15sp"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:textSize="15sp" />
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -261,9 +261,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="15dp"
-            android:background="#FF5252"
-            android:text="Save"
-            android:textColor="#ffffff" />
+            android:theme="@style/MyButton"
+            android:text="Save" />
 
         <TextView
             android:id="@+id/sign_up_text_view"

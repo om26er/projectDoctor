@@ -2,24 +2,24 @@ package com.byteshaft.doctor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.byteshaft.doctor.patients.DoctorsAppointment;
-import com.byteshaft.doctor.patients.DoctorsLocator;
 import android.view.View;
+import android.widget.CompoundButton;
+
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
-import com.byteshaft.doctor.patients.DoctorsRoute;
+import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.utils.Helpers;
-import com.byteshaft.doctor.introscreen.IntroScreen;
 
 
 public class MainActivity extends AppCompatActivity
@@ -51,6 +51,22 @@ public class MainActivity extends AppCompatActivity
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.patient_menu);
         }
+
+        final SwitchCompat onlineSwitch = (SwitchCompat) headerView.findViewById(R.id.online_switch);
+        onlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                switch (compoundButton.getId()) {
+                    case R.id.online_switch:
+                        if (b) {
+                            onlineSwitch.setText("On-line");
+                        } else {
+                            onlineSwitch.setText("Off-line");
+                        }
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -62,29 +78,28 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, IntroScreen.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            startActivity(new Intent(this, IntroScreen.class));
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -93,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_search) {
             // Handle the camera action
-            startActivity(new Intent(getApplicationContext(), DoctorsLocator.class));
+            loadFragment(new DoctorsList());
         } else if (id == R.id.nav_appointment) {
             loadFragment(new DoctorsBasicInfo());
         }
@@ -102,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void loadFragment(Fragment fragment) {
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.container, fragment);
