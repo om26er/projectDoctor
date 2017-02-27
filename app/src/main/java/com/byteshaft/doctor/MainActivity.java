@@ -13,9 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.byteshaft.doctor.patients.DoctorsAppointment;
 import com.byteshaft.doctor.patients.DoctorsLocator;
 import android.view.View;
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
+import com.byteshaft.doctor.patients.DoctorsRoute;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.doctor.introscreen.IntroScreen;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startActivity(new Intent(this, DoctorsAppointment.class));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
