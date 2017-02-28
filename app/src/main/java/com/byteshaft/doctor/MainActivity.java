@@ -13,6 +13,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.patients.DoctorsAppointment;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             loadFragment(new DoctorsList());
         } else if (id == R.id.nav_appointment) {
-            loadFragment(new DoctorsBasicInfo());
+            loadFragment(new UserBasicInfoStepTwo());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
