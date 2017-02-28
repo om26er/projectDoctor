@@ -32,14 +32,14 @@
                 android:padding="5dp">
 
                 <Spinner
-                    android:id="@+id/spinner1"
+                    android:id="@+id/states_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/spinner1"
+                    android:layout_below="@+id/states_spinner"
                     android:background="#000" />
             </RelativeLayout>
 
@@ -51,14 +51,14 @@
                 android:padding="5dp">
 
                 <Spinner
-                    android:id="@+id/spinner2"
+                    android:id="@+id/cities_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/spinner2"
+                    android:layout_below="@+id/cities_spinner"
                     android:background="#000" />
             </RelativeLayout>
         </LinearLayout>
