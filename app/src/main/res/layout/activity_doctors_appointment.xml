@@ -35,8 +35,9 @@
                         android:id="@+id/date_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Date"
-                        android:inputType="number" />
+                        android:focusable="false"
+                        android:editable="false"
+                        android:hint="Date"/>
                 </android.support.design.widget.TextInputLayout>
 
             </RelativeLayout>
@@ -57,6 +58,8 @@
                         android:id="@+id/time_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:editable="false"
                         android:hint="Time"
                         android:inputType="textPersonName" />
                 </android.support.design.widget.TextInputLayout>
@@ -90,7 +93,7 @@
             android:id="@+id/appointment_reason_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Requested services"
+            android:text="Appointment reason"
             android:textSize="15sp" />
 
         <Spinner
@@ -101,7 +104,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/insurance_spinner"
+            android:layout_below="@+id/appointment_reason"
             android:background="#000" />
 
         <android.support.design.widget.TextInputLayout
@@ -130,8 +133,7 @@
                 android:id="@+id/diagnostics_spinner_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp">
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_marginLeft="5dp"
@@ -187,8 +189,7 @@
                 android:id="@+id/medication_spinner_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp">
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_marginLeft="5dp"
@@ -249,8 +250,7 @@
                 android:id="@+id/destination_layoute"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
-                android:padding="5dp">
+                android:layout_weight="1.0">
 
                 <Spinner
                     android:id="@+id/destination_spinner"
@@ -281,8 +281,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
-                        android:hint="Date of return"
-                        android:inputType="number" />
+                        android:focusable="false"
+                        android:editable="false"
+                        android:hint="Date of return" />
                 </android.support.design.widget.TextInputLayout>
 
             </RelativeLayout>
