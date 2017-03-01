@@ -13,6 +13,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.byteshaft.doctor.accountfragments.Login;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.patients.DoctorsAppointment;
 import android.view.View;
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_search) {
             // Handle the camera action
-            loadFragment(new DoctorsList());
+            loadFragment(new Login());
         } else if (id == R.id.nav_appointment) {
             loadFragment(new UserBasicInfoStepTwo());
         }
