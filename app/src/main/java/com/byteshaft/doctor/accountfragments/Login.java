@@ -58,7 +58,7 @@ public class Login extends Fragment implements View.OnClickListener {
         System.out.println(mPasswordString);
 
         if (mUserNameString.trim().isEmpty()) {
-            mUserName.setError("enter a valid user name");
+            mUserName.setError("must enter user name");
             valid = false;
         } else {
             mUserName.setError(null);
