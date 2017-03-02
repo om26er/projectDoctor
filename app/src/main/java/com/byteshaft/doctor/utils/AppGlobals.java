@@ -4,6 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+
+import com.byteshaft.doctor.R;
 
 public class AppGlobals extends Application {
 
@@ -64,3 +68,4 @@ public class AppGlobals extends Application {
         return sContext;
     }
 }
+
