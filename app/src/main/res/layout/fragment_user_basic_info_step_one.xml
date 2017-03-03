@@ -24,7 +24,7 @@
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/email_edit_text"
+                android:id="@+id/doctor_id_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="DocID"
@@ -38,7 +38,7 @@
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/username_login"
+                android:id="@+id/first_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="First Name"
@@ -52,7 +52,7 @@
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/password_login"
+                android:id="@+id/last_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Last Name"
@@ -66,7 +66,7 @@
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/verification_code"
+                android:id="@+id/birth_date_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="BirthDate"
@@ -101,7 +101,7 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/txtStatus"
+            android:id="@+id/pick_for_current_location"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:drawableLeft="@mipmap/location"
@@ -124,7 +124,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/login_button"
+            android:id="@+id/next_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -133,7 +133,7 @@
             android:theme="@style/MyButton" />
 
         <TextView
-            android:id="@+id/sign_up_text_view"
+            android:id="@+id/login_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

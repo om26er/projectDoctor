@@ -198,10 +198,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                     mTermsConditionCheckBoxString = mTermsConditionCheckBox.getText().toString();
                     System.out.println(mTermsConditionCheckBoxString);
                 }
-
                 break;
         }
-
     }
 
     @Override
