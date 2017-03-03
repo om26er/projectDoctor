@@ -84,7 +84,7 @@
                     android:layout_marginTop="8dp">
 
                     <EditText
-                        android:id="@+id/username_login"
+                        android:id="@+id/phone_one_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Phone-1"
@@ -107,7 +107,7 @@
                     android:layout_marginTop="8dp">
 
                     <EditText
-                        android:id="@+id/password_login"
+                        android:id="@+id/phone_two_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Phone-2"
@@ -170,7 +170,7 @@
                 android:padding="5dp">
 
                 <CheckBox
-                    android:id="@+id/radio_button_male"
+                    android:id="@+id/notifications_check_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Notifications" />
@@ -200,7 +200,7 @@
 
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/login_button"
+            android:id="@+id/save_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"

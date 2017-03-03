@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.byteshaft.doctor.accountfragments.AccountActivationCode;
 import com.byteshaft.doctor.accountfragments.Login;
 import com.byteshaft.doctor.accountfragments.SignUp;
+import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.patients.DoctorsAppointment;
 import android.view.View;
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             loadFragment(new SignUp());
         } else if (id == R.id.nav_appointment) {
-            loadFragment(new DoctorsBasicInfo());
+            loadFragment(new UserBasicInfoStepOne());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

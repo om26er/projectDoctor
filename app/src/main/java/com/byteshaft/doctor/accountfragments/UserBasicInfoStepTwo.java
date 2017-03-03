@@ -5,7 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.byteshaft.doctor.R;
@@ -17,13 +22,38 @@ import java.util.List;
  * Created by husnain on 2/20/17.
  */
 
-public class UserBasicInfoStepTwo extends Fragment {
+public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private View mBaseView;
+
     private Spinner mStateSpinner;
     private Spinner mCitySpinner;
     private Spinner mInsuranceCarrierSpinner;
     private Spinner mAffiliatedClinicsSpinner;
+
+    private EditText mPhoneOneEditText;
+    private EditText mPhoneTwoEditText;
+    private EditText mEmergencyContactEditText;
+
+    private CheckBox mNotificationCheckBox;
+    private CheckBox mNewsCheckBox;
+    private CheckBox mTermsConditionCheckBox;
+
+    private String mPhoneOneEditTextString;
+    private String mPhoneTwoEditTextString;
+    private String mEmergencyContactString;
+
+
+    private String mStatesSpinnerValueString;
+    private String mCitiesSpinnerValueString;
+    private String mAffiliatedClinicsSpinnerValueString;
+    private String mInsuranceCarrierSpinnerValueString;
+
+    private String mNotificationCheckBoxString;
+    private String mNewsCheckBoxString;
+    private String mTermsConditionCheckBoxString;
+
+    private Button mSaveButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +63,16 @@ public class UserBasicInfoStepTwo extends Fragment {
         mCitySpinner = (Spinner) mBaseView.findViewById(R.id.cities_spinner);
         mInsuranceCarrierSpinner = (Spinner) mBaseView.findViewById(R.id.insurance_spinner);
         mAffiliatedClinicsSpinner = (Spinner) mBaseView.findViewById(R.id.clinic_spinner);
+
+        mPhoneOneEditText = (EditText) mBaseView.findViewById(R.id.phone_one_edit_text);
+        mPhoneTwoEditText = (EditText) mBaseView.findViewById(R.id.phone_two_edit_text);
+        mEmergencyContactEditText = (EditText) mBaseView.findViewById(R.id.emergency_contact);
+
+        mNotificationCheckBox = (CheckBox) mBaseView.findViewById(R.id.notifications_check_box);
+        mNewsCheckBox = (CheckBox) mBaseView.findViewById(R.id.news_check_box);
+        mTermsConditionCheckBox = (CheckBox) mBaseView.findViewById(R.id.terms_check_box);
+
+        mSaveButton = (Button) mBaseView.findViewById(R.id.save_button);
 
         List<String> StateList = new ArrayList<String>();
         StateList.add("State1");
@@ -77,6 +117,97 @@ public class UserBasicInfoStepTwo extends Fragment {
         clinicListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAffiliatedClinicsSpinner.setAdapter(clinicListAdapter);
 
+        mStateSpinner.setOnItemSelectedListener(this);
+        mCitySpinner.setOnItemSelectedListener(this);
+        mAffiliatedClinicsSpinner.setOnItemSelectedListener(this);
+        mInsuranceCarrierSpinner.setOnItemSelectedListener(this);
+
+        mNotificationCheckBox.setOnCheckedChangeListener(this);
+        mNewsCheckBox.setOnCheckedChangeListener(this);
+        mTermsConditionCheckBox.setOnCheckedChangeListener(this);
+
+        mSaveButton.setOnClickListener(this);
+
         return mBaseView;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (adapterView.getId()) {
+            case R.id.states_spinner:
+                mStatesSpinnerValueString = adapterView.getItemAtPosition(i).toString();
+                System.out.println(mStatesSpinnerValueString);
+                break;
+            case R.id.cities_spinner:
+                mCitiesSpinnerValueString = adapterView.getItemAtPosition(i).toString();
+                System.out.println(mCitiesSpinnerValueString);
+                break;
+            case R.id.insurance_spinner:
+                mInsuranceCarrierSpinnerValueString = adapterView.getItemAtPosition(i).toString();
+                System.out.println(mInsuranceCarrierSpinnerValueString);
+                break;
+            case R.id.clinics_spinner:
+                mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
+                System.out.println(mAffiliatedClinicsSpinnerValueString);
+                break;
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        mPhoneTwoEditTextString = mPhoneTwoEditText.getText().toString();
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        switch (compoundButton.getId()) {
+            case R.id.notifications_check_box:
+                if (mNotificationCheckBox.isChecked()) {
+                    mNotificationCheckBoxString = mNotificationCheckBox.getText().toString();
+                    System.out.println(mNotificationCheckBoxString);
+                }
+                break;
+            case R.id.news_check_box:
+                if (mNewsCheckBox.isChecked()) {
+                    mNewsCheckBoxString = mNewsCheckBox.getText().toString();
+                    System.out.println(mNewsCheckBoxString);
+                }
+                break;
+            case R.id.terms_check_box:
+                if (mTermsConditionCheckBox.isChecked()) {
+                    mTermsConditionCheckBoxString = mTermsConditionCheckBox.getText().toString();
+                    System.out.println(mTermsConditionCheckBoxString);
+                }
+                break;
+        }
+
+    }
+
+    private boolean validateEditText() {
+        boolean valid = true;
+        mPhoneOneEditTextString = mPhoneOneEditText.getText().toString();
+        mEmergencyContactString = mEmergencyContactEditText.getText().toString();
+
+        if (mPhoneOneEditTextString.trim().isEmpty()) {
+            mPhoneOneEditText.setError("please enter your phone number");
+            valid = false;
+        } else {
+            mPhoneOneEditText.setError(null);
+        }
+        if (mEmergencyContactString.trim().isEmpty()) {
+            mEmergencyContactEditText.setError("please provide your Emergency Contact");
+            valid = false;
+        } else {
+            mEmergencyContactEditText.setError(null);
+        }
+
+        return valid;
     }
 }
