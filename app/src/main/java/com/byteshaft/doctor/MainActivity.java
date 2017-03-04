@@ -1,5 +1,6 @@
 package com.byteshaft.doctor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.byteshaft.doctor.accountfragments.AccountActivationCode;
+import com.byteshaft.doctor.accountfragments.Login;
+import com.byteshaft.doctor.accountfragments.SignUp;
+import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
+import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
+import com.byteshaft.doctor.patients.DoctorsAppointment;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -23,10 +31,18 @@ import com.byteshaft.doctor.utils.Helpers;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static MainActivity sInstance;
+
+    public static MainActivity getInstance() {
+        return sInstance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sInstance = this;
         setContentView(R.layout.activity_main);
+        startActivity(new Intent(this, DoctorsAppointment.class));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -83,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_search) {
             // Handle the camera action
-            loadFragment(new DoctorsList());
+            loadFragment(new SignUp());
         } else if (id == R.id.nav_appointment) {
             loadFragment(new DoctorsBasicInfo());
         } else if (id == R.id.nav_favt_doc) {

@@ -8,6 +8,8 @@
        AIzaSyDZg2uOsPeHemP8fsl3MROGC8waG9dVsTI
     </string>
 
+    <string name="state_prompt">State</string>
+
     <string name="action_settings">Settings</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>

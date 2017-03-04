@@ -32,14 +32,14 @@
                 android:padding="5dp">
 
                 <Spinner
-                    android:id="@+id/spinner1"
+                    android:id="@+id/states_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/spinner1"
+                    android:layout_below="@+id/states_spinner"
                     android:background="#000" />
             </RelativeLayout>
 
@@ -51,14 +51,14 @@
                 android:padding="5dp">
 
                 <Spinner
-                    android:id="@+id/spinner2"
+                    android:id="@+id/cities_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/spinner2"
+                    android:layout_below="@+id/cities_spinner"
                     android:background="#000" />
             </RelativeLayout>
         </LinearLayout>
@@ -84,7 +84,7 @@
                     android:layout_marginTop="8dp">
 
                     <EditText
-                        android:id="@+id/username_login"
+                        android:id="@+id/phone_one_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Phone-1"
@@ -107,7 +107,7 @@
                     android:layout_marginTop="8dp">
 
                     <EditText
-                        android:id="@+id/password_login"
+                        android:id="@+id/phone_two_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Phone-2"
@@ -170,7 +170,7 @@
                 android:padding="5dp">
 
                 <CheckBox
-                    android:id="@+id/radio_button_male"
+                    android:id="@+id/notifications_check_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Notifications" />
@@ -200,7 +200,7 @@
 
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/login_button"
+            android:id="@+id/save_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"

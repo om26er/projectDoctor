@@ -38,7 +38,7 @@
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/password_login"
+                android:id="@+id/password_for_verification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
@@ -60,7 +60,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
-            android:id="@+id/forgot_password_text_view"
+            android:id="@+id/resend_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -69,7 +69,7 @@
             android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
+            android:id="@+id/button_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
