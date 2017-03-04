@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.doctors.DoctorsList;
+import com.byteshaft.doctor.patients.FavouriteDoctors;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -74,28 +75,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            startActivity(new Intent(this, IntroScreen.class));
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -107,6 +86,8 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new DoctorsList());
         } else if (id == R.id.nav_appointment) {
             loadFragment(new DoctorsBasicInfo());
+        } else if (id == R.id.nav_favt_doc) {
+            loadFragment(new FavouriteDoctors());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
