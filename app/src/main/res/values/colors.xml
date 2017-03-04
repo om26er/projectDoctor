@@ -9,4 +9,7 @@
     <color name="date_background">#4A4A4A</color>
     <color name="search_background">#737579</color>
     <color name="seek_bar_background">#FF5252</color>
+    <color name="appointment_available_bg">#AEAEAE</color>
+    <color name="appointment_bg">#FF5252</color>
+    <color name="fav_doctor_calendar_background">#AEAEAE</color>
 </resources>
