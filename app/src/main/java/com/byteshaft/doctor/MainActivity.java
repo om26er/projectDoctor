@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             loadFragment(new SignUp());
         } else if (id == R.id.nav_appointment) {
-            loadFragment(new UserBasicInfoStepOne());
+            loadFragment(new Login());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
