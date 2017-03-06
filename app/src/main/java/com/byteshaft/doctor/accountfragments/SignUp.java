@@ -1,7 +1,10 @@
 package com.byteshaft.doctor.accountfragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +13,25 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.requests.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
 
 /**
  * Created by husnain on 2/20/17.
  */
 
-public class SignUp extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class SignUp extends Fragment implements View.OnClickListener,
+        CompoundButton.OnCheckedChangeListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
 
     private View mBaseView;
 
@@ -36,7 +49,9 @@ public class SignUp extends Fragment implements View.OnClickListener, CompoundBu
     private String mEmailAddressString;
     private String mPasswordString;
     private String mVerifyPasswordString;
-    private String mCheckBoxString;
+    private String mCheckBoxString = "I am Patient";
+
+    private HttpRequest request;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +76,11 @@ public class SignUp extends Fragment implements View.OnClickListener, CompoundBu
         switch (view.getId()) {
             case R.id.sign_up_button:
                 System.out.println("signUp button");
+                if (validateEditText()) {
+                    registerUser(mPasswordString, mEmailAddressString, mCheckBoxString);
+                }
+                System.out.println("signUp button" + mUserNameString);
+                System.out.println("checkbox text" + mCheckBoxString);
                 break;
             case R.id.login_text_view:
                 MainActivity.getInstance().loadFragment(new Login());
@@ -74,6 +94,8 @@ public class SignUp extends Fragment implements View.OnClickListener, CompoundBu
         if (mDoctorsCheckBox.isChecked()) {
             mCheckBoxString = mDoctorsCheckBox.getText().toString();
             System.out.println(mCheckBoxString + "working");
+        } else if (!mDoctorsCheckBox.isChecked()) {
+            mCheckBoxString = "I am Patient";
         }
 
     }
@@ -112,5 +134,72 @@ public class SignUp extends Fragment implements View.OnClickListener, CompoundBu
             mVerifyPassword.setError(null);
         }
         return valid;
+    }
+
+    @Override
+    public void onReadyStateChange(HttpRequest request, int readyState) {
+        switch (readyState) {
+            case HttpRequest.STATE_DONE:
+                Helpers.dismissProgressDialog();
+                Log.i("TAG", "Response " + request.getResponseText());
+                switch (request.getStatus()) {
+                    case HttpRequest.ERROR_NETWORK_UNREACHABLE:
+                        AppGlobals.alertDialog(getActivity(), "Registration Failed!", "please check your internet connection");
+                        break;
+                    case HttpURLConnection.HTTP_BAD_REQUEST:
+                        AppGlobals.alertDialog(getActivity(), "Registration Failed!", "Email already in use");
+                        break;
+                    case HttpURLConnection.HTTP_CREATED:
+                        System.out.println(request.getResponseText() + "working ");
+                        Toast.makeText(getActivity(), "Activation code has been sent to you! Please check your Email", Toast.LENGTH_SHORT).show();
+                        try {
+                            JSONObject jsonObject = new JSONObject(request.getResponseText());
+                            System.out.println(jsonObject + "working ");
+                            String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
+                            String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
+                            String accountType = jsonObject.getString(AppGlobals.KEY_AACOUNT_TYPE);
+                            //saving values
+
+//                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_NAME, username);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AACOUNT_TYPE, accountType);
+                            Log.i("user name", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AACOUNT_TYPE));
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
+                            MainActivity.getInstance().loadFragment(new AccountActivationCode());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                }
+        }
+
+    }
+
+    @Override
+    public void onError(HttpRequest request, int readyState, short error, Exception exception) {
+
+    }
+
+    private void registerUser(String password, String email, String accountType) {
+        request = new HttpRequest(getActivity());
+        request.setOnReadyStateChangeListener(this);
+        request.setOnErrorListener(this);
+        request.open("POST", String.format("%suser/register", AppGlobals.BASE_URL));
+        request.send(getRegisterData(password, email, accountType));
+        Helpers.showProgressDialog(getActivity(), "Registering User ");
+    }
+
+
+    private String getRegisterData(String password, String email, String accountType) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("email", email);
+            jsonObject.put("account_type", accountType);
+            jsonObject.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+
     }
 }

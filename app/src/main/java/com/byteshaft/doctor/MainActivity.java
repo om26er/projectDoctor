@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             loadFragment(new SignUp());
         } else if (id == R.id.nav_appointment) {
-            loadFragment(new DoctorsBasicInfo());
+            loadFragment(new Login());
         } else if (id == R.id.nav_favt_doc) {
             loadFragment(new FavouriteDoctors());
         }

@@ -1,23 +1,33 @@
 package com.byteshaft.doctor.accountfragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.requests.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
 
 /**
  * Created by husnain on 2/20/17.
  */
 
-public class AccountActivationCode extends Fragment implements View.OnClickListener {
+public class AccountActivationCode extends Fragment implements View.OnClickListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
 
     private View mBaseView;
 
@@ -33,6 +43,8 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
     private String mUserNameString;
     private String mVerificationCodeString;
     private String mPasswordString;
+
+    private HttpRequest request;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,5 +110,63 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
             mPassword.setError(null);
         }
         return valid;
+    }
+
+    private void activateUser(String email, String emailOtp) {
+        request = new HttpRequest(getActivity());
+        request.setOnReadyStateChangeListener(this);
+        request.setOnErrorListener(this);
+        request.open("POST", String.format("%suser/activate", AppGlobals.BASE_URL));
+        request.send(getUserActivationData(email, emailOtp));
+        Helpers.showProgressDialog(getActivity(), "Activating User");
+    }
+
+
+    private String getUserActivationData(String email, String emailOtp) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("email", email);
+            jsonObject.put("sms_otp", emailOtp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    @Override
+    public void onReadyStateChange(HttpRequest request, int readyState) {
+        switch (readyState) {
+            case HttpRequest.STATE_DONE:
+                Helpers.dismissProgressDialog();
+                switch (request.getStatus()) {
+                    case HttpURLConnection.HTTP_BAD_REQUEST:
+                        Toast.makeText(getActivity(), "Please enter correct account activation key", Toast.LENGTH_LONG).show();
+                        break;
+                    case HttpURLConnection.HTTP_OK:
+                        try {
+                            JSONObject jsonObject = new JSONObject(request.getResponseText());
+                            String accountType = jsonObject.getString(AppGlobals.KEY_AACOUNT_TYPE);
+                            String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
+                            String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
+                            String token = jsonObject.getString(AppGlobals.KEY_TOKEN);
+
+                            //saving values
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AACOUNT_TYPE, accountType);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
+                            Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+                            MainActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                }
+        }
+
+    }
+
+    @Override
+    public void onError(HttpRequest request, int readyState, short error, Exception exception) {
+
     }
 }
