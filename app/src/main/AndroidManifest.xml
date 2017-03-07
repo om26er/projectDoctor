@@ -40,7 +40,7 @@
 
         <activity android:name=".patients.PatientsRecentHistory" />
         <activity android:name=".patients.PatientDetails" />
-        <activity android:name=".patients.DoctorBookingActivity"></activity>
+        <activity android:name=".patients.DoctorBookingActivity"/>
     </application>
 
 </manifest>

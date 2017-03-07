@@ -168,11 +168,11 @@
                     android:background="@mipmap/ic_plus_blue"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
+                <!--android:background="@mipmap/minus_button" for below button-->
                 <Button
                     android:layout_marginTop="4dp"
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@+id/plus_button"
-                    android:background="@mipmap/minus_button"
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
             </RelativeLayout>
