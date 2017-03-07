@@ -12,19 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
-import com.byteshaft.doctor.accountfragments.AccountActivationCode;
-import com.byteshaft.doctor.accountfragments.Login;
-import com.byteshaft.doctor.accountfragments.SignUp;
-import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
-import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
-import com.byteshaft.doctor.patients.DoctorsAppointment;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
-import com.byteshaft.doctor.doctors.DoctorsList;
-import com.byteshaft.doctor.patients.FavouriteDoctors;
+import com.byteshaft.doctor.accountfragments.Login;
+import com.byteshaft.doctor.accountfragments.SignUp;
+import com.byteshaft.doctor.patients.DoctorBookingActivity;
+import com.byteshaft.doctor.patients.DoctorsAppointment;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -103,7 +97,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_appointment) {
             loadFragment(new Login());
         } else if (id == R.id.nav_favt_doc) {
-            loadFragment(new FavouriteDoctors());
+            startActivity(new Intent(this, DoctorBookingActivity.class));
+//            loadFragment(new FavouriteDoctors());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

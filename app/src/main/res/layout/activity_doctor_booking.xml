@@ -7,7 +7,7 @@
     tools:context="com.byteshaft.doctor.patients.DoctorBookingActivity">
 
     <RelativeLayout
-        android:id="@+id/board"
+        android:id="@+id/board_booking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
@@ -15,17 +15,17 @@
         android:padding="15dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/doctor_image"
+            android:id="@+id/doctor_image_booking"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/doctor_name"
+            android:id="@+id/doctor_name_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctor_image"
+            android:layout_below="@+id/doctor_image_booking"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="2dp"
             android:gravity="center"
@@ -35,10 +35,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/doctor_sp"
+            android:id="@+id/doctor_sp_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctor_name"
+            android:layout_below="@+id/doctor_name_booking"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="4dp"
             android:gravity="center"
@@ -46,22 +46,22 @@
             android:textColor="@android:color/darker_gray" />
 
         <android.support.v7.widget.AppCompatRatingBar
-            android:id="@+id/user_ratings"
+            android:id="@+id/doctor_rating_booking"
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctor_sp"
+            android:layout_below="@+id/doctor_sp_booking"
             android:layout_centerHorizontal="true"
             android:numStars="5"
             android:rating="5.0" />
 
         <ImageButton
-            android:id="@+id/button"
+            android:id="@+id/button_fav_booking"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/doctor_name"
+            android:layout_alignTop="@+id/doctor_name_booking"
             android:background="@mipmap/ic_heart_fill"
             android:text="Button" />
 
@@ -70,10 +70,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/doctor_name">
+            android:layout_alignTop="@+id/doctor_name_booking">
 
             <ImageView
-                android:id="@+id/image_time"
+                android:id="@+id/image_time_booking"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@android:drawable/ic_menu_recent_history" />
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@+id/image_time"
+                android:layout_toRightOf="@+id/image_time_booking"
                 android:textColor="@android:color/white" />
 
         </RelativeLayout>
@@ -94,7 +94,7 @@
         android:id="@+id/buttons_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/board">
+        android:layout_below="@+id/board_booking">
 
 
         <RelativeLayout
@@ -104,7 +104,7 @@
             android:layout_margin="4dp">
 
             <ImageButton
-                android:id="@+id/call_button"
+                android:id="@+id/call_button_booking"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
@@ -112,7 +112,7 @@
                 android:background="@mipmap/ic_call" />
 
             <ImageButton
-                android:id="@+id/message_button"
+                android:id="@+id/chat_button_booking"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
@@ -128,6 +128,6 @@
         android:layout_below="@+id/buttons_layout"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
-        android:background="@android:color/darker_gray" /> 
+        android:background="@android:color/darker_gray" />
 
 </RelativeLayout>
