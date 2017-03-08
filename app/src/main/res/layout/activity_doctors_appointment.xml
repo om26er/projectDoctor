@@ -169,7 +169,6 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
                     android:background="@mipmap/ic_plus_blue" />
-
                 <Button
                     android:layout_width="40dp"
                     android:layout_height="40dp"

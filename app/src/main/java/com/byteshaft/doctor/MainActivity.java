@@ -16,9 +16,8 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.byteshaft.doctor.accountfragments.SignUp;
-import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.patients.DoctorBookingActivity;
-import com.byteshaft.doctor.patients.DoctorsAppointment;
+import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         sInstance = this;
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, DoctorsAppointment.class));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -97,8 +95,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_appointment) {
             loadFragment(new UserBasicInfoStepOne());
         } else if (id == R.id.nav_favt_doc) {
-            startActivity(new Intent(this, DoctorBookingActivity.class));
 //            loadFragment(new FavouriteDoctors());
+            startActivity(new Intent(getApplicationContext(), DoctorBookingActivity.class));
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
