@@ -50,7 +50,7 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
                 // TODO: 07/03/2017 open chat activity
                 break;
             case R.id.button_fav_booking:
-                mFavButton.setBackgroundResource(R.mipmap.favt_doc);
+                mFavButton.setBackgroundResource(R.mipmap.ic_heart_fill);
                 break;
         }
     }
