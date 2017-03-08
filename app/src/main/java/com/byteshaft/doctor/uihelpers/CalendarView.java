@@ -2,7 +2,6 @@ package com.byteshaft.doctor.uihelpers;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -172,11 +171,17 @@ public class CalendarView extends LinearLayout {
 	 */
 	public void updateCalendar(HashSet<Date> events) {
 		ArrayList<Date> cells = new ArrayList<>();
+        ArrayList<String> weekDay = new ArrayList<>();
 		Calendar calendar = (Calendar)currentDate.clone();
 		while (cells.size() < DAYS_COUNT) {
 			cells.add(calendar.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+            String dayOfTheWeek = sdf.format(calendar.getTime());
 			calendar.add(Calendar.DATE, 1);
+            weekDay.add(dayOfTheWeek);
 		}
+
+		weekGrid.setAdapter(new WeekAdapter(getContext(), weekDay));
 
 		// update hori
 		grid.setAdapter(new CalendarAdapter(getContext(), cells, events));
@@ -187,8 +192,7 @@ public class CalendarView extends LinearLayout {
 	}
 
 
-	private class CalendarAdapter extends ArrayAdapter<Date>
-	{
+	private class CalendarAdapter extends ArrayAdapter<Date> {
 		// days with events
 		private HashSet<Date> eventDays;
 
@@ -219,7 +223,7 @@ public class CalendarView extends LinearLayout {
 				view = inflater.inflate(R.layout.control_calendar_day, parent, false);
 
 			// if this day has an event, specify event image
-			view.setBackgroundResource(0);
+//			view.setBackgroundResource(0);
 			if (eventDays != null)
 			{
 				for (Date eventDate : eventDays)
@@ -229,25 +233,20 @@ public class CalendarView extends LinearLayout {
 							eventDate.getYear() == year)
 					{
 						// mark this day for event
-						view.setBackgroundResource(R.drawable.reminder);
+//						view.setBackgroundResource(R.drawable.reminder);
 						break;
 					}
 				}
 			}
 
-			// clear styling
-			((TextView)view).setTypeface(null, Typeface.NORMAL);
-			((TextView)view).setTextColor(Color.BLACK);
-
 			if (month != today.getMonth() || year != today.getYear())
 			{
 				// if this day is outside current month, grey it out
-				((TextView)view).setTextColor(getResources().getColor(R.color.greyed_out));
+//				((TextView)view).setTextColor(getResources().getColor(R.color.greyed_out));
 			}
 			else if (day == today.getDate()) {
 				// if it is today, set it to blue/bold
 				((TextView)view).setTypeface(null, Typeface.BOLD);
-				((TextView)view).setTextColor(getResources().getColor(R.color.today));
 			}
 			// set text
 			((TextView)view).setText(String.valueOf(date.getDate()));
@@ -273,4 +272,33 @@ public class CalendarView extends LinearLayout {
 	{
 		void onDayLongPress(Date date);
 	}
+
+    private class WeekAdapter extends ArrayAdapter<String> {
+        // days with events
+
+        // for view inflation
+        private LayoutInflater inflater;
+
+        public WeekAdapter(Context context, ArrayList<String> weekDay)
+        {
+            super(context, R.layout.single_week_day, weekDay);
+            inflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup parent) {
+            // day in question
+            String date = getItem(position);
+            // inflate item if it does not exist yet
+            if (view == null)
+                view = inflater.inflate(R.layout.single_week_day, parent, false);
+
+            // if this day has an event, specify event image
+            // set text
+            ((TextView)view).setText(String.valueOf(date));
+            Log.i(TAG, "week");
+
+            return view;
+        }
+    }
 }

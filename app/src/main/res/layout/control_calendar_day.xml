@@ -9,5 +9,6 @@
 	android:textAlignment="center"
 	android:padding="10dp"
 	android:layout_margin="5dp"
-	android:text="00"
-	android:background="@drawable/reminder"/>
+	android:textColor="@android:color/white"
+	android:background="@color/fav_doctor_calendar_background"
+	android:text="00"/>
