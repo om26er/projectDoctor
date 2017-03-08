@@ -7,17 +7,99 @@
     android:layout_height="match_parent"
     tools:context="com.byteshaft.doctor.patients.DoctorBookingActivity">
 
+<<<<<<< HEAD
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
+=======
+    <RelativeLayout
+        android:id="@+id/board_booking"
+>>>>>>> upstream/master
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#3F3F3F"
+<<<<<<< HEAD
         android:layout_margin="10dp"
         app:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+=======
+        android:padding="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/doctor_image_booking"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/doctor_name_booking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctor_image_booking"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:text="Dr Drake Remore"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/doctor_sp_booking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctor_name_booking"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="Dermatology"
+            android:textColor="@android:color/darker_gray" />
+
+        <android.support.v7.widget.AppCompatRatingBar
+            android:id="@+id/doctor_rating_booking"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctor_sp_booking"
+            android:layout_centerHorizontal="true"
+            android:numStars="5"
+            android:rating="5.0" />
+
+        <ImageButton
+            android:id="@+id/button_fav_booking"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/doctor_name_booking"
+            android:background="@mipmap/favt_doc"
+            android:text="Button" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/doctor_name_booking">
+
+            <ImageView
+                android:id="@+id/image_time_booking"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@android:drawable/ic_menu_recent_history" />
+
+            <TextClock
+                android:id="@+id/clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/image_time_booking"
+                android:textColor="@android:color/white" />
+>>>>>>> upstream/master
 
             <RelativeLayout
                 android:id="@+id/board"
@@ -146,6 +228,44 @@
         android:layout_below="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         calendarNS:dateFormat="MMMM yyyy" />
+=======
+        android:layout_below="@+id/board_booking">
+
+
+        <RelativeLayout
+            android:id="@+id/com_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp">
+
+            <ImageButton
+                android:id="@+id/call_button_booking"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/ic_call" />
+
+            <ImageButton
+                android:id="@+id/chat_button_booking"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:background="@mipmap/ic_chat" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="149dp"
+        android:layout_below="@+id/buttons_layout"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/darker_gray" />
+>>>>>>> upstream/master
 
 </RelativeLayout>
