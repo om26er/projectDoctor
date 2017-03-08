@@ -9,4 +9,5 @@
 	android:textAlignment="center"
 	android:padding="10dp"
 	android:layout_margin="5dp"
-	android:text="00" />
+	android:text="00"
+	android:background="@drawable/reminder"/>

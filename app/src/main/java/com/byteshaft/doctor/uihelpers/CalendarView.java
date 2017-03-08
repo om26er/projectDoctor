@@ -1,10 +1,11 @@
-package uihelpers;
+package com.byteshaft.doctor.uihelpers;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by a7med on 28/06/2015.
  */
-public class CustomCalendarView extends LinearLayout
-{
+public class CalendarView extends LinearLayout {
 	// for logging
 	private static final String LOGTAG = "Calendar View";
 
@@ -51,23 +53,25 @@ public class CustomCalendarView extends LinearLayout
 	private ImageView btnPrev;
 	private ImageView btnNext;
 	private TextView txtDate;
-	private GridView horizontalListView;
+	private GridView grid;
+	private GridView weekGrid;
+
 
 	// month-season association (northern hemisphere, sorry australia :)
 	int[] monthSeason = new int[] {2, 2, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2};
 
-	public CustomCalendarView(Context context)
+	public CalendarView(Context context)
 	{
 		super(context);
 	}
 
-	public CustomCalendarView(Context context, AttributeSet attrs)
+	public CalendarView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		initControl(context, attrs);
 	}
 
-	public CustomCalendarView(Context context, AttributeSet attrs, int defStyleAttr)
+	public CalendarView(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context, attrs, defStyleAttr);
 		initControl(context, attrs);
@@ -90,12 +94,12 @@ public class CustomCalendarView extends LinearLayout
 
 	private void loadDateFormat(AttributeSet attrs)
 	{
-		TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.CustomCalendarView);
+		TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.CalendarView);
 
 		try
 		{
 			// try to load provided date format, and fallback to default otherwise
-			dateFormat = ta.getString(R.styleable.CustomCalendarView_dateFormat);
+			dateFormat = ta.getString(R.styleable.CalendarView_dateFormat);
 			if (dateFormat == null)
 				dateFormat = DATE_FORMAT;
 		}
@@ -111,7 +115,8 @@ public class CustomCalendarView extends LinearLayout
 		btnPrev = (ImageView)findViewById(R.id.calendar_prev_button);
 		btnNext = (ImageView)findViewById(R.id.calendar_next_button);
 		txtDate = (TextView)findViewById(R.id.calendar_date_display);
-		horizontalListView = (GridView) findViewById(R.id.calendar_grid);
+		grid = (GridView) findViewById(R.id.calendar_grid);
+		weekGrid = (GridView) findViewById(R.id.week_grid);
 	}
 
 	private void assignClickHandlers() {
@@ -138,7 +143,7 @@ public class CustomCalendarView extends LinearLayout
 		});
 
 		// long-pressing a day
-		horizontalListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+		grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
 		{
 
 			@Override
@@ -174,17 +179,11 @@ public class CustomCalendarView extends LinearLayout
 		}
 
 		// update hori
-		horizontalListView.setAdapter(new CalendarAdapter(getContext(), cells, events));
+		grid.setAdapter(new CalendarAdapter(getContext(), cells, events));
 
 		// update title
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		txtDate.setText(sdf.format(currentDate.getTime()));
-
-		// set header color according to current season
-		int month = currentDate.get(Calendar.MONTH);
-		int season = monthSeason[month];
-
-//		header.setBackgroundColor();
 	}
 
 
@@ -230,7 +229,7 @@ public class CustomCalendarView extends LinearLayout
 							eventDate.getYear() == year)
 					{
 						// mark this day for event
-//						view.setBackgroundResource(R.drawable.reminder);
+						view.setBackgroundResource(R.drawable.reminder);
 						break;
 					}
 				}
@@ -243,15 +242,16 @@ public class CustomCalendarView extends LinearLayout
 			if (month != today.getMonth() || year != today.getYear())
 			{
 				// if this day is outside current month, grey it out
-//				((TextView)view).setTextColor(getResources().getColor(R.color.greyed_out));
+				((TextView)view).setTextColor(getResources().getColor(R.color.greyed_out));
 			}
 			else if (day == today.getDate()) {
 				// if it is today, set it to blue/bold
 				((TextView)view).setTypeface(null, Typeface.BOLD);
-//				((TextView)view).setTextColor(getResources().getColor(R.color.today));
+				((TextView)view).setTextColor(getResources().getColor(R.color.today));
 			}
 			// set text
 			((TextView)view).setText(String.valueOf(date.getDate()));
+			Log.i(TAG, "Called");
 
 			return view;
 		}

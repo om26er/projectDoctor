@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
+import com.byteshaft.doctor.accountfragments.Login;
 import com.byteshaft.doctor.accountfragments.SignUp;
 import com.byteshaft.doctor.patients.DoctorBookingActivity;
 import com.byteshaft.doctor.utils.Helpers;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             loadFragment(new SignUp());
         } else if (id == R.id.nav_appointment) {
-            loadFragment(new DoctorsBasicInfo());
+            loadFragment(new Login());
         } else if (id == R.id.nav_favt_doc) {
 //            loadFragment(new FavouriteDoctors());
             startActivity(new Intent(getApplicationContext(), DoctorBookingActivity.class));

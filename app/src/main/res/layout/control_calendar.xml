@@ -15,14 +15,14 @@
 		android:paddingLeft="30dp"
 		android:paddingRight="30dp">
 
-		<!-- prev button android:src="@drawable/next_icon" -->
+		<!-- prev button -->
 		<ImageView
 			android:id="@+id/calendar_prev_button"
 			android:layout_width="30dp"
 			android:layout_height="30dp"
 			android:layout_centerVertical="true"
 			android:layout_alignParentLeft="true"
-			/>
+			android:src="@mipmap/ic_backward"/>
 
 		<!-- date title -->
 		<TextView
@@ -37,84 +37,37 @@
 			android:textColor="#222222"
 			android:text="current date"/>
 
-		<!-- next button android:src="@drawable/next_icon" -->
+		<!-- next button -->
 		<ImageView
 			android:id="@+id/calendar_next_button"
 			android:layout_width="30dp"
 			android:layout_height="30dp"
 			android:layout_centerVertical="true"
-			android:layout_alignParentRight="true" />
+			android:layout_alignParentRight="true"
+			android:src="@mipmap/ic_open_details"/>
 	</RelativeLayout>
 
 	<!-- days header -->
 	<LinearLayout
 		android:id="@+id/calendar_header"
 		android:layout_width="match_parent"
-		android:layout_height="40dp"
+		android:layout_height="wrap_content"
+		android:padding="5dp"
 		android:gravity="center_vertical"
 		android:orientation="horizontal">
 
-		<TextView
-			android:layout_width="0dp"
+		<GridView
+			android:id="@+id/week_grid"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			android:textColor="#222222"
-			android:text="SUN"/>
+			android:numColumns="7"/>
 
-		<TextView
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			android:textColor="#222222"
-			android:text="MON"/>
-
-		<TextView
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			android:textColor="#222222"
-			android:text="TUE"/>
-
-		<TextView
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			android:textColor="#222222"
-			android:text="WED"/>
-
-		<TextView
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			android:textColor="#222222"
-			android:text="THU"/>
-
-		<TextView
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			android:textColor="#222222"
-			android:text="FRI"/>
-
-		<TextView
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			android:textColor="#222222"
-			android:text="SAT"/>
 	</LinearLayout>
 
 	<!-- days view -->
 	<GridView
 		android:id="@+id/calendar_grid"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		android:numColumns="7"/>
 </LinearLayout>
