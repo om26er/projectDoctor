@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
+import com.byteshaft.doctor.doctors.Appointments;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.patients.DoctorBookingActivity;
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), DoctorBookingActivity.class));
         } else if (id == R.id.nav_patients) {
             loadFragment(new MyPatients());
+        } else if (id == R.id.nav_doc_appointment) {
+            loadFragment(new Appointments());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
