@@ -62,8 +62,7 @@ public class ResetPassword extends Fragment implements View.OnClickListener, Htt
         switch (view.getId()) {
             case R.id.button_reset:
                 if (validateEditText()) {
-                    changePassword(mEmailString, mOldPasswordString, mNewPasswordString
-                    );
+                    changePassword(mEmailString, mOldPasswordString, mNewPasswordString);
                 }
                 break;
         }

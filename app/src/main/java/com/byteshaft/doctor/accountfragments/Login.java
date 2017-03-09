@@ -71,8 +71,8 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
         System.out.println(mEmailString);
         System.out.println(mPasswordString);
 
-        if (mEmailString.trim().isEmpty()) {
-            mEmail.setError("must enter user name");
+        if (mEmailString.trim().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(mEmailString).matches()) {
+            mEmail.setError("please provide a valid email");
             valid = false;
         } else {
             mEmail.setError(null);
@@ -144,7 +144,6 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                     case HttpURLConnection.HTTP_FORBIDDEN:
                         Toast.makeText(getActivity(), "Please activate your account !", Toast.LENGTH_LONG).show();
                         MainActivity.getInstance().loadFragment(new AccountActivationCode());
-
                         break;
 
                     case HttpURLConnection.HTTP_OK:
