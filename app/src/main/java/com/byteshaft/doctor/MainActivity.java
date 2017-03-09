@@ -15,10 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.byteshaft.doctor.patients.DoctorsLocator;
-import com.byteshaft.doctor.accountfragments.SignUp;
-import com.byteshaft.doctor.patients.DoctorBookingActivity;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
+import com.byteshaft.doctor.doctors.DoctorsList;
+import com.byteshaft.doctor.doctors.MyPatients;
+import com.byteshaft.doctor.patients.DoctorBookingActivity;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         sInstance = this;
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, DoctorsLocator.class));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerView;
-        if (Helpers.isDoctor()) {
+        if (!Helpers.isDoctor()) {
             headerView = getLayoutInflater().inflate(R.layout.nav_header_doctor, navigationView, false);
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.doctor_menus);
@@ -92,14 +91,15 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_search) {
-            // Handle the camera action
-            loadFragment(new SignUp());
+            loadFragment(new DoctorsList());
         } else if (id == R.id.nav_appointment) {
             loadFragment(new UserBasicInfoStepOne());
         } else if (id == R.id.nav_favt_doc) {
-            loadFragment(new UserBasicInfoStepOne());
+//            loadFragment(new UserBasicInfoStepOne());
 //            loadFragment(new FavouriteDoctors());
             startActivity(new Intent(getApplicationContext(), DoctorBookingActivity.class));
+        } else if (id == R.id.nav_patients) {
+            loadFragment(new MyPatients());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

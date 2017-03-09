@@ -71,7 +71,7 @@
             android:padding="2dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:text="On-line"
+            android:text="off-line"
             app:theme="@style/switchTheme"/>
 
         <TextView
