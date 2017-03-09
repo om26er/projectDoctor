@@ -3,6 +3,8 @@
     package="com.byteshaft.doctor">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".utils.AppGlobals"
@@ -26,13 +28,15 @@
             android:name=".introscreen.IntroScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".doctors.DoctorDetailsActivity"/>
-        <activity android:name=".patients.DoctorsAppointment"/>
+        <activity android:name=".doctors.DoctorDetailsActivity" />
+        <activity android:name=".patients.DoctorsAppointment" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <activity android:name=".patients.DoctorsLocator"/>
-        <activity android:name=".patients.DoctorsRoute"/>
+
+        <activity android:name=".patients.DoctorsLocator" />
+        <activity android:name=".patients.DoctorsRoute" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -40,7 +44,7 @@
 
         <activity android:name=".patients.PatientsRecentHistory" />
         <activity android:name=".patients.PatientDetails" />
-        <activity android:name=".patients.DoctorBookingActivity"></activity>
+        <activity android:name=".patients.DoctorBookingActivity"/>
     </application>
 
 </manifest>

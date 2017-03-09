@@ -6,14 +6,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 
-import com.byteshaft.doctor.R;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class AppGlobals extends Application {
-
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     private static Context sContext;
@@ -33,7 +40,7 @@ public class AppGlobals extends Application {
     public static Typeface robotoThin;
     public static Typeface robotoThinItalic;
 
-    public static final String BASE_URL = "http://46.101.34.116/api/";
+    public static final String BASE_URL = "https://46.101.34.116/api/";
     public static final String KEY_USER_NAME = "user_name";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_AACOUNT_TYPE = "account_type";
@@ -45,6 +52,7 @@ public class AppGlobals extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        disableSSLCertificateChecking();
         sContext = getApplicationContext();
         typefaceBold = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/bold.ttf");
         typefaceNormal = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/normal.ttf");
@@ -60,6 +68,42 @@ public class AppGlobals extends Application {
         robotoRegular = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Regular.ttf");
         robotoThin = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_Thin.ttf");
         robotoThinItalic = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/Roboto_ThinItalic.ttf");
+
+    }
+
+    private static void disableSSLCertificateChecking() {
+        final TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] arg0, String arg1)
+                            throws CertificateException {
+                    }
+
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] arg0, String arg1)
+                            throws CertificateException {
+                    }
+                }
+        };
+
+        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String s, SSLSession sslSession) {
+                return s.equals("46.101.34.116");
+            }
+        });
+
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (KeyManagementException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     public static SharedPreferences getPreferenceManager() {
