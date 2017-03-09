@@ -32,9 +32,10 @@ public class DoctorsLocator extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
-    private LatLng latLng;
+    public static LatLng addressString;
     private Marker currLocationMarker;
     private int zoomCounter = 0;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class DoctorsLocator extends AppCompatActivity implements OnMapReadyCallb
         public void onMyLocationChange(Location location) {
             if (location != null) {
                 Log.i("TAG", "location " + location.getLatitude());
+                addressString = new LatLng(location.getLatitude(), location.getLongitude());
+                Log.i("TAG", "current location " + addressString);
                 if (zoomCounter < 1) {
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(new LatLng(location.getLatitude(), location.getLongitude()))

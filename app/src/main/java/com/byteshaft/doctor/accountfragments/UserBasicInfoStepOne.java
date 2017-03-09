@@ -1,13 +1,19 @@
 package com.byteshaft.doctor.accountfragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -24,7 +30,12 @@ import android.widget.TextView;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.patients.DoctorsLocator;
+import com.byteshaft.doctor.utils.AppGlobals;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationListener;
 import com.byteshaft.doctor.utils.Helpers;
 
 import java.io.ByteArrayOutputStream;
@@ -34,15 +45,14 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import static android.app.Activity.RESULT_OK;
 
 public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.OnDateSetListener,
-        View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+        View.OnClickListener, RadioGroup.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
 
     private View mBaseView;
-
-
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;
     private File destination;
@@ -74,6 +84,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private String mMaleRadioButtonSting;
     private String mFemaleRadioButtonSting;
     private String mAddressString;
+
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
 
 
     @Override
@@ -130,7 +143,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 MainActivity.getInstance().loadFragment(new Login());
                 break;
             case R.id.pick_for_current_location:
-                startActivity(new Intent(getActivity(), DoctorsLocator.class));
+                buildGoogleApiClient();
                 break;
             case R.id.birth_date_edit_text:
                 datePickerDialog.show();
@@ -192,6 +205,67 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         return valid;
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        startLocationUpdates();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        System.out.println("Lat: " + location.getLatitude() + "Long: " + location.getLongitude());
+    }
+
+    public void buildGoogleApiClient() {
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(AppGlobals.getContext())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            mGoogleApiClient.connect();
+        }
+    }
+
+    public void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        createLocationRequest();
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
+    private void stopLocationUpdate() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        mGoogleApiClient.disconnect();
+    }
+
+        protected void createLocationRequest() {
+            long INTERVAL = 0;
+            long FASTEST_INTERVAL = 0;
+            mLocationRequest = new LocationRequest();
+            mLocationRequest.setInterval(INTERVAL);
+            mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        }
     // Dialog with option to capture image or choose from gallery
     private void selectImage() {
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
