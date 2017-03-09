@@ -40,7 +40,7 @@ public class Helpers {
     }
 
     public static void dismissProgressDialog() {
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
 

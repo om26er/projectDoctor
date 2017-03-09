@@ -24,6 +24,7 @@ import android.widget.CompoundButton;
 
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.doctors.DoctorsList;
+import com.byteshaft.doctor.patients.DoctorsLocator;
 import com.byteshaft.doctor.patients.FavouriteDoctors;
 import com.byteshaft.doctor.utils.Helpers;
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         sInstance = this;
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, DoctorsAppointment.class));
+        startActivity(new Intent(this, DoctorsLocator.class));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_appointment) {
             loadFragment(new Login());
         } else if (id == R.id.nav_favt_doc) {
-            loadFragment(new FavouriteDoctors());
+            loadFragment(new UserBasicInfoStepOne());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
