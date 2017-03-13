@@ -1,8 +1,6 @@
 package com.byteshaft.doctor.accountfragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +62,14 @@ public class SignUp extends Fragment implements View.OnClickListener,
         mSignUpButton = (Button) mBaseView.findViewById(R.id.sign_up_button);
         mLoginTextView = (TextView) mBaseView.findViewById(R.id.login_text_view);
         mDoctorsCheckBox = (CheckBox) mBaseView.findViewById(R.id.doctor_checkbox);
+
+        mUserName.setTypeface(AppGlobals.typefaceNormal);
+        mEmail.setTypeface(AppGlobals.typefaceNormal);
+        mPassword.setTypeface(AppGlobals.typefaceNormal);
+        mVerifyPassword.setTypeface(AppGlobals.typefaceNormal);
+        mSignUpButton.setTypeface(AppGlobals.typefaceNormal);
+        mLoginTextView.setTypeface(AppGlobals.typefaceNormal);
+        mDoctorsCheckBox.setTypeface(AppGlobals.typefaceNormal);
 
         mSignUpButton.setOnClickListener(this);
         mLoginTextView.setOnClickListener(this);

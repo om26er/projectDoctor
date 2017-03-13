@@ -1,6 +1,5 @@
 package com.byteshaft.doctor.accountfragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
@@ -22,9 +20,6 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 
-/**
- * Created by husnain on 2/20/17.
- */
 
 public class ResetPassword extends Fragment implements View.OnClickListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
 
@@ -49,6 +44,11 @@ public class ResetPassword extends Fragment implements View.OnClickListener, Htt
         mOldPassword = (EditText) mBaseView.findViewById(R.id.old_password_edit_text);
         mNewPassword = (EditText) mBaseView.findViewById(R.id.new_password_edit_text);
         mResetButton = (Button) mBaseView.findViewById(R.id.button_reset);
+
+        mEmail.setTypeface(AppGlobals.typefaceNormal);
+        mOldPassword.setTypeface(AppGlobals.typefaceNormal);
+        mNewPassword.setTypeface(AppGlobals.typefaceNormal);
+        mResetButton.setTypeface(AppGlobals.typefaceNormal);
 
         mEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
         mEmailString = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL);
@@ -132,7 +132,7 @@ public class ResetPassword extends Fragment implements View.OnClickListener, Htt
                         AppGlobals.alertDialog(getActivity(), "Resetting Failed!", "please check your internet connection");
                         break;
                     case HttpURLConnection.HTTP_BAD_REQUEST:
-                        AppGlobals.alertDialog(getActivity(), "Resetting Failed!" , "old Password is wrong");
+                        AppGlobals.alertDialog(getActivity(), "Resetting Failed!", "old Password is wrong");
                         break;
                     case HttpURLConnection.HTTP_OK:
                         System.out.println(request.getResponseText() + "working ");

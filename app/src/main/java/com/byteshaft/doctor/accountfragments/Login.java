@@ -1,6 +1,5 @@
 package com.byteshaft.doctor.accountfragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,10 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
-
-/**
- * Created by husnain on 2/20/17.
- */
 
 public class Login extends Fragment implements View.OnClickListener, HttpRequest.OnErrorListener,
         HttpRequest.OnReadyStateChangeListener {
@@ -53,6 +48,12 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
         mLoginButton = (Button) mBaseView.findViewById(R.id.button_login);
         mForgotPasswordTextView = (TextView) mBaseView.findViewById(R.id.forgot_password_text_view);
         mSignUpTextView = (TextView) mBaseView.findViewById(R.id.sign_up_text_view);
+        /// setting typeface
+        mEmail.setTypeface(AppGlobals.typefaceNormal);
+        mPassword.setTypeface(AppGlobals.typefaceNormal);
+        mLoginButton.setTypeface(AppGlobals.robotoRegular);
+        mForgotPasswordTextView.setTypeface(AppGlobals.robotoBoldItalic);
+        mSignUpTextView.setTypeface(AppGlobals.typefaceNormal);
 
         mLoginButton.setOnClickListener(this);
         mForgotPasswordTextView.setOnClickListener(this);
