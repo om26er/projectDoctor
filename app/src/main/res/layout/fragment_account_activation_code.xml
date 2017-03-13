@@ -69,9 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="25dp"
-            android:text="Do not have an account? Sign Up"
+            android:text="@string/signup_string"
             android:textSize="15sp" />
-
 
     </LinearLayout>
 </ScrollView>

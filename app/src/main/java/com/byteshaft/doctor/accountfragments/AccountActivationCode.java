@@ -22,9 +22,6 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 
-/**
- * Created by husnain on 2/20/17.
- */
 
 public class AccountActivationCode extends Fragment implements View.OnClickListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
 
@@ -51,6 +48,12 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
         mLoginButton = (Button) mBaseView.findViewById(R.id.button_login);
         mSignTextView = (TextView) mBaseView.findViewById(R.id.sign_up_text_view);
         mResendTextView = (TextView) mBaseView.findViewById(R.id.resend_text_view);
+
+        mEmail.setTypeface(AppGlobals.typefaceNormal);
+        mVerificationCode.setTypeface(AppGlobals.typefaceNormal);
+        mLoginButton.setTypeface(AppGlobals.typefaceNormal);
+        mSignTextView.setTypeface(AppGlobals.typefaceNormal);
+        mResendTextView.setTypeface(AppGlobals.typefaceBold);
 
         mLoginButton.setOnClickListener(this);
         mSignTextView.setOnClickListener(this);

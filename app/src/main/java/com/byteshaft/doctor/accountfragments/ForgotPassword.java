@@ -1,6 +1,5 @@
 package com.byteshaft.doctor.accountfragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
@@ -21,10 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
-
-/**
- * Created by husnain on 2/20/17.
- */
 
 public class ForgotPassword extends Fragment implements View.OnClickListener, HttpRequest.OnErrorListener,
         HttpRequest.OnReadyStateChangeListener {
@@ -44,6 +38,9 @@ public class ForgotPassword extends Fragment implements View.OnClickListener, Ht
         mEmail = (EditText) mBaseView.findViewById(R.id.email_edit_text);
         mRecoverButton = (Button) mBaseView.findViewById(R.id.button_recover);
         mRecoverButton.setOnClickListener(this);
+
+        mEmail.setTypeface(AppGlobals.typefaceNormal);
+        mRecoverButton.setTypeface(AppGlobals.typefaceNormal);
 
         mEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
         mEmailString = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL);

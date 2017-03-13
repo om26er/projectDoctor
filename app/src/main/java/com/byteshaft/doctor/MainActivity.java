@@ -15,9 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.doctors.Appointments;
-import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.patients.DoctorBookingActivity;
 import com.byteshaft.doctor.utils.Helpers;
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_search) {
-            loadFragment(new DoctorsList());
+            loadFragment(new DoctorsBasicInfo());
         } else if (id == R.id.nav_appointment) {
             loadFragment(new UserBasicInfoStepOne());
         } else if (id == R.id.nav_favt_doc) {
