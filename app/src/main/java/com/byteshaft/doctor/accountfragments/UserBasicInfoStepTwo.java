@@ -19,11 +19,8 @@ import com.byteshaft.doctor.utils.AppGlobals;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by husnain on 2/20/17.
- */
-
-public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItemSelectedListener,
+        View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private View mBaseView;
 
