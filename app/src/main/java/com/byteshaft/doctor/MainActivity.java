@@ -19,7 +19,7 @@ import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.doctors.Appointments;
 import com.byteshaft.doctor.doctors.MyPatients;
-import com.byteshaft.doctor.patients.DoctorBookingActivity;
+import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerView;
-        if (!Helpers.isDoctor()) {
+        if (Helpers.isDoctor()) {
             headerView = getLayoutInflater().inflate(R.layout.nav_header_doctor, navigationView, false);
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.doctor_menus);
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_favt_doc) {
 //            loadFragment(new UserBasicInfoStepOne());
 //            loadFragment(new FavouriteDoctors());
-            startActivity(new Intent(getApplicationContext(), DoctorBookingActivity.class));
+            startActivity(new Intent(getApplicationContext(), Services.class));
         } else if (id == R.id.nav_patients) {
             loadFragment(new MyPatients());
         } else if (id == R.id.nav_doc_appointment) {
