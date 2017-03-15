@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -52,6 +55,8 @@ public class AppGlobals extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FirebaseApp.initializeApp(getApplicationContext());
+        FirebaseMessaging.getInstance().subscribeToTopic("admin");
         disableSSLCertificateChecking();
         sContext = getApplicationContext();
         typefaceBold = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/bold.ttf");
