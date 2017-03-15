@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.byteshaft.doctor">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -43,6 +45,7 @@
         <activity android:name=".patients.PatientsRecentHistory" />
         <activity android:name=".patients.PatientDetails" />
         <activity android:name=".patients.DoctorBookingActivity"/>
+        <activity android:name=".doctors.Services" android:theme="@style/AppTheme.ServiceActionBar"/>
 
         <service
             android:name=".fcm.FireBaseService">
