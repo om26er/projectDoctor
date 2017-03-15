@@ -1,9 +1,12 @@
 package com.byteshaft.doctor.doctors;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -15,13 +18,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * Created by s9iper1 on 3/15/17.
@@ -30,11 +38,13 @@ import java.lang.reflect.Field;
 public class Services extends AppCompatActivity {
 
     private LinearLayout searchContainer;
+    private ListView serviceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.services_layout);
+        serviceList = (ListView) findViewById(R.id.service_list);
         searchContainer = new LinearLayout(this);
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         Toolbar.LayoutParams containerParams = new Toolbar.LayoutParams
@@ -105,6 +115,12 @@ public class Services extends AppCompatActivity {
         toolbar.addView(searchContainer);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ArrayList<String[]> data = new ArrayList<>();
+        data.add(new String[]{"service bla bla ", "120.00", "0"});
+        data.add(new String[]{"service abc ", "125.00", "1"});
+        data.add(new String[]{"service bcd ", "130.00", "0"});
+        data.add(new String[]{"service efg ", "150.00", "1"});
+        serviceList.setAdapter(new ServiceAdapter(getApplicationContext(), data));
     }
 
     @Override
@@ -127,5 +143,53 @@ public class Services extends AppCompatActivity {
                 return true;
             default:return false;
         }
+    }
+
+    class ServiceAdapter extends ArrayAdapter<ArrayList<String[]>> {
+
+        private ViewHolder viewHolder;
+        private ArrayList<String[]> data;
+
+        public ServiceAdapter(Context context, ArrayList<String[]> data) {
+            super(context, R.layout.delegate_service);
+            this.data = data;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.delegate_service, parent, false);
+                viewHolder = new ViewHolder();
+                viewHolder.serviceName = (TextView) convertView.findViewById(R.id.service_name);
+                viewHolder.servicePrice = (TextView) convertView.findViewById(R.id.service_price);
+                viewHolder.serviceStatus = (CheckBox) convertView.findViewById(R.id.service_checkbox);
+                viewHolder.removeService = (ImageButton) convertView.findViewById(R.id.remove_service);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            viewHolder.serviceName.setText(data.get(position)[0]);
+            viewHolder.servicePrice.setText(data.get(position)[1]);
+            if (Integer.valueOf(data.get(position)[2]) == 0) {
+                viewHolder.serviceStatus.setChecked(false);
+            } else {
+                viewHolder.serviceStatus.setChecked(true);
+            }
+            return convertView;
+        }
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+    }
+
+    class ViewHolder {
+        TextView serviceName;
+        TextView servicePrice;
+        CheckBox serviceStatus;
+        ImageButton removeService;
+
     }
 }
