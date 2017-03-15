@@ -11,15 +11,15 @@ import com.byteshaft.doctor.R;
 
 public class PatientDetails extends AppCompatActivity {
 
-    TextView patientName;
-    TextView patientAge;
-    ImageButton callButton;
-    ImageButton chatButton;
-    Button appointmentButton;
+    private TextView patientName;
+    private TextView patientAge;
+    private ImageButton callButton;
+    private ImageButton chatButton;
+    private Button appointmentButton;
 
-    EditText docId;
-    EditText birthDate;
-    EditText patientAddress;
+    private EditText docId;
+    private EditText birthDate;
+    private EditText patientAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
