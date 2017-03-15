@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "245879769579",
+    "firebase_url": "https://projectdoctor-159511.firebaseio.com",
+    "project_id": "projectdoctor-159511",
+    "storage_bucket": "projectdoctor-159511.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245879769579:android:9c9099e0f164048e",
+        "android_client_info": {
+          "package_name": "com.byteshaft.doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245879769579-648k2l06om8n140ke2jp7sp913o2ocsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR8ls_Fp5VCw6sRCQmUHtYNz4Pq94G2S4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
