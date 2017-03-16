@@ -2,7 +2,9 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -39,18 +41,15 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     private CheckBox mNotificationCheckBox;
     private CheckBox mNewsCheckBox;
     private CheckBox mTermsConditionCheckBox;
-
     private String mPhoneOneEditTextString;
     private String mPhoneTwoEditTextString;
     private String mConsultationTimeEditTextString;
     private String mCollegeIdEditTextString;
-
     private String mStatesSpinnerValueString;
     private String mCitiesSpinnerValueString;
     private String mSpecialitySpinnerValueString;
     private String mAffiliatedClinicsSpinnerValueString;
     private String mSubscriptionSpinnerValueString;
-
     private String mNotificationCheckBoxString;
     private String mNewsCheckBoxString;
     private String mTermsConditionCheckBoxString;
@@ -58,7 +57,9 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_doctor_basic_info, container, false);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.sign_up));
+        setHasOptionsMenu(true);
         mSaveButton = (Button) mBaseView.findViewById(R.id.save_button);
         mStateSpinner = (Spinner) mBaseView.findViewById(R.id.states_spinner);
         mCitySpinner = (Spinner) mBaseView.findViewById(R.id.cities_spinner);
@@ -149,6 +150,16 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
 
         mSaveButton.setOnClickListener(this);
         return mBaseView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                return true;
+            default:return false;
+        }
     }
 
     @Override

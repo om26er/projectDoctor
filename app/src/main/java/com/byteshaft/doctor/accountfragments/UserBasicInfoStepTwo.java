@@ -2,7 +2,9 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,7 +24,6 @@ import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
 import com.byteshaft.requests.HttpRequest;
 
-
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -36,44 +37,36 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         View.OnClickListener, CompoundButton.OnCheckedChangeListener, HttpRequest.OnReadyStateChangeListener,
         HttpRequest.OnFileUploadProgressListener {
     private View mBaseView;
-
     private Spinner mStateSpinner;
     private Spinner mCitySpinner;
     private Spinner mInsuranceCarrierSpinner;
     private Spinner mAffiliatedClinicsSpinner;
-
     private TextView mStateSpinnerTextView;
-
     private EditText mPhoneOneEditText;
     private EditText mPhoneTwoEditText;
     private EditText mEmergencyContactEditText;
-
     private CheckBox mNotificationCheckBox;
     private CheckBox mNewsCheckBox;
     private CheckBox mTermsConditionCheckBox;
-
     private String mPhoneOneEditTextString;
     private String mPhoneTwoEditTextString;
     private String mEmergencyContactString;
-
-
     private String mStatesSpinnerValueString;
     private String mCitiesSpinnerValueString;
     private String mAffiliatedClinicsSpinnerValueString;
     private String mInsuranceCarrierSpinnerValueString;
-
     private String mNotificationCheckBoxString;
     private String mNewsCheckBoxString;
     private String mTermsConditionCheckBoxString;
-
     private Button mSaveButton;
-
     private HttpRequest mRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_user_basic_info_step_two, container, false);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.sign_up));
+        setHasOptionsMenu(true);
         mStateSpinner = (Spinner) mBaseView.findViewById(R.id.states_spinner);
         mCitySpinner = (Spinner) mBaseView.findViewById(R.id.cities_spinner);
         mInsuranceCarrierSpinner = (Spinner) mBaseView.findViewById(R.id.insurance_spinner);
@@ -153,6 +146,16 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mSaveButton.setOnClickListener(this);
 
         return mBaseView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                return true;
+            default:return false;
+        }
     }
 
     @Override

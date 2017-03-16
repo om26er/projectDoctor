@@ -2,7 +2,9 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,22 +26,21 @@ import java.net.HttpURLConnection;
 public class ResetPassword extends Fragment implements View.OnClickListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
 
     private View mBaseView;
-
     private EditText mEmail;
     private EditText mOldPassword;
     private EditText mNewPassword;
-
     private Button mResetButton;
-
     private String mEmailString;
     private String mOldPasswordString;
     private String mNewPasswordString;
-
     private HttpRequest request;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_reset_password, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.reset_password));
+        setHasOptionsMenu(true);
         mEmail = (EditText) mBaseView.findViewById(R.id.email_edit_text);
         mOldPassword = (EditText) mBaseView.findViewById(R.id.old_password_edit_text);
         mNewPassword = (EditText) mBaseView.findViewById(R.id.new_password_edit_text);
@@ -56,6 +57,17 @@ public class ResetPassword extends Fragment implements View.OnClickListener, Htt
         mResetButton.setOnClickListener(this);
         return mBaseView;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                return true;
+            default:return false;
+        }
+    }
+
 
     @Override
     public void onClick(View view) {

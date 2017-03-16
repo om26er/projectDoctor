@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.introscreen.IntroScreen;
@@ -15,7 +16,6 @@ import com.byteshaft.doctor.introscreen.IntroScreen;
 public class AccountManagerActivity extends AppCompatActivity {
 
     private static AccountManagerActivity sInstance;
-
     public static AccountManagerActivity getInstance() {
         return sInstance;
     }
@@ -24,14 +24,30 @@ public class AccountManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_manager);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         IntroScreen.getInstance().finish();
         sInstance = this;
         loadFragment(new Login());
     }
 
     public void loadFragment(Fragment fragment) {
-        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        tx.replace(R.id.container, fragment);
-        tx.commit();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(getClass().getSimpleName());
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            Log.i("TAG", getSupportFragmentManager().getBackStackEntryAt(0).getName());
+        } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            this.finish();
+        }
+//        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+//            finish();
+//        }
     }
 }
