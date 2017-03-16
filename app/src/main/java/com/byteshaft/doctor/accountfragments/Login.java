@@ -29,15 +29,11 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
     private View mBaseView;
     private EditText mEmail;
     private EditText mPassword;
-
     private Button mLoginButton;
-
     private TextView mForgotPasswordTextView;
     private TextView mSignUpTextView;
-
     private String mPasswordString;
     private String mEmailString;
-
     private HttpRequest request;
 
     @Override
