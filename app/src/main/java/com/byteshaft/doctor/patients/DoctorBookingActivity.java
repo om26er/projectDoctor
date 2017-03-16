@@ -1,8 +1,16 @@
 package com.byteshaft.doctor.patients;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextClock;
@@ -10,6 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.doctor.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,14 +40,15 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
     private ImageButton mCallButton;
     private ImageButton mChatButton;
     private ImageButton mFavButton;
+    private GridView timeTableGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_booking);
+        timeTableGrid = (GridView) findViewById(R.id.time_table);
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());
-
         com.byteshaft.doctor.uihelpers.CalendarView cv = ((com.byteshaft.doctor.uihelpers.CalendarView)
                 findViewById(R.id.calendar_view));
         cv.updateCalendar(events);
@@ -43,8 +56,8 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
         // assign event handler
         cv.setEventHandler(new com.byteshaft.doctor.uihelpers.CalendarView.EventHandler() {
             @Override
-            public void onDayLongPress(Date date)
-            {
+            public void onDayPress(Date date) {
+                Log.i("TAG", "click");
                 // show returned day
                 DateFormat df = SimpleDateFormat.getDateInstance();
                 Toast.makeText(DoctorBookingActivity.this, df.format(date), Toast.LENGTH_SHORT).show();
@@ -61,6 +74,22 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
 //        mCallButton.setOnClickListener(this);
 //        mChatButton.setOnClickListener(this);
 //        mFavButton.setOnClickListener(this);
+        JSONArray jsonArray = new JSONArray();
+        try {
+
+            JSONObject time = new JSONObject();
+            time.put("time", "9:30");
+            time.put("state", 0);
+            jsonArray.put(time);
+            JSONObject timeTwo = new JSONObject();
+            timeTwo.put("time", "9:30");
+            timeTwo.put("state", 1);
+            jsonArray.put(timeTwo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.i("TAG", "array " + jsonArray);
+        timeTableGrid.setAdapter(new TimeTableAdapter(getApplicationContext(), jsonArray));
     }
 
     @Override
@@ -76,5 +105,52 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
 //                mFavButton.setBackgroundResource(R.mipmap.ic_heart_fill);
 //                break;
 //        }
+    }
+
+    private class TimeTableAdapter extends ArrayAdapter<JSONArray> {
+
+        private JSONArray timeTable;
+        private ViewHolder viewHolder;
+
+        public TimeTableAdapter(@NonNull Context context,
+                                JSONArray timeTable) {
+            super(context, R.layout.delegate_time_table);
+            this.timeTable = timeTable;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.delegate_time_table, parent, false);
+                viewHolder = new ViewHolder();
+                viewHolder.time = (AppCompatButton) convertView.findViewById(R.id.time);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            try {
+            JSONObject jsonObject = timeTable.getJSONObject(position);
+                viewHolder.time.setText(jsonObject.getString("time"));
+                if (jsonObject.getInt("state") == 0) {
+                    viewHolder.time.setPressed(false);
+                } else {
+                    viewHolder.time.setPressed(true);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return convertView;
+        }
+
+        @Override
+        public int getCount() {
+            return timeTable.length();
+        }
+    }
+
+    private class ViewHolder {
+        AppCompatButton time;
     }
 }

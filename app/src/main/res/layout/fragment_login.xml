@@ -50,7 +50,6 @@
             android:textSize="15sp"
             android:layout_gravity="right"
             android:text="Forgot Password?"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -67,7 +66,7 @@
             android:id="@+id/sign_up_text_view"
             android:textSize="15sp"
             android:layout_gravity="center_horizontal"
-            android:text="Do not have an account? Sign Up"
+            android:text="@string/sign_up_string"
             android:padding="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

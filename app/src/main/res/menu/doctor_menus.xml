@@ -7,7 +7,7 @@
             android:icon="@mipmap/ic_pulse"
             android:title="Dashboard" />
         <item
-            android:id="@+id/nav_appointment"
+            android:id="@+id/nav_doc_appointment"
             android:icon="@mipmap/sidebar_appoint"
             android:title="Appointments" />
         <item

@@ -18,8 +18,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
+import com.byteshaft.doctor.utils.AppGlobals;
 
 public class IntroScreen extends AppCompatActivity {
 
@@ -29,6 +30,11 @@ public class IntroScreen extends AppCompatActivity {
     private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
+    private static IntroScreen sInstance;
+
+    public static IntroScreen getInstance() {
+        return sInstance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,11 @@ public class IntroScreen extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
+        if (AppGlobals.isFirstTimeLaunch()) {
+//            if ()
+        }
         setContentView(R.layout.activity_intro_screen);
+        sInstance = this;
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
@@ -59,6 +69,7 @@ public class IntroScreen extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppGlobals.firstTimeLaunch(true);
                 launchHomeScreen();
             }
         });
@@ -73,6 +84,7 @@ public class IntroScreen extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
+                    AppGlobals.firstTimeLaunch(true);
                     launchHomeScreen();
                 }
             }
@@ -103,9 +115,7 @@ public class IntroScreen extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-//        prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(IntroScreen.this, MainActivity.class));
-        finish();
+        startActivity(new Intent(getApplicationContext(), AccountManagerActivity.class));
     }
 
     //  viewpager change listener

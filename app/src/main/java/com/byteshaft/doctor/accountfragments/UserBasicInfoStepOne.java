@@ -120,6 +120,15 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mNextButton = (Button) mBaseView.findViewById(R.id.next_button);
         mRadioGroup = (RadioGroup) mBaseView.findViewById(R.id.radio_group);
 
+        mDocID.setTypeface(AppGlobals.typefaceNormal);
+        mFirstName.setTypeface(AppGlobals.typefaceNormal);
+        mLastName.setTypeface(AppGlobals.typefaceNormal);
+        mDateOfBirth.setTypeface(AppGlobals.typefaceNormal);
+        mAddress.setTypeface(AppGlobals.typefaceNormal);
+
+        mLoginTextView.setTypeface(AppGlobals.robotoItalic);
+        AddressTextView.setTypeface(AppGlobals.typefaceNormal);
+
         mNextButton.setOnClickListener(this);
         mLoginTextView.setOnClickListener(this);
         AddressTextView.setOnClickListener(this);

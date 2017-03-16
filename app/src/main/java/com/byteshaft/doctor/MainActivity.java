@@ -16,10 +16,12 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
-import com.byteshaft.doctor.patients.DoctorsLocator;
-import com.byteshaft.doctor.accountfragments.SignUp;
-import com.byteshaft.doctor.patients.DoctorBookingActivity;
+import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
+import com.byteshaft.doctor.doctors.Appointments;
+import com.byteshaft.doctor.doctors.DoctorsList;
+import com.byteshaft.doctor.doctors.MyPatients;
+import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -92,13 +94,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_search) {
-            // Handle the camera action
-            loadFragment(new SignUp());
+            loadFragment(new DoctorsBasicInfo());
+        } else if (id == R.id.nav_search_doctor) {
+            loadFragment(new DoctorsList());
         } else if (id == R.id.nav_appointment) {
             loadFragment(new UserBasicInfoStepOne());
         } else if (id == R.id.nav_favt_doc) {
             loadFragment(new UserBasicInfoStepTwo());
-//            loadFragment(new FavouriteDoctors());
+
+            startActivity(new Intent(getApplicationContext(), Services.class));
+        } else if (id == R.id.nav_patients) {
+            loadFragment(new MyPatients());
+        } else if (id == R.id.nav_doc_appointment) {
+            loadFragment(new Appointments());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

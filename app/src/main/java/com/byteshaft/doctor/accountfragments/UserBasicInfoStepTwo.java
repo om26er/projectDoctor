@@ -2,7 +2,6 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,6 @@ import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
 import com.byteshaft.requests.HttpRequest;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.net.HttpURLConnection;
@@ -36,8 +33,8 @@ import java.util.List;
  */
 
 public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItemSelectedListener,
-        View.OnClickListener, CompoundButton.OnCheckedChangeListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnFileUploadProgressListener {
-
+        View.OnClickListener, CompoundButton.OnCheckedChangeListener, HttpRequest.OnReadyStateChangeListener,
+        HttpRequest.OnFileUploadProgressListener {
     private View mBaseView;
 
     private Spinner mStateSpinner;
@@ -93,13 +90,20 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
         mSaveButton = (Button) mBaseView.findViewById(R.id.save_button);
 
-        List<String> StateList = new ArrayList<String>();
-        StateList.add("state1");
-        StateList.add("state2");
-        StateList.add("state3");
-        StateList.add("state4");
-        StateList.add("state5");
-        ArrayAdapter<String> StateListAdapter = new ArrayAdapter<String>(getActivity(),
+        mPhoneOneEditText.setTypeface(AppGlobals.typefaceNormal);
+        mPhoneTwoEditText.setTypeface(AppGlobals.typefaceNormal);
+        mEmergencyContactEditText.setTypeface(AppGlobals.typefaceNormal);
+        mNotificationCheckBox.setTypeface(AppGlobals.typefaceNormal);
+        mNewsCheckBox.setTypeface(AppGlobals.typefaceNormal);
+        mTermsConditionCheckBox.setTypeface(AppGlobals.typefaceNormal);
+
+        List<String> StateList = new ArrayList<>();
+        StateList.add("State1");
+        StateList.add("State2");
+        StateList.add("State3");
+        StateList.add("State4");
+        StateList.add("State5");
+        ArrayAdapter<String> StateListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, StateList);
         StateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mStateSpinner.setAdapter(StateListAdapter);
@@ -110,28 +114,29 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         citiesList.add("city3");
         citiesList.add("city4");
         citiesList.add("city5");
-        ArrayAdapter<String> CitiesListAdapter = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter<String> CitiesListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, citiesList);
         CitiesListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCitySpinner.setAdapter(CitiesListAdapter);
 
-        List<String> InsuranceCarrierList = new ArrayList<String>();
-        InsuranceCarrierList.add("insurance carrier-1");
-        InsuranceCarrierList.add("insurance carrier-2");
-        InsuranceCarrierList.add("insurance carrier-3");
-        InsuranceCarrierList.add("insurance carrier-4");
-        ArrayAdapter<String> InsuranceCarrierListAdapter = new ArrayAdapter<String>(getActivity(),
+        List<String> InsuranceCarrierList = new ArrayList<>();
+        InsuranceCarrierList.add("Insurance Carrier-1");
+        InsuranceCarrierList.add("Insurance Carrier-2");
+        InsuranceCarrierList.add("Insurance Carrier-3");
+        InsuranceCarrierList.add("Insurance Carrier-4");
+        ArrayAdapter<String> InsuranceCarrierListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, InsuranceCarrierList);
         InsuranceCarrierListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mInsuranceCarrierSpinner.setAdapter(InsuranceCarrierListAdapter);
 
-        List<String> clinicList = new ArrayList<String>();
-        clinicList.add("doctor dray clinic");
-        clinicList.add("cantt clinic");
-        clinicList.add("city hospital");
-        clinicList.add("medicare");
-        clinicList.add("patient care");
-        ArrayAdapter<String> clinicListAdapter = new ArrayAdapter<String>(getActivity(),
+
+        List<String> clinicList = new ArrayList<>();
+        clinicList.add("Doctor dray clinic");
+        clinicList.add("Cantt clinic");
+        clinicList.add("City hospital");
+        clinicList.add("Medicare");
+        clinicList.add("Patient care");
+        ArrayAdapter<String> clinicListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, clinicList);
         clinicListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAffiliatedClinicsSpinner.setAdapter(clinicListAdapter);
@@ -167,7 +172,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 break;
             case R.id.clinic_spinner:
                 mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(" worekiuhfjvbkjkds"+ mAffiliatedClinicsSpinnerValueString);
+                System.out.println(" worekiuhfjvbkjkds" + mAffiliatedClinicsSpinnerValueString);
                 break;
         }
 

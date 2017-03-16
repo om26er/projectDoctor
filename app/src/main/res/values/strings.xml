@@ -4,8 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-       AIzaSyDZg2uOsPeHemP8fsl3MROGC8waG9dVsTI
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+       AIzaSyDR8ls_Fp5VCw6sRCQmUHtYNz4Pq94G2S4
     </string>
 
     <string name="state_prompt">State</string>
@@ -14,7 +14,9 @@
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="start">Start</string>
-    <string name="review">The best doctor In this area, The best doctor In this area. Ok kr k doctor hai ye!</string>
+    <string name="review">The best doctor In this area, The best doctor In this area. OK kr k doctor hai ye!</string>
+    <string name="signup_string">Do not have an account? <i>Sign Up</i> </string>
+    <string name="sign_up_string">Do not have an account? <i>Sign Up</i></string>
 
 
     <!-- Screens background color-->
