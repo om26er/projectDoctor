@@ -2,10 +2,13 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +21,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,25 +35,30 @@ import android.widget.TextView;
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.requests.HttpRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationListener;
 import com.byteshaft.doctor.utils.Helpers;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.app.Activity.RESULT_OK;
 
 public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.OnDateSetListener,
         View.OnClickListener, RadioGroup.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.OnConnectionFailedListener, LocationListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnFileUploadProgressListener {
 
 
     private View mBaseView;
@@ -67,9 +76,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private EditText mAddress;
 
     private Button mNextButton;
-    private RadioGroup mMaleFemale;
-    private RadioButton mMale;
-    private RadioButton mFemale;
+    private RadioGroup mRadioGroup;
+    private RadioButton genderButton;
 
     private TextView mLoginTextView;
     private TextView AddressTextView;
@@ -80,13 +88,19 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private String mFirstNameString;
     private String mLastNameString;
     private String mDateOfBirthString;
-
-    private String mMaleRadioButtonSting;
-    private String mFemaleRadioButtonSting;
+    private String mGenderButtonSting;
     private String mAddressString;
+    private String mLocationString;
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+
+    private HttpRequest mRequest;
+
+    private String city = "";
+    private String address = "";
+    private String zipCode = "";
+    private String houseNumber = "";
 
 
     @Override
@@ -104,15 +118,13 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         AddressTextView = (TextView) mBaseView.findViewById(R.id.pick_for_current_location);
 
         mNextButton = (Button) mBaseView.findViewById(R.id.next_button);
-        mMaleFemale = (RadioGroup) mBaseView.findViewById(R.id.radio_group);
-        mMale = (RadioButton) mBaseView.findViewById(R.id.radio_button_male);
-        mFemale = (RadioButton) mBaseView.findViewById(R.id.radio_button_female);
+        mRadioGroup = (RadioGroup) mBaseView.findViewById(R.id.radio_group);
 
         mNextButton.setOnClickListener(this);
         mLoginTextView.setOnClickListener(this);
         AddressTextView.setOnClickListener(this);
         mDateOfBirth.setOnClickListener(this);
-        mMaleFemale.setOnCheckedChangeListener(this);
+        mRadioGroup.setOnCheckedChangeListener(this);
         mProfilePicture.setOnClickListener(this);
 
         final Calendar calendar = Calendar.getInstance();
@@ -126,7 +138,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        mDateOfBirth.setText(i2 + "/" + i1 + "/" + i);
+        mDateOfBirth.setText(i2 + "/" + (i1 + 1) + "/" + i);
 
     }
 
@@ -137,7 +149,22 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 selectImage();
                 break;
             case R.id.next_button:
-                mAddressString = mAddress.getText().toString();
+                if (validateEditText()) {
+                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, mDocIDString);
+                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FIRST_NAME, mFirstNameString);
+                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LAST_NAME, mLastNameString);
+                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, mDateOfBirthString);
+                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, mGenderButtonSting);
+                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, mAddressString);
+                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
+                    if (AppGlobals.sDocotrsboolean) {
+                        MainActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                    } else {
+                        MainActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                    }
+
+                }
+
                 break;
             case R.id.login_text_view:
                 MainActivity.getInstance().loadFragment(new Login());
@@ -154,20 +181,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-        switch (checkedId) {
-            case R.id.radio_button_male:
-                if (mMale.isChecked()) {
-                    mMaleRadioButtonSting = mMale.getText().toString();
-                    System.out.println(mMaleRadioButtonSting);
-                }
-                break;
-            case R.id.radio_button_female:
-                if (mFemale.isChecked()) {
-                    mFemaleRadioButtonSting = mFemale.getText().toString();
-                    System.out.println(mFemaleRadioButtonSting);
-                }
-                break;
-        }
+        genderButton = (RadioButton) mBaseView.findViewById(checkedId);
+        mGenderButtonSting = genderButton.getText().toString();
+
     }
 
     private boolean validateEditText() {
@@ -176,6 +192,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mFirstNameString = mFirstName.getText().toString();
         mLastNameString = mLastName.getText().toString();
         mDateOfBirthString = mDateOfBirth.getText().toString();
+        mAddressString = mAddress.getText().toString();
 
         if (mDocIDString.trim().isEmpty()) {
             mDocID.setError("please provide DocID");
@@ -197,10 +214,16 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         }
 
         if (mDateOfBirthString.trim().isEmpty()) {
-            mDateOfBirth.setError("please provide firstName");
+            mDateOfBirth.setError("please provide please provide date of birth");
             valid = false;
         } else {
             mDateOfBirth.setError(null);
+        }
+        if (mAddressString.trim().isEmpty()) {
+            mAddress.setError("please provide your address");
+            valid = false;
+        } else {
+            mAddress.setError(null);
         }
         return valid;
     }
@@ -222,7 +245,37 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
     @Override
     public void onLocationChanged(Location location) {
+        mLocationString = location.getLatitude() + "," + location.getLongitude();
         System.out.println("Lat: " + location.getLatitude() + "Long: " + location.getLongitude());
+        getAddress(location.getLatitude(), location.getLongitude());
+//        getLocationFromAddress(AppGlobals.getContext(), "314 E 4th St,Seiling, OK 73663");
+//        System.out.println("Latlong from address" + getLocationFromAddress(AppGlobals.getContext(), "314 E 4th St,Seiling, OK 73663"));
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
     }
 
     public void buildGoogleApiClient() {
@@ -258,14 +311,16 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mGoogleApiClient.disconnect();
     }
 
-        protected void createLocationRequest() {
-            long INTERVAL = 0;
-            long FASTEST_INTERVAL = 0;
-            mLocationRequest = new LocationRequest();
-            mLocationRequest.setInterval(INTERVAL);
-            mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        }
+
+    protected void createLocationRequest() {
+        long INTERVAL = 0;
+        long FASTEST_INTERVAL = 0;
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
     // Dialog with option to capture image or choose from gallery
     private void selectImage() {
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
@@ -308,12 +363,12 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 destination = new File(Environment.getExternalStorageDirectory(),
                         System.currentTimeMillis() + ".jpg");
                 imageUrl = destination.getAbsolutePath();
-                FileOutputStream fo;
+                FileOutputStream fileOutputStream;
                 try {
                     destination.createNewFile();
-                    fo = new FileOutputStream(destination);
-                    fo.write(bytes.toByteArray());
-                    fo.close();
+                    fileOutputStream = new FileOutputStream(destination);
+                    fileOutputStream.write(bytes.toByteArray());
+                    fileOutputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -334,5 +389,31 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 imageUrl = String.valueOf(selectedImagePath);
             }
         }
+    }
+
+
+    @Override
+    public void onReadyStateChange(HttpRequest request, int readyState) {
+
+    }
+
+    @Override
+    public void onFileUploadProgress(HttpRequest request, File file, long loaded, long total) {
+
+    }
+
+    private void getAddress(double latitude, double longitude) {
+        StringBuilder result = new StringBuilder();
+        try {
+            Geocoder geocoder = new Geocoder(AppGlobals.getContext(), Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                result.append(address.getLocality()).append(address.getCountryName());
+            }
+        } catch (IOException e) {
+            Log.e("tag", e.getMessage());
+        }
+        mAddress.setText(result.toString());
     }
 }

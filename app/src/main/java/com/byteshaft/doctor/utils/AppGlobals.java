@@ -42,12 +42,25 @@ public class AppGlobals extends Application {
 
     public static final String BASE_URL = "https://46.101.34.116/api/";
     public static final String KEY_USER_NAME = "user_name";
+    public static final String KEY_FIRST_NAME = "first_name";
+    public static final String KEY_LAST_NAME = "last_name";
+    public static final String KEY_DOC_ID = "identity_document";
+    public static final String KEY_DATE_OF_BIRTH = "dob";
+    public static final String KEY_GENDER = "gender";
+    public static final String KEY_ADDRESS = "address";
+    public static final String KEY_LOCATION = "location";
+    public static final String KEY_IMAGE_URL = "photo";
+
     public static final String KEY_EMAIL = "email";
     public static final String KEY_AACOUNT_TYPE = "account_type";
     public static final String KEY_USER_ID = "id";
     public static final String KEY_PHONE_NUMBER = "mobile_number";
     public static final String KEY_TOKEN = "token";
     public static final String USER_ACTIVATION_KEY = "activation_key";
+
+    public static boolean sDocotrsboolean = false;
+
+
 
     @Override
     public void onCreate() {

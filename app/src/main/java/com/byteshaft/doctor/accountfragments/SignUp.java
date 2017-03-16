@@ -35,7 +35,6 @@ public class SignUp extends Fragment implements View.OnClickListener,
 
     private View mBaseView;
 
-    private EditText mUserName;
     private EditText mEmail;
     private EditText mPassword;
     private EditText mVerifyPassword;
@@ -49,7 +48,7 @@ public class SignUp extends Fragment implements View.OnClickListener,
     private String mEmailAddressString;
     private String mPasswordString;
     private String mVerifyPasswordString;
-    private String mCheckBoxString = "I am Patient";
+    private String mCheckBoxString = "patient";
 
     private HttpRequest request;
 
@@ -57,7 +56,6 @@ public class SignUp extends Fragment implements View.OnClickListener,
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
-        mUserName = (EditText) mBaseView.findViewById(R.id.username_edit_text);
         mEmail = (EditText) mBaseView.findViewById(R.id.email_edit_text);
         mPassword = (EditText) mBaseView.findViewById(R.id.password_edit_text);
         mVerifyPassword = (EditText) mBaseView.findViewById(R.id.verify_password_edit_text);
@@ -92,10 +90,12 @@ public class SignUp extends Fragment implements View.OnClickListener,
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (mDoctorsCheckBox.isChecked()) {
-            mCheckBoxString = mDoctorsCheckBox.getText().toString();
+            mCheckBoxString = "doctor";
+            AppGlobals.sDocotrsboolean = true;
             System.out.println(mCheckBoxString + "working");
         } else if (!mDoctorsCheckBox.isChecked()) {
-            mCheckBoxString = "I am Patient";
+            mCheckBoxString = "patient";
+            AppGlobals.sDocotrsboolean = false;
         }
 
     }
@@ -103,7 +103,6 @@ public class SignUp extends Fragment implements View.OnClickListener,
     private boolean validateEditText() {
         boolean valid = true;
         mEmailAddressString = mEmail.getText().toString();
-        mUserNameString = mUserName.getText().toString();
         mPasswordString = mPassword.getText().toString();
         mVerifyPasswordString = mVerifyPassword.getText().toString();
 
@@ -112,12 +111,6 @@ public class SignUp extends Fragment implements View.OnClickListener,
             valid = false;
         } else {
             mEmail.setError(null);
-        }
-        if (mUserNameString.trim().isEmpty()) {
-            mUserName.setError("must enter user name");
-            valid = false;
-        } else {
-            mUserName.setError(null);
         }
         if (mPasswordString.trim().isEmpty() || mPasswordString.length() < 4) {
             mPassword.setError("enter at least 4 characters");
@@ -202,4 +195,5 @@ public class SignUp extends Fragment implements View.OnClickListener,
         return jsonObject.toString();
 
     }
+
 }
