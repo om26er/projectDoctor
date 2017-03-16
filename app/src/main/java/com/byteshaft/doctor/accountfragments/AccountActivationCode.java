@@ -127,7 +127,7 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
         } else {
             mEmail.setError(null);
         }
-        if (mVerificationCodeString.trim().isEmpty() || mVerificationCodeString.length() > 5) {
+        if (mVerificationCodeString.trim().isEmpty() || mVerificationCodeString.length() < 6) {
             mVerificationCode.setError("Verification code must be 6 characters");
             valid = false;
         } else {
@@ -185,7 +185,7 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
-                            MainActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                            AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

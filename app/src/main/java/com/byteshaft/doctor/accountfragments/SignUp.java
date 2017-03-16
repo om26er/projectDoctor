@@ -105,11 +105,9 @@ public class SignUp extends Fragment implements View.OnClickListener,
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (mDoctorsCheckBox.isChecked()) {
             mCheckBoxString = "doctor";
-            AppGlobals.sDocotrsboolean = true;
             System.out.println(mCheckBoxString + "working");
         } else if (!mDoctorsCheckBox.isChecked()) {
             mCheckBoxString = "patient";
-            AppGlobals.sDocotrsboolean = false;
         }
 
     }
@@ -175,8 +173,7 @@ public class SignUp extends Fragment implements View.OnClickListener,
                                 AppGlobals.userType(false);
                             }
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
-                            MainActivity.getInstance().loadFragment(new AccountActivationCode());
-
+                            AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
