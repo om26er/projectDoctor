@@ -166,17 +166,21 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, mGenderButtonSting);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, mAddressString);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
-                    if (AppGlobals.sDocotrsboolean) {
-                        MainActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                    if (AppGlobals.sDoctorsboolean) {
+                        AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                        AppGlobals.sDoctorsboolean = false;
+                        stopLocationUpdate();
                     } else {
-                        MainActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                        AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
+                        AppGlobals.sDoctorsboolean = true;
+                        startLocationUpdates();
                     }
 
                 }
 
                 break;
             case R.id.login_text_view:
-                MainActivity.getInstance().loadFragment(new Login());
+                AccountManagerActivity.getInstance().loadFragment(new Login());
                 break;
             case R.id.pick_for_current_location:
                 buildGoogleApiClient();
@@ -201,6 +205,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mFirstNameString = mFirstName.getText().toString();
         mLastNameString = mLastName.getText().toString();
         mDateOfBirthString = mDateOfBirth.getText().toString();
+
         mAddressString = mAddress.getText().toString();
 
         if (mDocIDString.trim().isEmpty()) {
@@ -322,8 +327,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
 
     protected void createLocationRequest() {
-        long INTERVAL = 0;
-        long FASTEST_INTERVAL = 0;
+        long INTERVAL = 60000;
+        long FASTEST_INTERVAL = 50000;
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);

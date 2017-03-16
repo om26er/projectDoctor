@@ -172,7 +172,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 break;
             case R.id.clinic_spinner:
                 mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(" worekiuhfjvbkjkds" + mAffiliatedClinicsSpinnerValueString);
+                System.out.println(mAffiliatedClinicsSpinnerValueString);
                 break;
         }
 
@@ -198,13 +198,13 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         switch (compoundButton.getId()) {
             case R.id.notifications_check_box:
                 if (mNotificationCheckBox.isChecked()) {
-                    mNotificationCheckBoxString = mNotificationCheckBox.getText().toString();
+                    mNotificationCheckBoxString = "true";
                     System.out.println(mNotificationCheckBoxString);
                 }
                 break;
             case R.id.news_check_box:
                 if (mNewsCheckBox.isChecked()) {
-                    mNewsCheckBoxString = mNewsCheckBox.getText().toString();
+                    mNewsCheckBoxString = "true";
                     System.out.println(mNewsCheckBoxString);
                 }
                 break;
@@ -266,7 +266,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mRequest.setOnFileUploadProgressListener(this);
         mRequest.open("POST", String.format("%suser/profile", AppGlobals.BASE_URL));
         mRequest.setRequestHeader("Authorization", "Token " +
-                "86fbb9c707dedbca83063205ae3ee1c5ce622f51");
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         mRequest.send(data);
     }
 
@@ -287,7 +287,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                         break;
                     case HttpURLConnection.HTTP_FORBIDDEN:
                         Toast.makeText(getActivity(), "Please activate your account !", Toast.LENGTH_LONG).show();
-                        MainActivity.getInstance().loadFragment(new AccountActivationCode());
+                        AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
                         break;
 
                     case HttpURLConnection.HTTP_OK:
