@@ -2,7 +2,9 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,16 +27,16 @@ public class ForgotPassword extends Fragment implements View.OnClickListener, Ht
 
     private View mBaseView;
     private EditText mEmail;
-
     private Button mRecoverButton;
     private String mEmailString;
-
     private HttpRequest request;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_forgot_password, container, false);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.forgot_password));
+        setHasOptionsMenu(true);
         mEmail = (EditText) mBaseView.findViewById(R.id.email_edit_text);
         mRecoverButton = (Button) mBaseView.findViewById(R.id.button_recover);
         mRecoverButton.setOnClickListener(this);
@@ -45,6 +47,16 @@ public class ForgotPassword extends Fragment implements View.OnClickListener, Ht
         mEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
         mEmailString = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL);
         return mBaseView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                return true;
+            default:return false;
+        }
     }
 
 

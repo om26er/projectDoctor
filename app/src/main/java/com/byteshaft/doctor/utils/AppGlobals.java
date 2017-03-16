@@ -53,17 +53,16 @@ public class AppGlobals extends Application {
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_IMAGE_URL = "photo";
+    public static final String KEY_LOGIN = "login";
 
     public static final String KEY_EMAIL = "email";
-    public static final String KEY_AACOUNT_TYPE = "account_type";
+    public static final String KEY_ACCOUNT_TYPE = "account_type";
     public static final String KEY_USER_ID = "id";
     public static final String KEY_PHONE_NUMBER = "mobile_number";
     public static final String KEY_TOKEN = "token";
     public static final String USER_ACTIVATION_KEY = "activation_key";
 
     public static boolean sDoctorsboolean = false;
-
-
 
     @Override
     public void onCreate() {
@@ -122,6 +121,26 @@ public class AppGlobals extends Application {
         } catch (KeyManagementException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void loginState(boolean type) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().putBoolean(KEY_LOGIN, type).apply();
+    }
+
+    public static boolean isLogin() {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        return sharedPreferences.getBoolean(KEY_LOGIN, false);
+    }
+
+    public static void userType(boolean type) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().putBoolean(KEY_ACCOUNT_TYPE, type).apply();
+    }
+
+    public static boolean isDoctor() {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        return sharedPreferences.getBoolean(KEY_ACCOUNT_TYPE, false);
     }
 
     public static SharedPreferences getPreferenceManager() {

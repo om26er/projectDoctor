@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.patient_menu);
         }
-
         final SwitchCompat onlineSwitch = (SwitchCompat) headerView.findViewById(R.id.online_switch);
         onlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

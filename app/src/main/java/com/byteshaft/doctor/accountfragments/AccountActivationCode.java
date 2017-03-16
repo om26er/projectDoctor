@@ -2,8 +2,10 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,20 +31,19 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
 
     private EditText mEmail;
     private EditText mVerificationCode;
-
     private Button mLoginButton;
     private TextView mSignTextView;
     private TextView mResendTextView;
-
-
     private String mEmailString;
     private String mVerificationCodeString;
-
     private HttpRequest request;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_account_activation_code, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.account_activation));
+        setHasOptionsMenu(true);
         mEmail = (EditText) mBaseView.findViewById(R.id.email_edit_text);
         mVerificationCode = (EditText) mBaseView.findViewById(R.id.verification_code);
         mLoginButton = (Button) mBaseView.findViewById(R.id.button_login);
@@ -61,6 +62,16 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
         mEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
         mEmailString = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL);
         return mBaseView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                return true;
+            default:return false;
+        }
     }
 
     @Override
@@ -159,14 +170,18 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
                     case HttpURLConnection.HTTP_OK:
                         try {
                             JSONObject jsonObject = new JSONObject(request.getResponseText());
-                            String accountType = jsonObject.getString(AppGlobals.KEY_AACOUNT_TYPE);
+                            String accountType = jsonObject.getString(AppGlobals.KEY_ACCOUNT_TYPE);
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
                             String token = jsonObject.getString(AppGlobals.KEY_TOKEN);
 
                             //saving values
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AACOUNT_TYPE, accountType);
+                            if (accountType.equals("doctor")) {
+                                AppGlobals.userType(true);
+                            } else {
+                                AppGlobals.userType(false);
+                            }
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));

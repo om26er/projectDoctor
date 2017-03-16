@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
 import com.byteshaft.doctor.utils.AppGlobals;
@@ -43,7 +44,13 @@ public class IntroScreen extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
         if (AppGlobals.isFirstTimeLaunch()) {
-//            if ()
+            if (AppGlobals.isLogin()) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            } else {
+                finish();
+                startActivity(new Intent(getApplicationContext(), AccountManagerActivity.class));
+            }
         }
         setContentView(R.layout.activity_intro_screen);
         sInstance = this;
