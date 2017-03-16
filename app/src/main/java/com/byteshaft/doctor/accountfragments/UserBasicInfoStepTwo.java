@@ -1,8 +1,10 @@
 package com.byteshaft.doctor.accountfragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +21,14 @@ import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
 import com.byteshaft.requests.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.net.HttpURLConnection;
@@ -154,7 +160,8 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
             case android.R.id.home:
 
                 return true;
-            default:return false;
+            default:
+                return false;
         }
     }
 
@@ -175,7 +182,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 break;
             case R.id.clinic_spinner:
                 mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(" worekiuhfjvbkjkds" + mAffiliatedClinicsSpinnerValueString);
+                System.out.println(mAffiliatedClinicsSpinnerValueString);
                 break;
         }
 
@@ -201,13 +208,13 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         switch (compoundButton.getId()) {
             case R.id.notifications_check_box:
                 if (mNotificationCheckBox.isChecked()) {
-                    mNotificationCheckBoxString = mNotificationCheckBox.getText().toString();
+                    mNotificationCheckBoxString = "true";
                     System.out.println(mNotificationCheckBoxString);
                 }
                 break;
             case R.id.news_check_box:
                 if (mNewsCheckBox.isChecked()) {
-                    mNewsCheckBoxString = mNewsCheckBox.getText().toString();
+                    mNewsCheckBoxString = "true";
                     System.out.println(mNewsCheckBoxString);
                 }
                 break;
@@ -253,6 +260,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         data.append(FormData.TYPE_CONTENT_TEXT, "dob", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH));
         data.append(FormData.TYPE_CONTENT_TEXT, "gender", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_GENDER));
         data.append(FormData.TYPE_CONTENT_TEXT, "location", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LOCATION));
+        data.append(FormData.TYPE_CONTENT_TEXT, "address", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ADDRESS));
         data.append(FormData.TYPE_CONTENT_FILE, "photo", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL));
         data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
@@ -269,7 +277,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mRequest.setOnFileUploadProgressListener(this);
         mRequest.open("POST", String.format("%suser/profile", AppGlobals.BASE_URL));
         mRequest.setRequestHeader("Authorization", "Token " +
-                "86fbb9c707dedbca83063205ae3ee1c5ce622f51");
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         mRequest.send(data);
     }
 
@@ -280,21 +288,76 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 Helpers.dismissProgressDialog();
                 switch (request.getStatus()) {
                     case HttpRequest.ERROR_NETWORK_UNREACHABLE:
-                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "please check your internet connection");
+                        AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "please check your internet connection");
                         break;
                     case HttpURLConnection.HTTP_NOT_FOUND:
-                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "provide a valid EmailAddress");
+                        AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "provide a valid EmailAddress");
                         break;
                     case HttpURLConnection.HTTP_UNAUTHORIZED:
-                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "Please enter correct password");
+                        AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "Please enter correct password");
                         break;
                     case HttpURLConnection.HTTP_FORBIDDEN:
-                        Toast.makeText(getActivity(), "Please activate your account !", Toast.LENGTH_LONG).show();
-                        MainActivity.getInstance().loadFragment(new AccountActivationCode());
+                        AppGlobals.alertDialog(getActivity(), "Inactive Account", "Please activate your account");
+                        AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
                         break;
+                    case HttpURLConnection.HTTP_CREATED:
+                        System.out.println(request.getResponseText() + "working ");
+                        Toast.makeText(getActivity(), "Profile Created Successfully", Toast.LENGTH_SHORT).show();
+                        try {
+                            JSONObject jsonObject = new JSONObject(request.getResponseText());
+                            System.out.println(jsonObject + "working ");
 
-                    case HttpURLConnection.HTTP_OK:
-                        Toast.makeText(getActivity(), "o0k HAi!", Toast.LENGTH_LONG).show();
+                            String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
+                            String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
+                            String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
+                            String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
+
+                            String gender = jsonObject.getString(AppGlobals.KEY_GENDER);
+                            String dateOfBirth = jsonObject.getString(AppGlobals.KEY_DATE_OF_BIRTH);
+                            String phoneNumberPrimary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_PRIMARY);
+                            String phoneNumberSecondary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_SECONDARY);
+
+                            String affiliateClinic = jsonObject.getString(AppGlobals.KEY_AFFILIATE_CLINIC);
+                            String insuranceCarrier = jsonObject.getString(AppGlobals.KEY_INSURANCE_CARRIER);
+                            String address = jsonObject.getString(AppGlobals.KEY_ADDRESS);
+                            String location = jsonObject.getString(AppGlobals.KEY_LOCATION);
+
+                            String chatStatus = jsonObject.getString(AppGlobals.KEY_CHAT_STATUS);
+                            String state = jsonObject.getString(AppGlobals.KEY_STATE);
+                            String docId = jsonObject.getString(AppGlobals.KEY_DOC_ID);
+                            String showNews = jsonObject.getString(AppGlobals.KEY_SHOW_NEWS);
+
+                            String showNotification = jsonObject.getString(AppGlobals.KEY_SHOW_NOTIFICATION);
+                            String emergencyContact = jsonObject.getString(AppGlobals.KEY_EMERGENCY_CONTACT);
+
+                            //saving values
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FIRST_NAME, firstName);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LAST_NAME, lastName);
+
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, gender);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, dateOfBirth);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY, phoneNumberPrimary);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY, phoneNumberSecondary);
+
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AFFILIATE_CLINIC, affiliateClinic);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_INSURANCE_CARRIER, insuranceCarrier);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, address);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, location);
+
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CHAT_STATUS, chatStatus);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_STATE, state);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, docId);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NEWS, showNews);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NOTIFICATION, showNotification);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT, emergencyContact);
+                            Log.i("Emergency Contact", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
+
+                            startActivity(new Intent(getActivity(), MainActivity.class));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                 }
         }

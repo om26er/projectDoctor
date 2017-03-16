@@ -141,7 +141,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                         break;
                     case HttpURLConnection.HTTP_FORBIDDEN:
                         Toast.makeText(getActivity(), "Please activate your account !", Toast.LENGTH_LONG).show();
-                        MainActivity.getInstance().loadFragment(new AccountActivationCode());
+                        AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
                         break;
 
                     case HttpURLConnection.HTTP_OK:

@@ -20,6 +20,7 @@ import com.byteshaft.doctor.utils.AppGlobals;
 public class AccountManagerActivity extends AppCompatActivity {
 
     private static AccountManagerActivity sInstance;
+
     public static AccountManagerActivity getInstance() {
         return sInstance;
     }
@@ -43,8 +44,9 @@ public class AccountManagerActivity extends AppCompatActivity {
     public void loadFragment(Fragment fragment) {
         String backStateName = fragment.getClass().getName();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment, fragment.getClass().getSimpleName());
+        fragmentTransaction.replace(R.id.container, fragment, backStateName);
         FragmentManager manager = getSupportFragmentManager();
+        Log.i("TAG", backStateName);
         boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
         if (!fragmentPopped) {
             fragmentTransaction.addToBackStack(backStateName);
@@ -54,14 +56,22 @@ public class AccountManagerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            Log.i("TAG", getSupportFragmentManager().getBackStackEntryAt(0).getName());
-        } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            this.finish();
-        }
-//        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+        Fragment fragment =  getSupportFragmentManager()
+                .findFragmentByTag("com.byteshaft.doctor.accountfragments.AccountActivationCode");
+        if (fragment instanceof AccountActivationCode) {
+            Log.i("TAG", "fragment " + fragment.isVisible());
+
+        } else {
+            Log.i("TAG", "count "+ getSupportFragmentManager().getBackStackEntryCount());
+
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                this.finish();
+            }
+//        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
 //            finish();
 //        }
+            super.onBackPressed();
+        }
     }
 }
