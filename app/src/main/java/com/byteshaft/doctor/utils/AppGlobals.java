@@ -54,15 +54,24 @@ public class AppGlobals extends Application {
     public static final String KEY_LOCATION = "location";
     public static final String KEY_IMAGE_URL = "photo";
     public static final String KEY_LOGIN = "login";
-
+    public static final String KEY_PHONE_NUMBER_PRIMARY = "phone_number_primary";
+    public static final String KEY_PHONE_NUMBER_SECONDARY = "phone_number_secondary";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_ACCOUNT_TYPE = "account_type";
     public static final String KEY_USER_ID = "id";
-    public static final String KEY_PHONE_NUMBER = "mobile_number";
+    public static final String KEY_AFFILIATE_CLINIC = "affiliate_clinic";
+    public static final String KEY_CHAT_STATUS = "available_to_chat";
+    public static final String KEY_INSURANCE_CARRIER = "insurance_carrier";
+    public static final String KEY_EMERGENCY_CONTACT = "emergency_contact";
+    public static final String KEY_SHOW_NEWS = "show_news";
+    public static final String KEY_SHOW_NOTIFICATION = "show_notification";
+    public static final String KEY_STATE = "state";
+    public static final String KEY_USER = "user";
+
+
     public static final String KEY_TOKEN = "token";
     public static final String USER_ACTIVATION_KEY = "activation_key";
 
-    public static boolean sDoctorsboolean = false;
 
     @Override
     public void onCreate() {

@@ -160,7 +160,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        mDateOfBirth.setText(i2 + "/" + (i1 + 1) + "/" + i);
+        mDateOfBirth.setText(i + "-" + (i1 + 1) + "-" + i2);
 
     }
 
@@ -178,14 +178,13 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, mDateOfBirthString);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, mGenderButtonSting);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, mAddressString);
+                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, mLocationString);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
-                    if (AppGlobals.sDoctorsboolean) {
+                    if (!AppGlobals.isDoctor()) {
                         AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
-                        AppGlobals.sDoctorsboolean = false;
                         stopLocationUpdate();
                     } else {
                         AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
-                        AppGlobals.sDoctorsboolean = true;
                         startLocationUpdates();
                     }
 
@@ -218,7 +217,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mFirstNameString = mFirstName.getText().toString();
         mLastNameString = mLastName.getText().toString();
         mDateOfBirthString = mDateOfBirth.getText().toString();
-
         mAddressString = mAddress.getText().toString();
 
         if (mDocIDString.trim().isEmpty()) {

@@ -105,11 +105,9 @@ public class SignUp extends Fragment implements View.OnClickListener,
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (mDoctorsCheckBox.isChecked()) {
             mCheckBoxString = "doctor";
-            AppGlobals.sDoctorsboolean = true;
             System.out.println(mCheckBoxString + "working");
         } else if (!mDoctorsCheckBox.isChecked()) {
             mCheckBoxString = "patient";
-            AppGlobals.sDoctorsboolean = false;
         }
 
     }
