@@ -159,7 +159,9 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                 AppGlobals.userType(true);
                             } else {
                                 AppGlobals.userType(false);
-                            }                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
+                            }
+                            AppGlobals.loginState(true);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
                             AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
