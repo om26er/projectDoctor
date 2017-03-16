@@ -2,6 +2,7 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -164,7 +164,6 @@ public class SignUp extends Fragment implements View.OnClickListener,
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
                             String accountType = jsonObject.getString(AppGlobals.KEY_ACCOUNT_TYPE);
                             //saving values
-
 //                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_NAME, username);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
                             if (accountType.equals("doctor")) {
@@ -173,6 +172,8 @@ public class SignUp extends Fragment implements View.OnClickListener,
                                 AppGlobals.userType(false);
                             }
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
                         } catch (JSONException e) {
                             e.printStackTrace();

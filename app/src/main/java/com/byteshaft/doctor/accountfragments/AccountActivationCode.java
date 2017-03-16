@@ -2,6 +2,7 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -182,9 +183,12 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
                             } else {
                                 AppGlobals.userType(false);
                             }
+                            AppGlobals.loginState(true);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+                            FragmentManager fragmentManager = getFragmentManager();
+                            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
                         } catch (JSONException e) {
                             e.printStackTrace();
