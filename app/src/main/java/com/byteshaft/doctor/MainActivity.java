@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.doctors.Appointments;
@@ -99,8 +100,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_appointment) {
             loadFragment(new UserBasicInfoStepOne());
         } else if (id == R.id.nav_favt_doc) {
-//            loadFragment(new UserBasicInfoStepOne());
-//            loadFragment(new FavouriteDoctors());
+            loadFragment(new UserBasicInfoStepTwo());
+
             startActivity(new Intent(getApplicationContext(), Services.class));
         } else if (id == R.id.nav_patients) {
             loadFragment(new MyPatients());

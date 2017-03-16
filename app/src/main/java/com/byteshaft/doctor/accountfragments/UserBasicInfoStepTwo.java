@@ -12,22 +12,37 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.requests.FormData;
+import com.byteshaft.requests.HttpRequest;
 
+
+import java.io.File;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItemSelectedListener,
-        View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+/**
+ * Created by husnain on 2/20/17.
+ */
 
+public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItemSelectedListener,
+        View.OnClickListener, CompoundButton.OnCheckedChangeListener, HttpRequest.OnReadyStateChangeListener,
+        HttpRequest.OnFileUploadProgressListener {
     private View mBaseView;
 
     private Spinner mStateSpinner;
     private Spinner mCitySpinner;
     private Spinner mInsuranceCarrierSpinner;
     private Spinner mAffiliatedClinicsSpinner;
+
+    private TextView mStateSpinnerTextView;
 
     private EditText mPhoneOneEditText;
     private EditText mPhoneTwoEditText;
@@ -53,6 +68,8 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
     private Button mSaveButton;
 
+    private HttpRequest mRequest;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_user_basic_info_step_two, container, false);
@@ -61,6 +78,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mCitySpinner = (Spinner) mBaseView.findViewById(R.id.cities_spinner);
         mInsuranceCarrierSpinner = (Spinner) mBaseView.findViewById(R.id.insurance_spinner);
         mAffiliatedClinicsSpinner = (Spinner) mBaseView.findViewById(R.id.clinic_spinner);
+        mStateSpinnerTextView = (TextView) mBaseView.findViewById(R.id.states_spinner_text_view);
 
         mPhoneOneEditText = (EditText) mBaseView.findViewById(R.id.phone_one_edit_text);
         mPhoneTwoEditText = (EditText) mBaseView.findViewById(R.id.phone_two_edit_text);
@@ -90,12 +108,12 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         StateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mStateSpinner.setAdapter(StateListAdapter);
 
-        List<String> citiesList = new ArrayList<>();
-        citiesList.add("City1");
-        citiesList.add("City2");
-        citiesList.add("City3");
-        citiesList.add("City4");
-        citiesList.add("City5");
+        List<String> citiesList = new ArrayList<String>();
+        citiesList.add("city1");
+        citiesList.add("city2");
+        citiesList.add("city3");
+        citiesList.add("city4");
+        citiesList.add("city5");
         ArrayAdapter<String> CitiesListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, citiesList);
         CitiesListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -110,6 +128,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 android.R.layout.simple_list_item_1, InsuranceCarrierList);
         InsuranceCarrierListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mInsuranceCarrierSpinner.setAdapter(InsuranceCarrierListAdapter);
+
 
         List<String> clinicList = new ArrayList<>();
         clinicList.add("Doctor dray clinic");
@@ -151,9 +170,9 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 mInsuranceCarrierSpinnerValueString = adapterView.getItemAtPosition(i).toString();
                 System.out.println(mInsuranceCarrierSpinnerValueString);
                 break;
-            case R.id.clinics_spinner:
+            case R.id.clinic_spinner:
                 mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(mAffiliatedClinicsSpinnerValueString);
+                System.out.println(" worekiuhfjvbkjkds" + mAffiliatedClinicsSpinnerValueString);
                 break;
         }
 
@@ -167,6 +186,10 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     @Override
     public void onClick(View view) {
         mPhoneTwoEditTextString = mPhoneTwoEditText.getText().toString();
+        if (validateEditText()) {
+            sendingDataToServer();
+            Toast.makeText(getActivity(), "errors", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -187,8 +210,11 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 break;
             case R.id.terms_check_box:
                 if (mTermsConditionCheckBox.isChecked()) {
+                    mSaveButton.setEnabled(true);
                     mTermsConditionCheckBoxString = mTermsConditionCheckBox.getText().toString();
                     System.out.println(mTermsConditionCheckBoxString);
+                } else {
+                    mSaveButton.setEnabled(false);
                 }
                 break;
         }
@@ -214,5 +240,66 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         }
 
         return valid;
+    }
+
+    private void sendingDataToServer() {
+        FormData data = new FormData();
+        data.append(FormData.TYPE_CONTENT_TEXT, "identity_document", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DOC_ID));
+        data.append(FormData.TYPE_CONTENT_TEXT, "first_name", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_FIRST_NAME));
+        data.append(FormData.TYPE_CONTENT_TEXT, "last_name", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
+        data.append(FormData.TYPE_CONTENT_TEXT, "dob", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH));
+        data.append(FormData.TYPE_CONTENT_TEXT, "gender", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_GENDER));
+        data.append(FormData.TYPE_CONTENT_TEXT, "location", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LOCATION));
+        data.append(FormData.TYPE_CONTENT_FILE, "photo", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL));
+        data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "insurance_carrier", mInsuranceCarrierSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic", mAffiliatedClinicsSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_primary", mPhoneOneEditTextString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_secondary", mPhoneTwoEditTextString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "emergency_contact", mEmergencyContactString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "show_notification", mNotificationCheckBoxString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "show_news", mNewsCheckBoxString);
+
+        mRequest = new HttpRequest(getActivity().getApplicationContext());
+        mRequest.setOnReadyStateChangeListener(this);
+        mRequest.setOnFileUploadProgressListener(this);
+        mRequest.open("POST", String.format("%suser/profile", AppGlobals.BASE_URL));
+        mRequest.setRequestHeader("Authorization", "Token " +
+                "86fbb9c707dedbca83063205ae3ee1c5ce622f51");
+        mRequest.send(data);
+    }
+
+    @Override
+    public void onReadyStateChange(HttpRequest request, int readyState) {
+        switch (readyState) {
+            case HttpRequest.STATE_DONE:
+                Helpers.dismissProgressDialog();
+                switch (request.getStatus()) {
+                    case HttpRequest.ERROR_NETWORK_UNREACHABLE:
+                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "please check your internet connection");
+                        break;
+                    case HttpURLConnection.HTTP_NOT_FOUND:
+                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "provide a valid EmailAddress");
+                        break;
+                    case HttpURLConnection.HTTP_UNAUTHORIZED:
+                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "Please enter correct password");
+                        break;
+                    case HttpURLConnection.HTTP_FORBIDDEN:
+                        Toast.makeText(getActivity(), "Please activate your account !", Toast.LENGTH_LONG).show();
+                        MainActivity.getInstance().loadFragment(new AccountActivationCode());
+                        break;
+
+                    case HttpURLConnection.HTTP_OK:
+                        Toast.makeText(getActivity(), "o0k HAi!", Toast.LENGTH_LONG).show();
+
+                }
+        }
+
+    }
+
+    @Override
+    public void onFileUploadProgress(HttpRequest request, File file, long loaded, long total) {
+
     }
 }
