@@ -7,22 +7,24 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,13 +37,13 @@ import android.widget.TextView;
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.HttpRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationListener;
-import com.byteshaft.doctor.utils.Helpers;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
@@ -74,7 +76,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private EditText mLastName;
     private EditText mDateOfBirth;
     private EditText mAddress;
-
     private Button mNextButton;
     private RadioGroup mRadioGroup;
     private RadioButton genderButton;
@@ -106,7 +107,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_user_basic_info_step_one, container, false);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.sign_up));
+        setHasOptionsMenu(true);
         mProfilePicture = (CircleImageView) mBaseView.findViewById(R.id.user_dp);
         mDocID = (EditText) mBaseView.findViewById(R.id.doctor_id_edit_text);
         mFirstName = (EditText) mBaseView.findViewById(R.id.first_name_edit_text);
@@ -143,6 +146,16 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
         return mBaseView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                return true;
+            default:return false;
+        }
     }
 
     @Override

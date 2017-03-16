@@ -2,6 +2,7 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,8 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_login, container, false);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.login));
         mEmail = (EditText) mBaseView.findViewById(R.id.email_edit_text);
         mPassword = (EditText) mBaseView.findViewById(R.id.password_edit_text);
         mLoginButton = (Button) mBaseView.findViewById(R.id.button_login);
@@ -61,7 +63,6 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
 
         return mBaseView;
     }
-
 
     public boolean validate() {
         boolean valid = true;
@@ -151,15 +152,18 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                         System.out.println(request.getResponseText() + "working ");
                         try {
                             JSONObject jsonObject = new JSONObject(request.getResponseText());
-                            String accountType = jsonObject.getString(AppGlobals.KEY_AACOUNT_TYPE);
+                            String accountType = jsonObject.getString(AppGlobals.KEY_ACCOUNT_TYPE);
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
                             String token = jsonObject.getString(AppGlobals.KEY_TOKEN);
 
                             //saving values
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AACOUNT_TYPE, accountType);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
+                            if (accountType.equals("doctor")) {
+                                AppGlobals.userType(true);
+                            } else {
+                                AppGlobals.userType(false);
+                            }                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
                             AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());

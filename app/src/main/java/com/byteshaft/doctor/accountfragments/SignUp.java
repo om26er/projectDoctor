@@ -2,8 +2,10 @@ package com.byteshaft.doctor.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,28 +34,25 @@ public class SignUp extends Fragment implements View.OnClickListener,
         CompoundButton.OnCheckedChangeListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
 
     private View mBaseView;
-
     private EditText mEmail;
     private EditText mPassword;
     private EditText mVerifyPassword;
     private CheckBox mDoctorsCheckBox;
-
     private Button mSignUpButton;
-
     private TextView mLoginTextView;
-
     private String mUserNameString;
     private String mEmailAddressString;
     private String mPasswordString;
     private String mVerifyPasswordString;
     private String mCheckBoxString = "patient";
-
     private HttpRequest request;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_sign_up, container, false);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.sign_up));
+        setHasOptionsMenu(true);
         mEmail = (EditText) mBaseView.findViewById(R.id.email_edit_text);
         mPassword = (EditText) mBaseView.findViewById(R.id.password_edit_text);
         mVerifyPassword = (EditText) mBaseView.findViewById(R.id.verify_password_edit_text);
@@ -75,6 +74,16 @@ public class SignUp extends Fragment implements View.OnClickListener,
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                return true;
+            default:return false;
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sign_up_button:
@@ -86,7 +95,7 @@ public class SignUp extends Fragment implements View.OnClickListener,
                 System.out.println("checkbox text" + mCheckBoxString);
                 break;
             case R.id.login_text_view:
-                MainActivity.getInstance().loadFragment(new Login());
+                AccountManagerActivity.getInstance().loadFragment(new Login());
                 break;
         }
 
@@ -155,13 +164,16 @@ public class SignUp extends Fragment implements View.OnClickListener,
                             System.out.println(jsonObject + "working ");
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
-                            String accountType = jsonObject.getString(AppGlobals.KEY_AACOUNT_TYPE);
+                            String accountType = jsonObject.getString(AppGlobals.KEY_ACCOUNT_TYPE);
                             //saving values
 
 //                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_NAME, username);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AACOUNT_TYPE, accountType);
-                            Log.i("user name", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AACOUNT_TYPE));
+                            if (accountType.equals("doctor")) {
+                                AppGlobals.userType(true);
+                            } else {
+                                AppGlobals.userType(false);
+                            }
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             MainActivity.getInstance().loadFragment(new AccountActivationCode());
 

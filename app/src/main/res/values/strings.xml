@@ -55,4 +55,10 @@
         <item>12–2–2017</item>
     </string-array>
 
+    <string name="account_activation">Account Activation</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="login">Login</string>
+    <string name="reset_password">Reset Password</string>
+
 </resources>
