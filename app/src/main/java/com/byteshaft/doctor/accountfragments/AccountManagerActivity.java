@@ -16,6 +16,7 @@ import com.byteshaft.doctor.introscreen.IntroScreen;
 public class AccountManagerActivity extends AppCompatActivity {
 
     private static AccountManagerActivity sInstance;
+
     public static AccountManagerActivity getInstance() {
         return sInstance;
     }
@@ -33,8 +34,13 @@ public class AccountManagerActivity extends AppCompatActivity {
 
     public void loadFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(
+                R.anim.enter,
+                R.anim.exit,
+                R.anim.pop_enter,
+                R.anim.pop_exit);
         fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.addToBackStack(getClass().getSimpleName());
+        fragmentTransaction.addToBackStack("Fragment");
         fragmentTransaction.commit();
     }
 
@@ -46,7 +52,7 @@ public class AccountManagerActivity extends AppCompatActivity {
         } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             this.finish();
         }
-//        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+//        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
 //            finish();
 //        }
     }
