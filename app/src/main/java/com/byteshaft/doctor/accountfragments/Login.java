@@ -118,10 +118,10 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                 }
                 break;
             case R.id.forgot_password_text_view:
-                MainActivity.getInstance().loadFragment(new ForgotPassword());
+                AccountManagerActivity.getInstance().loadFragment(new ForgotPassword());
                 break;
             case R.id.sign_up_text_view:
-                MainActivity.getInstance().loadFragment(new SignUp());
+                AccountManagerActivity.getInstance().loadFragment(new SignUp());
                 break;
 
         }
@@ -162,7 +162,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
-                            MainActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
+                            AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
 
                         } catch (JSONException e) {
                             e.printStackTrace();

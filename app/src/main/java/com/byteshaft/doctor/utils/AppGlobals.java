@@ -127,12 +127,12 @@ public class AppGlobals extends Application {
 
     public static void firstTimeLaunch(boolean value) {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        sharedPreferences.edit().putBoolean(AppGlobals.IS_FIRST_TIME_LAUNCH, value).apply();
+        sharedPreferences.edit().putBoolean(IS_FIRST_TIME_LAUNCH, value).apply();
     }
 
     public static boolean isFirstTimeLaunch() {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        return sharedPreferences.getBoolean(AppGlobals.IS_FIRST_TIME_LAUNCH, false);
+        return sharedPreferences.getBoolean(IS_FIRST_TIME_LAUNCH, false);
     }
 
     public static Context getContext() {
