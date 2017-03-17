@@ -169,7 +169,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 selectImage();
                 break;
             case R.id.next_button:
-                if (validateEditText()) {
+                if (validateEditText() && mGenderButtonSting != null && !mGenderButtonSting.isEmpty()) {
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, mDocIDString);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FIRST_NAME, mFirstNameString);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LAST_NAME, mLastNameString);
@@ -185,6 +185,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     } else {
                         AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
                     }
+                } else {
+                    Helpers.showSnackBar(getView(), R.string.choose_your_gender);
                 }
 
                 break;
