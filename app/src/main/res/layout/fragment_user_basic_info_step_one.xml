@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="First Name"
-                android:inputType="textPersonName" />
+                android:inputType="textCapSentences" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Last Name"
-                android:inputType="textPersonName" />
+                android:inputType="textCapSentences" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -73,8 +73,8 @@
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:focusable="false"
-                android:hint="BirthDate"
-                android:inputType="number" />
+                android:hint="@string/date_of_birth"
+                android:inputType="datetime" />
 
         </android.support.design.widget.TextInputLayout>
 
