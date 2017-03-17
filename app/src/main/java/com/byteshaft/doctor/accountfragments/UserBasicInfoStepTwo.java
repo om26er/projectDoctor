@@ -197,7 +197,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mPhoneTwoEditTextString = mPhoneTwoEditText.getText().toString();
         if (validateEditText()) {
             sendingDataToServer();
-            Toast.makeText(getActivity(), "errors", Toast.LENGTH_SHORT).show();
         }
 
     }

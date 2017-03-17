@@ -94,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/phone_1"
-                        android:inputType="textPersonName" />
+                        android:inputType="phone" />
                 </android.support.design.widget.TextInputLayout>
 
             </RelativeLayout>
@@ -117,7 +117,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/phone_2"
-                        android:inputType="textPersonName" />
+                        android:inputType="phone" />
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -133,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/emergency_contact"
-                android:inputType="textPersonName" />
+                android:inputType="phone" />
         </android.support.design.widget.TextInputLayout>
 
         <Spinner
@@ -144,7 +144,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/insurance_spinner"
             android:background="#000" />
 
         <Spinner
@@ -156,7 +155,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/clinic_spinner"
             android:background="#000" />
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
