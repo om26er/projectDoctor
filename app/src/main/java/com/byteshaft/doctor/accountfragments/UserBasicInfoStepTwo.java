@@ -259,7 +259,9 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         data.append(FormData.TYPE_CONTENT_TEXT, "gender", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_GENDER));
         data.append(FormData.TYPE_CONTENT_TEXT, "location", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LOCATION));
         data.append(FormData.TYPE_CONTENT_TEXT, "address", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ADDRESS));
-        data.append(FormData.TYPE_CONTENT_FILE, "photo", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL));
+        if (!AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL).trim().isEmpty()) {
+            data.append(FormData.TYPE_CONTENT_FILE, "photo", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL));
+        }
         data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "insurance_carrier", mInsuranceCarrierSpinnerValueString);
@@ -306,7 +308,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                             System.out.println(jsonObject + "working ");
 
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
-                            String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
                             String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
                             String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
 
@@ -322,6 +323,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
                             String chatStatus = jsonObject.getString(AppGlobals.KEY_CHAT_STATUS);
                             String state = jsonObject.getString(AppGlobals.KEY_STATE);
+                            String city = jsonObject.getString(AppGlobals.KEY_CITY);
                             String docId = jsonObject.getString(AppGlobals.KEY_DOC_ID);
                             String showNews = jsonObject.getString(AppGlobals.KEY_SHOW_NEWS);
 
@@ -330,7 +332,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
                             //saving values
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FIRST_NAME, firstName);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LAST_NAME, lastName);
 
@@ -346,6 +347,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CHAT_STATUS, chatStatus);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_STATE, state);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CITY, city);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, docId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NEWS, showNews);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NOTIFICATION, showNotification);
