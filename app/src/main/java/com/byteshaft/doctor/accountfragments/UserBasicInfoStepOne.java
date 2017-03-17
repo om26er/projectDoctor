@@ -13,6 +13,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,7 +36,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -80,8 +81,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private RadioGroup mRadioGroup;
     private RadioButton genderButton;
 
-    private TextView mLoginTextView;
-    private TextView AddressTextView;
+    private TextView mAddressTextView;
 
     private DatePickerDialog datePickerDialog;
 
@@ -102,6 +102,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private String address = "";
     private String zipCode = "";
     private String houseNumber = "";
+    private int locationCounter = 0;
+
+    private static final int LOCATION_PERMISSION = 1;
 
 
     @Override
@@ -116,9 +119,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName = (EditText) mBaseView.findViewById(R.id.last_name_edit_text);
         mDateOfBirth = (EditText) mBaseView.findViewById(R.id.birth_date_edit_text);
         mAddress = (EditText) mBaseView.findViewById(R.id.address_edit_text);
-
-        mLoginTextView = (TextView) mBaseView.findViewById(R.id.login_text_view);
-        AddressTextView = (TextView) mBaseView.findViewById(R.id.pick_for_current_location);
+        mAddressTextView = (TextView) mBaseView.findViewById(R.id.pick_for_current_location);
 
         mNextButton = (Button) mBaseView.findViewById(R.id.next_button);
         mRadioGroup = (RadioGroup) mBaseView.findViewById(R.id.radio_group);
@@ -129,12 +130,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mDateOfBirth.setTypeface(AppGlobals.typefaceNormal);
         mAddress.setTypeface(AppGlobals.typefaceNormal);
 
-        mLoginTextView.setTypeface(AppGlobals.robotoItalic);
-        AddressTextView.setTypeface(AppGlobals.typefaceNormal);
-
         mNextButton.setOnClickListener(this);
-        mLoginTextView.setOnClickListener(this);
-        AddressTextView.setOnClickListener(this);
+        mAddressTextView.setOnClickListener(this);
         mDateOfBirth.setOnClickListener(this);
         mRadioGroup.setOnCheckedChangeListener(this);
         mProfilePicture.setOnClickListener(this);
@@ -154,7 +151,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
             case android.R.id.home:
 
                 return true;
-            default:return false;
+            default:
+                return false;
         }
     }
 
@@ -184,10 +182,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     }
                     if (!AppGlobals.isDoctor()) {
                         AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
-                        stopLocationUpdate();
                     } else {
                         AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
-                        startLocationUpdates();
                     }
 
                 }
@@ -197,12 +193,53 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 AccountManagerActivity.getInstance().loadFragment(new Login());
                 break;
             case R.id.pick_for_current_location:
-                buildGoogleApiClient();
+                locationCounter = 0;
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle(getResources().getString(R.string.permission_dialog_title));
+                    alertDialogBuilder.setMessage(getResources().getString(R.string.permission_dialog_message))
+                            .setCancelable(false).setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    LOCATION_PERMISSION);
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+                } else {
+                    new LocationTask().execute();
+                }
                 break;
             case R.id.birth_date_edit_text:
                 datePickerDialog.show();
                 break;
 
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    new LocationTask().execute();
+                } else {
+                    Helpers.showSnackBar(getView(), R.string.permission_denied);
+                }
+
+                break;
         }
     }
 
@@ -272,11 +309,15 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
     @Override
     public void onLocationChanged(Location location) {
-        mLocationString = location.getLatitude() + "," + location.getLongitude();
-        System.out.println("Lat: " + location.getLatitude() + "Long: " + location.getLongitude());
-        getAddress(location.getLatitude(), location.getLongitude());
+        locationCounter++;
+        if (locationCounter > 1) {
+            stopLocationUpdate();
+            mLocationString = location.getLatitude() + "," + location.getLongitude();
+            System.out.println("Lat: " + location.getLatitude() + "Long: " + location.getLongitude());
+            getAddress(location.getLatitude(), location.getLongitude());
 //        getLocationFromAddress(AppGlobals.getContext(), "314 E 4th St,Seiling, OK 73663");
 //        System.out.println("Latlong from address" + getLocationFromAddress(AppGlobals.getContext(), "314 E 4th St,Seiling, OK 73663"));
+        }
     }
 
     public LatLng getLocationFromAddress(Context context, String strAddress) {
@@ -340,8 +381,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
 
     protected void createLocationRequest() {
-        long INTERVAL = 60000;
-        long FASTEST_INTERVAL = 50000;
+        long INTERVAL = 1000;
+        long FASTEST_INTERVAL = 1000;
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
@@ -430,17 +471,37 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     }
 
     private void getAddress(double latitude, double longitude) {
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
         try {
             Geocoder geocoder = new Geocoder(AppGlobals.getContext(), Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
-                result.append(address.getLocality()).append(address.getCountryName());
+                result.append(address.getLocality()).append(" ").append(address.getCountryName());
             }
         } catch (IOException e) {
             Log.e("tag", e.getMessage());
         }
-        mAddress.setText(result.toString());
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAddress.setText(result.toString());
+            }
+        });
+    }
+
+    class LocationTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Helpers.showSnackBar(getView(), R.string.acquiring_location);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            buildGoogleApiClient();
+            return null;
+        }
     }
 }

@@ -27,7 +27,7 @@
                 android:id="@+id/email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginTop="10dp"
-            android:text="Resend"
+            android:text="@string/resend"
             android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatButton
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="20dp"
-            android:text="Activate"
+            android:text="@string/activate"
             android:theme="@style/MyButton" />
 
         <TextView

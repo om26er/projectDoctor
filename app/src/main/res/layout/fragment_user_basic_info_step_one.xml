@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:padding="8dp"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -29,7 +30,7 @@
                 android:id="@+id/doctor_id_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="DocID"
+                android:hint="@string/doc_id"
                 android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
 
@@ -43,8 +44,8 @@
                 android:id="@+id/first_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Name"
-                android:inputType="textPersonName" />
+                android:hint="@string/first_name"
+                android:inputType="textCapSentences" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -57,8 +58,8 @@
                 android:id="@+id/last_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Name"
-                android:inputType="textPersonName" />
+                android:hint="@string/last_name"
+                android:inputType="textCapSentences" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -73,8 +74,8 @@
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:focusable="false"
-                android:hint="BirthDate"
-                android:inputType="number" />
+                android:hint="@string/date_of_birth"
+                android:inputType="datetime" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -92,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
                 android:layout_weight="1"
-                android:text="Male" />
+                android:text="@string/male" />
 
             <RadioButton
                 android:id="@+id/radio_button_female"
@@ -100,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|right"
                 android:layout_marginRight="100dp"
-                android:text="Female" />
+                android:text="@string/female" />
 
         </RadioGroup>
 
@@ -111,7 +112,7 @@
             android:drawableLeft="@mipmap/location"
             android:drawablePadding="5dp"
             android:gravity="center"
-            android:text="Pick for current location" />
+            android:text="@string/pick_for_current_location" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -122,7 +123,7 @@
                 android:id="@+id/address_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Address"
+                android:hint="@string/address"
                 android:inputType="textPersonName" />
 
         </android.support.design.widget.TextInputLayout>
@@ -131,18 +132,9 @@
             android:id="@+id/next_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="15dp"
-            android:text="NEXT"
+            android:layout_marginTop="16dp"
+            android:padding="10dp"
+            android:text="@string/next"
             android:theme="@style/MyButton" />
-
-        <TextView
-            android:id="@+id/login_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:text="Already have an account? Login"
-            android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>

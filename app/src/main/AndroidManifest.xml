@@ -23,6 +23,7 @@
         <activity
             android:name=".introscreen.IntroScreen"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,24 +31,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".doctors.Dashboard" />
+        <activity android:windowSoftInputMode="adjustResize" android:name=".doctors.Dashboard" />
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             />
-        <activity android:name=".accountfragments.AccountManagerActivity"/>
-        <activity android:name=".doctors.DoctorDetailsActivity" />
-        <activity android:name=".patients.DoctorsAppointment" />
+        <activity android:windowSoftInputMode="adjustResize" android:name=".accountfragments.AccountManagerActivity"/>
+        <activity android:windowSoftInputMode="adjustResize" android:name=".doctors.DoctorDetailsActivity" />
+        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.DoctorsAppointment" />
 
 
-        <activity android:name=".patients.DoctorsLocator" />
-        <activity android:name=".patients.DoctorsRoute" />
+        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.DoctorsLocator" />
+        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.DoctorsRoute" />
 
-        <activity android:name=".patients.PatientsRecentHistory" />
-        <activity android:name=".patients.PatientDetails" />
-        <activity android:name=".patients.DoctorBookingActivity"/>
-        <activity android:name=".doctors.Services" android:theme="@style/AppTheme.ServiceActionBar"/>
+        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.PatientsRecentHistory" />
+        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.PatientDetails" />
+        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.DoctorBookingActivity"/>
+        <activity android:windowSoftInputMode="adjustResize" android:name=".doctors.Services" android:theme="@style/AppTheme.ServiceActionBar"/>
 
         <service
             android:name=".fcm.FireBaseService">

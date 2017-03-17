@@ -350,7 +350,6 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                             String showNews = jsonObject.getString(AppGlobals.KEY_SHOW_NEWS);
 
                             String showNotification = jsonObject.getString(AppGlobals.KEY_SHOW_NOTIFICATION);
-                            String emergencyContact = jsonObject.getString(AppGlobals.KEY_EMERGENCY_CONTACT);
                             String consultationTime = jsonObject.getString(AppGlobals.KEY_CONSULTATION_TIME);
                             String reviewStars = jsonObject.getString(AppGlobals.KEY_REVIEW_STARS);
 
@@ -377,11 +376,11 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NEWS, showNews);
 
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NOTIFICATION, showNotification);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT, emergencyContact);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CONSULTATION_TIME, consultationTime);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_REVIEW_STARS, reviewStars);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_COLLEGE_ID, collegeId);
                             Log.i("Emergency Contact", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
+                            AppGlobals.gotInfo(true);
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -15,13 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
+import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
+import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.doctors.Appointments;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.doctors.Services;
+import com.byteshaft.doctor.introscreen.IntroScreen;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -37,6 +39,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AccountManagerActivity.getInstance() != null) {
+            AccountManagerActivity.getInstance().finish();
+        }
+        if (IntroScreen.getInstance() != null) {
+            IntroScreen.getInstance().finish();
+        }
         sInstance = this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
