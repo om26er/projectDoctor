@@ -31,7 +31,6 @@ public class AccountManagerActivity extends AppCompatActivity {
         if (!AppGlobals.isLogin()) {
             loadFragment(new Login());
         } else {
-            finish();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
         setContentView(R.layout.activity_account_manager);
