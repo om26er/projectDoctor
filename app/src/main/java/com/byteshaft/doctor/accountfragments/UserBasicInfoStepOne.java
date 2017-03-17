@@ -187,7 +187,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                         AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
                         startLocationUpdates();
                     }
-
                 }
 
                 break;
@@ -219,7 +218,11 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     alertDialog.show();
 
                 } else {
-                    new LocationTask().execute();
+                    if (Helpers.locationEnabled()) {
+                        new LocationTask().execute();
+                    } else {
+                        Helpers.dialogForLocationEnableManually(getActivity());
+                    }
                 }
                 break;
             case R.id.birth_date_edit_text:
@@ -236,7 +239,11 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
             case LOCATION_PERMISSION:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    new LocationTask().execute();
+                    if (Helpers.locationEnabled()) {
+                        new LocationTask().execute();
+                    } else {
+                        Helpers.dialogForLocationEnableManually(getActivity());
+                    }
                 } else {
                     Helpers.showSnackBar(getView(), R.string.permission_denied);
                 }
@@ -458,6 +465,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 mProfilePicture.setImageBitmap(profilePic);
                 imageUrl = String.valueOf(selectedImagePath);
             }
+        } else if (requestCode == AppGlobals.LOCATION_ENABLE) {
+            new LocationTask().execute();
         }
     }
 
