@@ -23,6 +23,7 @@ import com.byteshaft.doctor.doctors.Appointments;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.doctors.Services;
+import com.byteshaft.doctor.introscreen.IntroScreen;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         if (AccountManagerActivity.getInstance() != null) {
             AccountManagerActivity.getInstance().finish();
+        }
+        if (IntroScreen.getInstance() != null) {
+            IntroScreen.getInstance().finish();
         }
         sInstance = this;
         setContentView(R.layout.activity_main);
@@ -79,7 +83,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        loadFragment(new UserBasicInfoStepOne());
     }
 
     @Override
