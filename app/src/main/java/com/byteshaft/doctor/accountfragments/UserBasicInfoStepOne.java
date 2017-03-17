@@ -18,8 +18,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,7 +36,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -102,6 +103,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private String address = "";
     private String zipCode = "";
     private String houseNumber = "";
+    private int locationCounter = 0;
+
+    private static final int LOCATION_PERMISSION = 1;
 
 
     @Override
@@ -195,12 +199,61 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 AccountManagerActivity.getInstance().loadFragment(new Login());
                 break;
             case R.id.pick_for_current_location:
-                buildGoogleApiClient();
+                locationCounter = 0;
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle(getResources().getString(R.string.permission_dialog_title));
+                    alertDialogBuilder.setMessage(getResources().getString(R.string.permission_dialog_message))
+                            .setCancelable(false).setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    LOCATION_PERMISSION);
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+                } else {
+                    buildGoogleApiClient();
+                }
                 break;
             case R.id.birth_date_edit_text:
                 datePickerDialog.show();
                 break;
 
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    buildGoogleApiClient();
+                } else {
+                    Snackbar.make(getView(), getResources().getString(R.string.permission_denied), Snackbar.LENGTH_SHORT)
+                            .setAction(getResources().getString(R.string.close), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                            .show();
+                }
+
+                break;
         }
     }
 
@@ -270,11 +323,15 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
     @Override
     public void onLocationChanged(Location location) {
-        mLocationString = location.getLatitude() + "," + location.getLongitude();
-        System.out.println("Lat: " + location.getLatitude() + "Long: " + location.getLongitude());
-        getAddress(location.getLatitude(), location.getLongitude());
+        locationCounter++;
+        if (locationCounter > 1) {
+            stopLocationUpdate();
+            mLocationString = location.getLatitude() + "," + location.getLongitude();
+            System.out.println("Lat: " + location.getLatitude() + "Long: " + location.getLongitude());
+            getAddress(location.getLatitude(), location.getLongitude());
 //        getLocationFromAddress(AppGlobals.getContext(), "314 E 4th St,Seiling, OK 73663");
 //        System.out.println("Latlong from address" + getLocationFromAddress(AppGlobals.getContext(), "314 E 4th St,Seiling, OK 73663"));
+        }
     }
 
     public LatLng getLocationFromAddress(Context context, String strAddress) {
