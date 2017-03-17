@@ -35,6 +35,9 @@ public class AccountManagerActivity extends AppCompatActivity {
         } else {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
+        if (IntroScreen.getInstance() != null) {
+            IntroScreen.getInstance().finish();
+        }
         setContentView(R.layout.activity_account_manager);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
