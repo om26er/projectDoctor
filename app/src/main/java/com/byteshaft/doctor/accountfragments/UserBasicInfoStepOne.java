@@ -82,7 +82,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private RadioGroup mRadioGroup;
     private RadioButton genderButton;
 
-    private TextView mLoginTextView;
     private TextView mAddressTextView;
 
     private DatePickerDialog datePickerDialog;
@@ -121,8 +120,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName = (EditText) mBaseView.findViewById(R.id.last_name_edit_text);
         mDateOfBirth = (EditText) mBaseView.findViewById(R.id.birth_date_edit_text);
         mAddress = (EditText) mBaseView.findViewById(R.id.address_edit_text);
-
-        mLoginTextView = (TextView) mBaseView.findViewById(R.id.login_text_view);
         mAddressTextView = (TextView) mBaseView.findViewById(R.id.pick_for_current_location);
 
         mNextButton = (Button) mBaseView.findViewById(R.id.next_button);
@@ -133,12 +130,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName.setTypeface(AppGlobals.typefaceNormal);
         mDateOfBirth.setTypeface(AppGlobals.typefaceNormal);
         mAddress.setTypeface(AppGlobals.typefaceNormal);
-
-        mLoginTextView.setTypeface(AppGlobals.robotoItalic);
         mAddressTextView.setTypeface(AppGlobals.typefaceNormal);
 
         mNextButton.setOnClickListener(this);
-        mLoginTextView.setOnClickListener(this);
         mAddressTextView.setOnClickListener(this);
         mDateOfBirth.setOnClickListener(this);
         mRadioGroup.setOnCheckedChangeListener(this);
@@ -159,7 +153,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
             case android.R.id.home:
 
                 return true;
-            default:return false;
+            default:
+                return false;
         }
     }
 
