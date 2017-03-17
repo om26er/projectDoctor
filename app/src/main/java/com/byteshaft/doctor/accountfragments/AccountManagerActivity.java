@@ -30,6 +30,8 @@ public class AccountManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (!AppGlobals.isLogin()) {
             loadFragment(new Login());
+        } else if (!AppGlobals.isInfoAvailable()){
+            loadFragment(new UserBasicInfoStepOne());
         } else {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }

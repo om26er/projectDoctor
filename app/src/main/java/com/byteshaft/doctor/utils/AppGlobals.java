@@ -67,6 +67,7 @@ public class AppGlobals extends Application {
     public static final String KEY_SHOW_NOTIFICATION = "show_notification";
     public static final String KEY_STATE = "state";
     public static final String KEY_USER = "user";
+    public static final String KEY_GOT_INFO = "got_info";
 
 
     public static final String KEY_TOKEN = "token";
@@ -190,6 +191,16 @@ public class AppGlobals extends Application {
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public static void gotInfo(boolean type) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().putBoolean(KEY_GOT_INFO, type).apply();
+    }
+
+    public static boolean isInfoAvailable() {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        return sharedPreferences.getBoolean(KEY_GOT_INFO, false);
     }
 }
 
