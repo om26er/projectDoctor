@@ -68,6 +68,7 @@ public class DoctorsList extends Fragment {
 
         // Setup search view
         EditText toolbarSearchView = new EditText(getActivity());
+        toolbarSearchView.setFocusableInTouchMode(true);
         toolbarSearchView.setBackgroundColor(getResources().getColor(R.color.search_background));
         // Set width / height / gravity
         int[] textSizeAttr = new int[]{android.R.attr.actionBarSize};

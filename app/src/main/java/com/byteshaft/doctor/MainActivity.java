@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -24,6 +25,7 @@ import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.introscreen.IntroScreen;
+import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         if (IntroScreen.getInstance() != null) {
             IntroScreen.getInstance().finish();
         }
+        Log.i("TAG", "token " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         sInstance = this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+        loadFragment(new DoctorsList());
     }
 
     @Override
