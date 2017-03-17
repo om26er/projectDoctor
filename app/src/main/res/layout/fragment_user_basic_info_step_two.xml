@@ -93,7 +93,7 @@
                         android:id="@+id/phone_one_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Phone-1"
+                        android:hint="@string/phone_1"
                         android:inputType="textPersonName" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -116,7 +116,7 @@
                         android:id="@+id/phone_two_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Phone-2"
+                        android:hint="@string/phone_2"
                         android:inputType="textPersonName" />
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
@@ -132,7 +132,7 @@
                 android:id="@+id/emergency_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Emergency Contact"
+                android:hint="@string/emergency_contact"
                 android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
@@ -179,7 +179,7 @@
                     android:id="@+id/notifications_check_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Notifications" />
+                    android:text="@string/notifications" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -193,7 +193,7 @@
                     android:id="@+id/news_check_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="News" />
+                    android:text="@string/news" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -202,7 +202,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="I accept the terms and conditions" />
+            android:text="@string/i_accept_the_terms_and_conditions" />
 
 
         <android.support.v7.widget.AppCompatButton
@@ -212,7 +212,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginTop="15dp"
             android:enabled="false"
-            android:text="Save"
+            android:text="@string/save"
             android:theme="@style/MyButton" />
 
         <TextView
@@ -221,7 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
-            android:text="Terms and conditions of the services"
+            android:text="@string/terms_and_conditions_of_the_services"
             android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>

@@ -27,7 +27,7 @@
                 android:id="@+id/email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -41,7 +41,7 @@
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -55,7 +55,7 @@
                 android:id="@+id/verify_password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirm Password"
+                android:hint="@string/confirm_password"
                 android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
@@ -64,7 +64,7 @@
             android:id="@+id/doctor_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I am a Doctor" />
+            android:text="@string/i_am_a_doctor" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/sign_up_button"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="15dp"
-            android:text="Create account"
+            android:text="@string/create_account"
             android:theme="@style/MyButton" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
-            android:text="Already have an account? Login"
+            android:text="@string/already_have_an_account_login"
             android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>
