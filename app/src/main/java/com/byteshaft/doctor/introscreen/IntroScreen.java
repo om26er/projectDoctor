@@ -44,11 +44,9 @@ public class IntroScreen extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
         if (AppGlobals.isFirstTimeLaunch()) {
-            if (AppGlobals.isLogin()) {
-                finish();
+            if (AppGlobals.isLogin() && AppGlobals.isInfoAvailable()) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             } else {
-                finish();
                 startActivity(new Intent(getApplicationContext(), AccountManagerActivity.class));
             }
         }

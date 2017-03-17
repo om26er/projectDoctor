@@ -36,7 +36,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -130,7 +129,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName.setTypeface(AppGlobals.typefaceNormal);
         mDateOfBirth.setTypeface(AppGlobals.typefaceNormal);
         mAddress.setTypeface(AppGlobals.typefaceNormal);
-        mAddressTextView.setTypeface(AppGlobals.typefaceNormal);
 
         mNextButton.setOnClickListener(this);
         mAddressTextView.setOnClickListener(this);
@@ -181,19 +179,10 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, mLocationString);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
                     if (!AppGlobals.isDoctor()) {
-                        if (AccountManagerActivity.getInstance() != null) {
-                            AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
-                        } else {
-                            MainActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
-                        }
+                        AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
                     } else {
-                        if (AccountManagerActivity.getInstance() != null) {
-                            AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
-                            startLocationUpdates();
-                        } else {
-                            MainActivity.getInstance().loadFragment(new DoctorsBasicInfo());
-                            startLocationUpdates();
-                        }
+                        AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
+                        startLocationUpdates();
                     }
 
                 }
