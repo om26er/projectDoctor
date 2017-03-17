@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:padding="8dp"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -131,8 +132,8 @@
             android:id="@+id/next_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
+            android:padding="10dp"
             android:text="@string/next"
             android:theme="@style/MyButton" />
     </LinearLayout>

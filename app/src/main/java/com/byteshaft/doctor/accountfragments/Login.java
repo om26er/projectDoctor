@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -131,16 +129,16 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                 Helpers.dismissProgressDialog();
                 switch (request.getStatus()) {
                     case HttpRequest.ERROR_NETWORK_UNREACHABLE:
-                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "please check your internet connection");
+                        AppGlobals.alertDialog(getActivity(), getString(R.string.login_faild), getString(R.string.check_internet));
                         break;
                     case HttpURLConnection.HTTP_NOT_FOUND:
-                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "provide a valid EmailAddress");
+                        AppGlobals.alertDialog(getActivity(), getString(R.string.login_faild), getString(R.string.email_not_exist));
                         break;
                     case HttpURLConnection.HTTP_UNAUTHORIZED:
-                        AppGlobals.alertDialog(getActivity(), "Login Failed!", "Please enter correct password");
+                        AppGlobals.alertDialog(getActivity(), getString(R.string.login_faild), getString(R.string.check_password));
                         break;
                     case HttpURLConnection.HTTP_FORBIDDEN:
-                        Toast.makeText(getActivity(), "Please activate your account !", Toast.LENGTH_LONG).show();
+                        Helpers.showSnackBar(getView(), R.string.activate_your_account);
                         AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
                         break;
 

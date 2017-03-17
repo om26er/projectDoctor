@@ -119,7 +119,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName = (EditText) mBaseView.findViewById(R.id.last_name_edit_text);
         mDateOfBirth = (EditText) mBaseView.findViewById(R.id.birth_date_edit_text);
         mAddress = (EditText) mBaseView.findViewById(R.id.address_edit_text);
-
         mAddressTextView = (TextView) mBaseView.findViewById(R.id.pick_for_current_location);
 
         mNextButton = (Button) mBaseView.findViewById(R.id.next_button);
@@ -130,8 +129,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName.setTypeface(AppGlobals.typefaceNormal);
         mDateOfBirth.setTypeface(AppGlobals.typefaceNormal);
         mAddress.setTypeface(AppGlobals.typefaceNormal);
-
-        mAddressTextView.setTypeface(AppGlobals.typefaceNormal);
 
         mNextButton.setOnClickListener(this);
         mAddressTextView.setOnClickListener(this);
@@ -180,7 +177,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, mGenderButtonSting);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, mAddressString);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, mLocationString);
-                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
+                    if (!imageUrl.trim().isEmpty()) {
+                        AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
+                    }
                     if (!AppGlobals.isDoctor()) {
                         AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
                     } else {
