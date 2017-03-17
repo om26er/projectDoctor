@@ -179,7 +179,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, mGenderButtonSting);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, mAddressString);
                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, mLocationString);
-                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
+                    if (!imageUrl.trim().isEmpty()) {
+                        AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
+                    }
                     if (!AppGlobals.isDoctor()) {
                         AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
                         stopLocationUpdate();

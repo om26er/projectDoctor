@@ -1,8 +1,10 @@
 package com.byteshaft.doctor.accountfragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,15 +16,25 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.requests.FormData;
+import com.byteshaft.requests.HttpRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSelectedListener,
-        CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+        CompoundButton.OnCheckedChangeListener, View.OnClickListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnFileUploadProgressListener {
 
     private View mBaseView;
     private Button mSaveButton;
@@ -54,6 +66,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     private String mNewsCheckBoxString;
     private String mTermsConditionCheckBoxString;
 
+    private HttpRequest mRequest;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_doctor_basic_info, container, false);
@@ -84,54 +98,54 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
 
 
         List<String> StateList = new ArrayList<>();
-        StateList.add("State1");
-        StateList.add("State2");
-        StateList.add("State3");
-        StateList.add("State4");
-        StateList.add("State5");
+        StateList.add("state1");
+        StateList.add("state2");
+        StateList.add("state3");
+        StateList.add("state4");
+        StateList.add("state5");
         ArrayAdapter<String> StateListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, StateList);
         StateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mStateSpinner.setAdapter(StateListAdapter);
 
         List<String> citiesList = new ArrayList<>();
-        citiesList.add("City1");
-        citiesList.add("City2");
-        citiesList.add("City3");
-        citiesList.add("City4");
-        citiesList.add("City5");
+        citiesList.add("city1");
+        citiesList.add("city2");
+        citiesList.add("city3");
+        citiesList.add("city4");
+        citiesList.add("city5");
         ArrayAdapter<String> CitiesListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, citiesList);
         CitiesListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCitySpinner.setAdapter(CitiesListAdapter);
 
         List<String> specialityList = new ArrayList<>();
-        specialityList.add("ENT");
-        specialityList.add("Dermatologist");
-        specialityList.add("Surgeon");
+        specialityList.add("ent");
+        specialityList.add("dermatologist");
+        specialityList.add("surgeon");
         specialityList.add("physiotherapist");
-        specialityList.add("Dentist");
+        specialityList.add("dentist");
         ArrayAdapter<String> SpecialityListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, specialityList);
         SpecialityListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpecialitySpinner.setAdapter(SpecialityListAdapter);
 
         List<String> clinicList = new ArrayList<>();
-        clinicList.add("Doctor dray clinic");
-        clinicList.add("Cantt clinic");
-        clinicList.add("City hospital");
-        clinicList.add("Medicare");
-        clinicList.add("Patient care");
+        clinicList.add("dray clinic");
+        clinicList.add("cantt clinic");
+        clinicList.add("city hospital");
+        clinicList.add("medicare");
+        clinicList.add("patient care");
         ArrayAdapter<String> clinicListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, clinicList);
         clinicListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAffiliatedClinicsSpinner.setAdapter(clinicListAdapter);
 
         List<String> subscriptionList = new ArrayList<>();
-        subscriptionList.add("Basic plan");
-        subscriptionList.add("Monthly plan");
+        subscriptionList.add("basic plan");
+        subscriptionList.add("monthly plan");
         subscriptionList.add("Premium plan");
-        subscriptionList.add("Professional plan");
+        subscriptionList.add("professional plan");
         ArrayAdapter<String> subscriptionListAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, subscriptionList);
         subscriptionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -156,9 +170,9 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-
                 return true;
-            default:return false;
+            default:
+                return false;
         }
     }
 
@@ -199,20 +213,23 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         switch (compoundButton.getId()) {
             case R.id.notifications_check_box:
                 if (mNotificationCheckBox.isChecked()) {
-                    mNotificationCheckBoxString = mNotificationCheckBox.getText().toString();
+                    mNotificationCheckBoxString = "true";
                     System.out.println(mNotificationCheckBoxString);
                 }
                 break;
             case R.id.news_check_box:
                 if (mNewsCheckBox.isChecked()) {
-                    mNewsCheckBoxString = mNewsCheckBox.getText().toString();
+                    mNewsCheckBoxString = "true";
                     System.out.println(mNewsCheckBoxString);
                 }
                 break;
             case R.id.terms_check_box:
                 if (mTermsConditionCheckBox.isChecked()) {
+                    mSaveButton.setEnabled(true);
                     mTermsConditionCheckBoxString = mTermsConditionCheckBox.getText().toString();
                     System.out.println(mTermsConditionCheckBoxString);
+                } else {
+                    mSaveButton.setEnabled(false);
                 }
                 break;
         }
@@ -220,6 +237,10 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void onClick(View view) {
+        mPhoneTwoEditTextString = mPhoneTwoEditText.getText().toString();
+        if (validateEditText()) {
+            sendingDataToServer();
+        }
 
     }
 
@@ -249,5 +270,130 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         }
 
         return valid;
+    }
+
+    private void sendingDataToServer() {
+        FormData data = new FormData();
+        data.append(FormData.TYPE_CONTENT_TEXT, "identity_document", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DOC_ID));
+        data.append(FormData.TYPE_CONTENT_TEXT, "first_name", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_FIRST_NAME));
+        data.append(FormData.TYPE_CONTENT_TEXT, "last_name", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
+        data.append(FormData.TYPE_CONTENT_TEXT, "dob", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH));
+        data.append(FormData.TYPE_CONTENT_TEXT, "gender", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_GENDER));
+        data.append(FormData.TYPE_CONTENT_TEXT, "location", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LOCATION));
+        data.append(FormData.TYPE_CONTENT_TEXT, "address", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ADDRESS));
+        if (!AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL).trim().isEmpty()) {
+            data.append(FormData.TYPE_CONTENT_FILE, "photo", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL));
+        }
+        data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "speciality", mSpecialitySpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic", mAffiliatedClinicsSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "subscription_type", mSubscriptionSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_primary", mPhoneOneEditTextString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_secondary", mPhoneTwoEditTextString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "consultation_time", mConsultationTimeEditTextString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "college_id", mCollegeIdEditTextString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "show_notification", mNotificationCheckBoxString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "show_news", mNewsCheckBoxString);
+
+        mRequest = new HttpRequest(getActivity().getApplicationContext());
+        mRequest.setOnReadyStateChangeListener(this);
+        mRequest.setOnFileUploadProgressListener(this);
+        mRequest.open("POST", String.format("%suser/profile", AppGlobals.BASE_URL));
+        mRequest.setRequestHeader("Authorization", "Token " +
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+        mRequest.send(data);
+    }
+
+    @Override
+    public void onReadyStateChange(HttpRequest request, int readyState) {
+        switch (readyState) {
+            case HttpRequest.STATE_DONE:
+                Helpers.dismissProgressDialog();
+                switch (request.getStatus()) {
+                    case HttpRequest.ERROR_NETWORK_UNREACHABLE:
+                        AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "please check your internet connection");
+                        break;
+                    case HttpURLConnection.HTTP_NOT_FOUND:
+                        AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "provide a valid EmailAddress");
+                        break;
+                    case HttpURLConnection.HTTP_UNAUTHORIZED:
+                        AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "Please enter correct password");
+                        break;
+                    case HttpURLConnection.HTTP_FORBIDDEN:
+                        AppGlobals.alertDialog(getActivity(), "Inactive Account", "Please activate your account");
+                        AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
+                        break;
+                    case HttpURLConnection.HTTP_CREATED:
+                        try {
+                            JSONObject jsonObject = new JSONObject(request.getResponseText());
+
+                            String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
+                            String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
+                            String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
+
+                            String gender = jsonObject.getString(AppGlobals.KEY_GENDER);
+                            String dateOfBirth = jsonObject.getString(AppGlobals.KEY_DATE_OF_BIRTH);
+                            String phoneNumberPrimary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_PRIMARY);
+                            String phoneNumberSecondary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_SECONDARY);
+
+                            String affiliateClinic = jsonObject.getString(AppGlobals.KEY_AFFILIATE_CLINIC);
+                            String subscriptionType = jsonObject.getString(AppGlobals.KEY_SUBSCRIPTION_TYPE);
+                            String address = jsonObject.getString(AppGlobals.KEY_ADDRESS);
+                            String location = jsonObject.getString(AppGlobals.KEY_LOCATION);
+
+                            String chatStatus = jsonObject.getString(AppGlobals.KEY_CHAT_STATUS);
+                            String state = jsonObject.getString(AppGlobals.KEY_STATE);
+                            String city = jsonObject.getString(AppGlobals.KEY_CITY);
+                            String docId = jsonObject.getString(AppGlobals.KEY_DOC_ID);
+                            String collegeId = jsonObject.getString(AppGlobals.KEY_COLLEGE_ID);
+                            String showNews = jsonObject.getString(AppGlobals.KEY_SHOW_NEWS);
+
+                            String showNotification = jsonObject.getString(AppGlobals.KEY_SHOW_NOTIFICATION);
+                            String emergencyContact = jsonObject.getString(AppGlobals.KEY_EMERGENCY_CONTACT);
+                            String consultationTime = jsonObject.getString(AppGlobals.KEY_CONSULTATION_TIME);
+                            String reviewStars = jsonObject.getString(AppGlobals.KEY_REVIEW_STARS);
+
+
+                            //saving values
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FIRST_NAME, firstName);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LAST_NAME, lastName);
+
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, gender);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, dateOfBirth);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY, phoneNumberPrimary);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY, phoneNumberSecondary);
+
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AFFILIATE_CLINIC, affiliateClinic);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SUBSCRIPTION_TYPE, subscriptionType);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, address);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, location);
+
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CHAT_STATUS, chatStatus);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_STATE, state);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CITY, city);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, docId);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NEWS, showNews);
+
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NOTIFICATION, showNotification);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT, emergencyContact);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CONSULTATION_TIME, consultationTime);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_REVIEW_STARS, reviewStars);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_COLLEGE_ID, collegeId);
+                            Log.i("Emergency Contact", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
+                            startActivity(new Intent(getActivity(), MainActivity.class));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                }
+        }
+
+    }
+
+    @Override
+    public void onFileUploadProgress(HttpRequest request, File file, long loaded, long total) {
+
     }
 }

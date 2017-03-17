@@ -48,6 +48,7 @@ public class AppGlobals extends Application {
     public static final String KEY_FIRST_NAME = "first_name";
     public static final String KEY_LAST_NAME = "last_name";
     public static final String KEY_DOC_ID = "identity_document";
+    public static final String KEY_COLLEGE_ID = "college_id";
     public static final String KEY_DATE_OF_BIRTH = "dob";
     public static final String KEY_GENDER = "gender";
     public static final String KEY_ADDRESS = "address";
@@ -63,9 +64,13 @@ public class AppGlobals extends Application {
     public static final String KEY_CHAT_STATUS = "available_to_chat";
     public static final String KEY_INSURANCE_CARRIER = "insurance_carrier";
     public static final String KEY_EMERGENCY_CONTACT = "emergency_contact";
+    public static final String KEY_SUBSCRIPTION_TYPE = "subscription_type";
+    public static final String KEY_CONSULTATION_TIME = "consultation_time";
+    public static final String KEY_REVIEW_STARS = "review_stars";
     public static final String KEY_SHOW_NEWS = "show_news";
     public static final String KEY_SHOW_NOTIFICATION = "show_notification";
     public static final String KEY_STATE = "state";
+    public static final String KEY_CITY = "city";
     public static final String KEY_USER = "user";
 
 
