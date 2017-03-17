@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
@@ -353,7 +352,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NOTIFICATION, showNotification);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT, emergencyContact);
                             Log.i("Emergency Contact", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
-
+                            AppGlobals.gotInfo(true);
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } catch (JSONException e) {
                             e.printStackTrace();
