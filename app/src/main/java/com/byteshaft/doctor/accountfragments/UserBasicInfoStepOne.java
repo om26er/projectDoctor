@@ -185,7 +185,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                         AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
                     } else {
                         AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
-                        startLocationUpdates();
                     }
                 }
 
