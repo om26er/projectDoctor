@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 
 /**
  * Created by s9iper1 on 2/20/17.
@@ -80,5 +82,12 @@ public class Helpers {
         options.inJustDecodeBounds = false;
         bm = BitmapFactory.decodeFile(selectedImagePath, options);
         return bm;
+    }
+
+    public static void showSnackBar(View view, int id) {
+        Snackbar.make(view, AppGlobals.getContext().getResources()
+                .getString(id), Snackbar.LENGTH_SHORT)
+                .setActionTextColor(AppGlobals.getContext().getResources().getColor(android.R.color.holo_red_light ))
+                .show();
     }
 }
