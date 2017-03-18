@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
@@ -167,7 +165,8 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                             AppGlobals.loginState(true);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ACCOUNT_TYPE, accountType);
-                            AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
+                            startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
+//                            AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -191,56 +190,24 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                     case HttpRequest.STATE_DONE:
                         switch (request.getStatus()) {
                             case HttpURLConnection.HTTP_OK:
-                                System.out.println(request.getResponseText() + "working ");
+                                System.out.println(request.getResponseText() + "working ok kro");
                                 try {
                                     JSONObject jsonObject = new JSONObject(request.getResponseText());
 
-                                    String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                                     String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
                                     String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
-
+                                    String speciality = jsonObject.getString(AppGlobals.KEY_DOC_SPECIALITY);
                                     String gender = jsonObject.getString(AppGlobals.KEY_GENDER);
                                     String dateOfBirth = jsonObject.getString(AppGlobals.KEY_DATE_OF_BIRTH);
-                                    String phoneNumberPrimary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_PRIMARY);
-                                    String phoneNumberSecondary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_SECONDARY);
-
-                                    String affiliateClinic = jsonObject.getString(AppGlobals.KEY_AFFILIATE_CLINIC);
-                                    String insuranceCarrier = jsonObject.getString(AppGlobals.KEY_INSURANCE_CARRIER);
-                                    String address = jsonObject.getString(AppGlobals.KEY_ADDRESS);
-                                    String location = jsonObject.getString(AppGlobals.KEY_LOCATION);
-
-                                    String chatStatus = jsonObject.getString(AppGlobals.KEY_CHAT_STATUS);
-                                    String state = jsonObject.getString(AppGlobals.KEY_STATE);
-                                    String city = jsonObject.getString(AppGlobals.KEY_CITY);
-                                    String docId = jsonObject.getString(AppGlobals.KEY_DOC_ID);
-                                    String showNews = jsonObject.getString(AppGlobals.KEY_SHOW_NEWS);
-
-                                    String showNotification = jsonObject.getString(AppGlobals.KEY_SHOW_NOTIFICATION);
-                                    String emergencyContact = jsonObject.getString(AppGlobals.KEY_EMERGENCY_CONTACT);
 
                                     //saving values
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FIRST_NAME, firstName);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LAST_NAME, lastName);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_SPECIALITY, speciality);
 
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, gender);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, dateOfBirth);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY, phoneNumberPrimary);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY, phoneNumberSecondary);
 
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AFFILIATE_CLINIC, affiliateClinic);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_INSURANCE_CARRIER, insuranceCarrier);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, address);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, location);
-
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CHAT_STATUS, chatStatus);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_STATE, state);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CITY, city);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, docId);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NEWS, showNews);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NOTIFICATION, showNotification);
-                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT, emergencyContact);
-                                    Log.i("Emergency Contact", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
                                     AppGlobals.gotInfo(true);
                                     startActivity(new Intent(getActivity(), MainActivity.class));
                                 } catch (JSONException e) {
@@ -258,7 +225,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
 
             }
         });
-        request.open("POST", String.format("%suser/profile", AppGlobals.BASE_URL));
+        request.open("GET", String.format("%suser/profile", AppGlobals.BASE_URL));
         request.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         request.send();

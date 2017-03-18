@@ -77,8 +77,13 @@ public class MainActivity extends AppCompatActivity
             TextView docSpeciality = (TextView) headerView.findViewById(R.id.doc_nav_speciality);
             TextView docExpDate = (TextView) headerView.findViewById(R.id.doc_nav_expiry_date);
 
+            // setting up information
+            docName.setText(AppGlobals.getStringFromSharedPreferences(
+                    AppGlobals.KEY_FIRST_NAME) + " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
             docEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
-            final SwitchCompat PatientOnlineSwitch = (SwitchCompat) headerView.findViewById(doc_nav_online_switch);
+            docSpeciality.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DOC_SPECIALITY));
+
+            final SwitchCompat PatientOnlineSwitch = (SwitchCompat) headerView.findViewById(R.id.doc_nav_online_switch);
             PatientOnlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
