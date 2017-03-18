@@ -28,7 +28,6 @@ import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.introscreen.IntroScreen;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
-
 import static com.byteshaft.doctor.R.id.doc_nav_online_switch;
 import static com.byteshaft.doctor.R.id.patient_nav_online_switch;
 

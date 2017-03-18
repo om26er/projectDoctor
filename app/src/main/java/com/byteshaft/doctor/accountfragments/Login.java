@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,9 +165,9 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                             }
                             AppGlobals.loginState(true);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ACCOUNT_TYPE, accountType);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
+                            Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
                             startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
-//                            AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
