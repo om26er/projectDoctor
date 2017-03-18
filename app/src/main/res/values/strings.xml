@@ -93,6 +93,7 @@
     <string name="last_name">Last Name</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="choose_your_gender">Please chose your Gender</string>
     <string name="pick_for_current_location">Pick for current location</string>
     <string name="address">Address</string>
     <string name="emergency_contact">Emergency Contact</string>
