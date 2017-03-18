@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
@@ -25,6 +26,9 @@ import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.introscreen.IntroScreen;
 import com.byteshaft.doctor.utils.Helpers;
+
+import static com.byteshaft.doctor.R.id.doc_nav_online_switch;
+import static com.byteshaft.doctor.R.id.patient_nav_online_switch;
 
 
 public class MainActivity extends AppCompatActivity
@@ -63,26 +67,52 @@ public class MainActivity extends AppCompatActivity
             headerView = getLayoutInflater().inflate(R.layout.nav_header_doctor, navigationView, false);
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.doctor_menus);
+
+            /// Doctor's Navigation items
+            TextView docName = (TextView) headerView.findViewById(R.id.doc_nav_name);
+            TextView docEmail = (TextView) headerView.findViewById(R.id.doc_nav_email);
+            TextView docSpeciality = (TextView) headerView.findViewById(R.id.doc_nav_speciality);
+            TextView docExpDate = (TextView) headerView.findViewById(R.id.doc_nav_expiry_date);
+            final SwitchCompat PatientOnlineSwitch = (SwitchCompat) headerView.findViewById(doc_nav_online_switch);
+            PatientOnlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    switch (compoundButton.getId()) {
+                        case doc_nav_online_switch:
+                            if (b) {
+                                PatientOnlineSwitch.setText(R.string.online);
+                            } else {
+                                PatientOnlineSwitch.setText(R.string.offline);
+                            }
+                            break;
+                    }
+                }
+            });
+
         } else {
             headerView = getLayoutInflater().inflate(R.layout.nav_header_patient, navigationView, false);
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.patient_menu);
-        }
-        final SwitchCompat onlineSwitch = (SwitchCompat) headerView.findViewById(R.id.online_switch);
-        onlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switch (compoundButton.getId()) {
-                    case R.id.online_switch:
-                        if (b) {
-                            onlineSwitch.setText("On-line");
-                        } else {
-                            onlineSwitch.setText("Off-line");
-                        }
-                        break;
+            TextView patientName = (TextView) headerView.findViewById(R.id.patient_nav_name);
+            TextView patientEmail = (TextView) headerView.findViewById(R.id.patient_nav_email);
+            TextView patientAge = (TextView) headerView.findViewById(R.id.patient_nav_age);
+            final SwitchCompat DocOnlineSwitch = (SwitchCompat) headerView.findViewById(patient_nav_online_switch);
+            DocOnlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    switch (compoundButton.getId()) {
+                        case patient_nav_online_switch:
+                            if (b) {
+                                DocOnlineSwitch.setText(R.string.online);
+                            } else {
+                                DocOnlineSwitch.setText(R.string.offline);
+                            }
+                            break;
+                    }
                 }
-            }
-        });
+            });
+        }
+
     }
 
     @Override
