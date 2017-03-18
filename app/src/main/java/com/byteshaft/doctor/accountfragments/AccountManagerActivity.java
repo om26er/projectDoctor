@@ -70,12 +70,16 @@ public class AccountManagerActivity extends AppCompatActivity {
             Log.i("TAG", "count " + getSupportFragmentManager().getBackStackEntryCount());
 
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStack();
+                Log.i("TAG", "count again" + getSupportFragmentManager().getBackStackEntryCount());
+                Fragment accountActivation = getSupportFragmentManager()
+                        .findFragmentByTag("com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne");
+                if (getSupportFragmentManager().getBackStackEntryCount() == 1 && accountActivation.isVisible()) {
+                    super.onBackPressed();
+                }
             } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
                 this.finish();
             }
-//        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-//            finish();
-//        }
             super.onBackPressed();
         }
     }
