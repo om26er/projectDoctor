@@ -1,5 +1,6 @@
 package com.byteshaft.doctor.accountfragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -162,7 +164,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
-                            AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepOne());
+                            startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

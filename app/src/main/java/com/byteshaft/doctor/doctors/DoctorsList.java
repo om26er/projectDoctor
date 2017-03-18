@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -53,6 +54,7 @@ public class DoctorsList extends Fragment {
     private LinearLayout searchContainer;
     private CustomAdapter customAdapter;
     private HashMap<String, Integer> showingPosition;
+    private EditText toolbarSearchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,8 +69,7 @@ public class DoctorsList extends Fragment {
         searchContainer.setLayoutParams(containerParams);
 
         // Setup search view
-        EditText toolbarSearchView = new EditText(getActivity());
-        toolbarSearchView.setFocusableInTouchMode(true);
+        toolbarSearchView = new EditText(getActivity());
         toolbarSearchView.setBackgroundColor(getResources().getColor(R.color.search_background));
         // Set width / height / gravity
         int[] textSizeAttr = new int[]{android.R.attr.actionBarSize};
@@ -108,6 +109,16 @@ public class DoctorsList extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         });
+        toolbarSearchView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                toolbarSearchView.setFocusable(true);
+                toolbarSearchView.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+        toolbarSearchView.setFocusableInTouchMode(false);
+        toolbarSearchView.setFocusable(false);
         toolbarSearchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -154,6 +165,7 @@ public class DoctorsList extends Fragment {
         });
         return mBaseView;
     }
+
 
 
     @Override
@@ -264,6 +276,5 @@ public class DoctorsList extends Fragment {
         LinearLayout dateLayout;
         TextView date;
         ImageView status;
-
     }
 }
