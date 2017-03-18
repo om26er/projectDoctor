@@ -30,7 +30,7 @@ public class Helpers {
 
     public static boolean isDoctor() {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        return sharedPreferences.getBoolean(AppGlobals.IS_DOCTOR, false);
+        return sharedPreferences.getBoolean(AppGlobals.IS_DOCTOR, true);
     }
 
     public static void userType(boolean type) {

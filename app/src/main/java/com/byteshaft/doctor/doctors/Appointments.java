@@ -28,10 +28,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
-/**
- * Created by s9iper1 on 3/9/17.
- */
-
 public class Appointments extends Fragment {
 
     private View mBaseView;

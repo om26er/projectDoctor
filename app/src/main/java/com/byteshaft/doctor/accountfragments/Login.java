@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
@@ -148,10 +149,13 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                         System.out.println(request.getResponseText() + "working ");
                         try {
                             JSONObject jsonObject = new JSONObject(request.getResponseText());
+                            String token = jsonObject.getString(AppGlobals.KEY_TOKEN);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TOKEN, token);
+                            gettingUserData();
                             String accountType = jsonObject.getString(AppGlobals.KEY_ACCOUNT_TYPE);
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
-                            String token = jsonObject.getString(AppGlobals.KEY_TOKEN);
+
 
                             //saving values
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
@@ -177,6 +181,88 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
     @Override
     public void onError(HttpRequest request, int readyState, short error, Exception exception) {
 
+    }
+
+    private void gettingUserData() {
+        HttpRequest request = new HttpRequest(AppGlobals.getContext());
+        request.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest request, int readyState) {
+                switch (readyState) {
+                    case HttpRequest.STATE_DONE:
+                        switch (request.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                System.out.println(request.getResponseText() + "working ");
+                                try {
+                                    JSONObject jsonObject = new JSONObject(request.getResponseText());
+
+                                    String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
+                                    String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
+                                    String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
+
+                                    String gender = jsonObject.getString(AppGlobals.KEY_GENDER);
+                                    String dateOfBirth = jsonObject.getString(AppGlobals.KEY_DATE_OF_BIRTH);
+                                    String phoneNumberPrimary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_PRIMARY);
+                                    String phoneNumberSecondary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_SECONDARY);
+
+                                    String affiliateClinic = jsonObject.getString(AppGlobals.KEY_AFFILIATE_CLINIC);
+                                    String insuranceCarrier = jsonObject.getString(AppGlobals.KEY_INSURANCE_CARRIER);
+                                    String address = jsonObject.getString(AppGlobals.KEY_ADDRESS);
+                                    String location = jsonObject.getString(AppGlobals.KEY_LOCATION);
+
+                                    String chatStatus = jsonObject.getString(AppGlobals.KEY_CHAT_STATUS);
+                                    String state = jsonObject.getString(AppGlobals.KEY_STATE);
+                                    String city = jsonObject.getString(AppGlobals.KEY_CITY);
+                                    String docId = jsonObject.getString(AppGlobals.KEY_DOC_ID);
+                                    String showNews = jsonObject.getString(AppGlobals.KEY_SHOW_NEWS);
+
+                                    String showNotification = jsonObject.getString(AppGlobals.KEY_SHOW_NOTIFICATION);
+                                    String emergencyContact = jsonObject.getString(AppGlobals.KEY_EMERGENCY_CONTACT);
+
+                                    //saving values
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_USER_ID, userId);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FIRST_NAME, firstName);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LAST_NAME, lastName);
+
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, gender);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, dateOfBirth);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY, phoneNumberPrimary);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY, phoneNumberSecondary);
+
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AFFILIATE_CLINIC, affiliateClinic);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_INSURANCE_CARRIER, insuranceCarrier);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, address);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, location);
+
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CHAT_STATUS, chatStatus);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_STATE, state);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CITY, city);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, docId);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NEWS, showNews);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NOTIFICATION, showNotification);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT, emergencyContact);
+                                    Log.i("Emergency Contact", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
+                                    AppGlobals.gotInfo(true);
+                                    startActivity(new Intent(getActivity(), MainActivity.class));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                        }
+                }
+
+            }
+        });
+        request.setOnErrorListener(new HttpRequest.OnErrorListener() {
+            @Override
+            public void onError(HttpRequest request, int readyState, short error, Exception exception) {
+
+            }
+        });
+        request.open("POST", String.format("%suser/profile", AppGlobals.BASE_URL));
+        request.setRequestHeader("Authorization", "Token " +
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+        request.send();
     }
 
 }
