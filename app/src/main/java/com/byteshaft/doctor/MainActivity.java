@@ -53,21 +53,26 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
-        View headerView;
         if (Helpers.isDoctor()) {
+            View headerView;
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+
+                }
+            });
+            navigationView.setNavigationItemSelectedListener(this);
+            navigationView.setItemIconTintList(null);
             headerView = getLayoutInflater().inflate(R.layout.nav_header_doctor, navigationView, false);
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.doctor_menus);
-
             /// Doctor's Navigation items
             TextView docName = (TextView) headerView.findViewById(R.id.doc_nav_name);
             TextView docEmail = (TextView) headerView.findViewById(R.id.doc_nav_email);
@@ -95,6 +100,22 @@ public class MainActivity extends AppCompatActivity
             });
 
         } else {
+            View headerView;
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+
+                }
+            });
+            navigationView.setNavigationItemSelectedListener(this);
+            navigationView.setItemIconTintList(null);
             headerView = getLayoutInflater().inflate(R.layout.nav_header_patient, navigationView, false);
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.patient_menu);
@@ -117,8 +138,8 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             });
+            loadFragment(new DoctorsList());
         }
-        loadFragment(new DoctorsList());
     }
 
     @Override
