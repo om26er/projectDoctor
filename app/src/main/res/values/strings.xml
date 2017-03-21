@@ -95,6 +95,7 @@
     <string name="female">Female</string>
     <string name="choose_your_gender">Please chose your Gender</string>
     <string name="pick_for_current_location">Pick for current location</string>
+    <string name="enter_address">please provide your address</string>
     <string name="address">Address</string>
     <string name="emergency_contact">Emergency Contact</string>
     <string name="i_accept_the_terms_and_conditions">I accept the terms and conditions</string>
@@ -105,5 +106,6 @@
     <string name="activate_your_account">Please activate your account !</string>
     <string name="online">Online</string>
     <string name="offline">Offline</string>
+    <string name="dashboard">Dashboard</string>
 
 </resources>

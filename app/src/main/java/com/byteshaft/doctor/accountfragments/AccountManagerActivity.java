@@ -74,7 +74,8 @@ public class AccountManagerActivity extends AppCompatActivity {
                 Log.i("TAG", "count again" + getSupportFragmentManager().getBackStackEntryCount());
                 Fragment accountActivation = getSupportFragmentManager()
                         .findFragmentByTag("com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne");
-                if (getSupportFragmentManager().getBackStackEntryCount() == 1 && accountActivation.isVisible()) {
+                if (getSupportFragmentManager().getBackStackEntryCount() == 1 && accountActivation != null &&
+                        accountActivation.isVisible()) {
                     super.onBackPressed();
                 }
             } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {

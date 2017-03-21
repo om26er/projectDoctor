@@ -45,7 +45,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     private Spinner mStateSpinner;
     private Spinner mCitySpinner;
     private Spinner mInsuranceCarrierSpinner;
-    private Spinner mAffiliatedClinicsSpinner;
+//    private Spinner mAffiliatedClinicsSpinner;
     private TextView mStateSpinnerTextView;
     private EditText mPhoneOneEditText;
     private EditText mPhoneTwoEditText;
@@ -75,7 +75,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mStateSpinner = (Spinner) mBaseView.findViewById(R.id.states_spinner);
         mCitySpinner = (Spinner) mBaseView.findViewById(R.id.cities_spinner);
         mInsuranceCarrierSpinner = (Spinner) mBaseView.findViewById(R.id.insurance_spinner);
-        mAffiliatedClinicsSpinner = (Spinner) mBaseView.findViewById(R.id.clinic_spinner);
+//        mAffiliatedClinicsSpinner = (Spinner) mBaseView.findViewById(R.id.clinic_spinner);
         mStateSpinnerTextView = (TextView) mBaseView.findViewById(R.id.states_spinner_text_view);
 
         mPhoneOneEditText = (EditText) mBaseView.findViewById(R.id.phone_one_edit_text);
@@ -128,20 +128,20 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mInsuranceCarrierSpinner.setAdapter(InsuranceCarrierListAdapter);
 
 
-        List<String> clinicList = new ArrayList<>();
-        clinicList.add("Doctor dray clinic");
-        clinicList.add("Cantt clinic");
-        clinicList.add("City hospital");
-        clinicList.add("Medicare");
-        clinicList.add("Patient care");
-        ArrayAdapter<String> clinicListAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, clinicList);
-        clinicListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mAffiliatedClinicsSpinner.setAdapter(clinicListAdapter);
+//        List<String> clinicList = new ArrayList<>();
+//        clinicList.add("Doctor dray clinic");
+//        clinicList.add("Cantt clinic");
+//        clinicList.add("City hospital");
+//        clinicList.add("Medicare");
+//        clinicList.add("Patient care");
+//        ArrayAdapter<String> clinicListAdapter = new ArrayAdapter<>(getActivity(),
+//                android.R.layout.simple_list_item_1, clinicList);
+//        clinicListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mAffiliatedClinicsSpinner.setAdapter(clinicListAdapter);
 
         mStateSpinner.setOnItemSelectedListener(this);
         mCitySpinner.setOnItemSelectedListener(this);
-        mAffiliatedClinicsSpinner.setOnItemSelectedListener(this);
+//        mAffiliatedClinicsSpinner.setOnItemSelectedListener(this);
         mInsuranceCarrierSpinner.setOnItemSelectedListener(this);
 
         mNotificationCheckBox.setOnCheckedChangeListener(this);
@@ -157,7 +157,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-
                 return true;
             default:
                 return false;
@@ -179,10 +178,10 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 mInsuranceCarrierSpinnerValueString = adapterView.getItemAtPosition(i).toString();
                 System.out.println(mInsuranceCarrierSpinnerValueString);
                 break;
-            case R.id.clinic_spinner:
-                mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(mAffiliatedClinicsSpinnerValueString);
-                break;
+//            case R.id.clinic_spinner:
+//                mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
+//                System.out.println(mAffiliatedClinicsSpinnerValueString);
+//                break;
         }
 
     }
@@ -265,7 +264,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "insurance_carrier", mInsuranceCarrierSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic", mAffiliatedClinicsSpinnerValueString);
+//        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic", mAffiliatedClinicsSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_primary", mPhoneOneEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_secondary", mPhoneTwoEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "emergency_contact", mEmergencyContactString);
@@ -279,6 +278,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mRequest.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         mRequest.send(data);
+        Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
     }
 
     @Override
@@ -316,7 +316,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                             String phoneNumberPrimary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_PRIMARY);
                             String phoneNumberSecondary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_SECONDARY);
 
-                            String affiliateClinic = jsonObject.getString(AppGlobals.KEY_AFFILIATE_CLINIC);
+//                            String affiliateClinic = jsonObject.getString(AppGlobals.KEY_AFFILIATE_CLINIC);
                             String insuranceCarrier = jsonObject.getString(AppGlobals.KEY_INSURANCE_CARRIER);
                             String address = jsonObject.getString(AppGlobals.KEY_ADDRESS);
                             String location = jsonObject.getString(AppGlobals.KEY_LOCATION);
@@ -340,7 +340,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY, phoneNumberPrimary);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY, phoneNumberSecondary);
 
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AFFILIATE_CLINIC, affiliateClinic);
+//                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_AFFILIATE_CLINIC, affiliateClinic);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_INSURANCE_CARRIER, insuranceCarrier);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, address);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_LOCATION, location);

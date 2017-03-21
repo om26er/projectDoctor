@@ -23,7 +23,7 @@
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/doctor_name"
+            android:id="@+id/doctor_name_dashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/doctor_image"
@@ -39,7 +39,7 @@
             android:id="@+id/doctor_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctor_name"
+            android:layout_below="@+id/doctor_name_dashboard"
             android:layout_marginTop="2dp"
             android:gravity="center"
             android:text="drake@gmail.com"
