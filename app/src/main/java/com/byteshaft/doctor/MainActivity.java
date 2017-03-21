@@ -1,5 +1,8 @@
 package com.byteshaft.doctor;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -27,6 +30,13 @@ import com.byteshaft.doctor.patients.MyAppointments;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +46,8 @@ public class MainActivity extends AppCompatActivity
     public static MainActivity getInstance() {
         return sInstance;
     }
+
+    private CircleImageView profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +89,9 @@ public class MainActivity extends AppCompatActivity
             TextView docEmail = (TextView) headerView.findViewById(R.id.doc_nav_email);
             TextView docSpeciality = (TextView) headerView.findViewById(R.id.doc_nav_speciality);
             TextView docExpDate = (TextView) headerView.findViewById(R.id.doc_nav_expiry_date);
+            profilePicture = (CircleImageView) headerView.findViewById(R.id.nav_imageView);
 
-            //stting typeface
+            //setting typeface
             docName.setTypeface(AppGlobals.typefaceNormal);
             docEmail.setTypeface(AppGlobals.typefaceNormal);
             docSpeciality.setTypeface(AppGlobals.typefaceNormal);
@@ -130,6 +143,7 @@ public class MainActivity extends AppCompatActivity
             TextView patientName = (TextView) headerView.findViewById(R.id.patient_nav_name);
             TextView patientEmail = (TextView) headerView.findViewById(R.id.patient_nav_email);
             TextView patientAge = (TextView) headerView.findViewById(R.id.patient_nav_age);
+            profilePicture = (CircleImageView) headerView.findViewById(R.id.nav_imageView);
             patientName.setText(AppGlobals.getStringFromSharedPreferences(
                     AppGlobals.KEY_FIRST_NAME) + " " +
                     AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
@@ -152,6 +166,9 @@ public class MainActivity extends AppCompatActivity
                 }
             });
             loadFragment(new DoctorsList());
+            if (AppGlobals.isLogin()) {
+                new GetBitMap();
+            }
         }
     }
 
@@ -193,5 +210,34 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.container, fragment);
         tx.commit();
+    }
+
+    class GetBitMap extends AsyncTask<String, String, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            return getBitmapFromURL();
+        }
+
+        public Bitmap getBitmapFromURL() {
+            try {
+                URL url = new URL(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL));
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            } catch (IOException e) {
+                // Log exception
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            profilePicture.setImageBitmap(bitmap);
+        }
     }
 }

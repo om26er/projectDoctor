@@ -52,11 +52,9 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
         mLoginButton.setTypeface(AppGlobals.robotoRegular);
         mForgotPasswordTextView.setTypeface(AppGlobals.robotoBoldItalic);
         mSignUpTextView.setTypeface(AppGlobals.typefaceNormal);
-
         mLoginButton.setOnClickListener(this);
         mForgotPasswordTextView.setOnClickListener(this);
         mSignUpTextView.setOnClickListener(this);
-
         return mBaseView;
     }
 
@@ -154,7 +152,6 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                             String accountType = jsonObject.getString(AppGlobals.KEY_ACCOUNT_TYPE);
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
-
 
                             //saving values
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);

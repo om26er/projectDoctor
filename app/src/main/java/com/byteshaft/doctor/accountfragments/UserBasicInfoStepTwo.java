@@ -277,6 +277,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mRequest.open("POST", String.format("%suser/profile", AppGlobals.BASE_URL));
         mRequest.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+        mRequest.setTimeout(200000);
         mRequest.send(data);
         Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
     }
@@ -366,6 +367,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onFileUploadProgress(HttpRequest request, File file, long loaded, long total) {
+        Log.i("TAG", "file total" +total + " remaining " + loaded);
 
     }
 }
