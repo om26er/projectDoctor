@@ -68,7 +68,6 @@
             android:textSize="15sp"
             android:layout_gravity="center_horizontal"
             android:text="@string/sign_up_string"
-            android:padding="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

@@ -18,10 +18,10 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
-import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.doctors.Appointments;
+import com.byteshaft.doctor.doctors.Dashboard;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.doctors.Services;
@@ -74,32 +74,35 @@ public class MainActivity extends AppCompatActivity
             navigationView.addHeaderView(headerView);
             navigationView.inflateMenu(R.menu.doctor_menus);
             /// Doctor's Navigation items
+
             TextView docName = (TextView) headerView.findViewById(R.id.doc_nav_name);
             TextView docEmail = (TextView) headerView.findViewById(R.id.doc_nav_email);
             TextView docSpeciality = (TextView) headerView.findViewById(R.id.doc_nav_speciality);
             TextView docExpDate = (TextView) headerView.findViewById(R.id.doc_nav_expiry_date);
+
+            //stting typeface
+            docName.setTypeface(AppGlobals.typefaceNormal);
+            docEmail.setTypeface(AppGlobals.typefaceNormal);
+            docSpeciality.setTypeface(AppGlobals.typefaceNormal);
+            docExpDate.setTypeface(AppGlobals.typefaceNormal);
+
             // setting up information
-            if (AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_GENDER).contains("Male")) {
-                docName.setText("Dr. " + AppGlobals.getStringFromSharedPreferences(
-                        AppGlobals.KEY_FIRST_NAME) + " " +
-                        AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
-            } else {
-                docName.setText("Dra. " + AppGlobals.getStringFromSharedPreferences(
-                        AppGlobals.KEY_FIRST_NAME) + " " +
-                        AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
-            }
+            docName.setText(AppGlobals.getStringFromSharedPreferences(
+                    AppGlobals.KEY_FIRST_NAME) + " " +
+                    AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
             docEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
             docSpeciality.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DOC_SPECIALITY));
-            final SwitchCompat PatientOnlineSwitch = (SwitchCompat) headerView.findViewById(R.id.doc_nav_online_switch);
-            PatientOnlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            final SwitchCompat patientOnlineSwitch = (SwitchCompat) headerView.findViewById(R.id.doc_nav_online_switch);
+            patientOnlineSwitch.setTypeface(AppGlobals.typefaceNormal);
+            patientOnlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     switch (compoundButton.getId()) {
                         case R.id.doc_nav_online_switch:
                             if (b) {
-                                PatientOnlineSwitch.setText(R.string.online);
+                                patientOnlineSwitch.setText(R.string.online);
                             } else {
-                                PatientOnlineSwitch.setText(R.string.offline);
+                                patientOnlineSwitch.setText(R.string.offline);
                             }
                             break;
                     }
@@ -129,6 +132,11 @@ public class MainActivity extends AppCompatActivity
             TextView patientName = (TextView) headerView.findViewById(R.id.patient_nav_name);
             TextView patientEmail = (TextView) headerView.findViewById(R.id.patient_nav_email);
             TextView patientAge = (TextView) headerView.findViewById(R.id.patient_nav_age);
+            patientName.setText(AppGlobals.getStringFromSharedPreferences(
+                    AppGlobals.KEY_FIRST_NAME) + " " +
+                    AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
+            String age = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH);
+            patientAge.setText(age);
             final SwitchCompat DocOnlineSwitch = (SwitchCompat) headerView.findViewById(R.id.patient_nav_online_switch);
             patientEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
             DocOnlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -164,8 +172,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_search) {
-            loadFragment(new DoctorsBasicInfo());
+        if (id == R.id.nav_dashboard) {
+            loadFragment(new Dashboard());
         } else if (id == R.id.nav_search_doctor) {
             loadFragment(new DoctorsList());
         } else if (id == R.id.nav_appointment) {
