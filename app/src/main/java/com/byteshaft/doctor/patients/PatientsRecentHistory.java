@@ -21,7 +21,7 @@ public class PatientsRecentHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patients_recent_history);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.dashboard_fragment);
         patientName = (TextView) findViewById(R.id.patient_name);
         patientEmail = (TextView) findViewById(R.id.patient_email);
         patientAge = (TextView) findViewById(R.id.patient_age);
