@@ -105,5 +105,6 @@
     <string name="activate_your_account">Please activate your account !</string>
     <string name="online">Online</string>
     <string name="offline">Offline</string>
+    <string name="dashboard">Dashboard</string>
 
 </resources>

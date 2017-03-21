@@ -196,9 +196,9 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                     JSONObject jsonObject = new JSONObject(request.getResponseText());
                                     String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
                                     String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
-                                    String speciality = jsonObject.getString(AppGlobals.KEY_DOC_SPECIALITY);
                                     String gender = jsonObject.getString(AppGlobals.KEY_GENDER);
                                     String dateOfBirth = jsonObject.getString(AppGlobals.KEY_DATE_OF_BIRTH);
+                                    String speciality = jsonObject.getString(AppGlobals.KEY_DOC_SPECIALITY);
 
                                     //saving values
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FIRST_NAME, firstName);
@@ -209,7 +209,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, dateOfBirth);
 
                                     AppGlobals.gotInfo(true);
-                                    startActivity(new Intent(getActivity(), MainActivity.class));
+                                    startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

@@ -26,10 +26,6 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 
-/**
- * Created by husnain on 2/20/17.
- */
-
 public class SignUp extends Fragment implements View.OnClickListener,
         CompoundButton.OnCheckedChangeListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
 
