@@ -194,7 +194,6 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                 System.out.println(request.getResponseText() + "working ok kro");
                                 try {
                                     JSONObject jsonObject = new JSONObject(request.getResponseText());
-
                                     String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
                                     String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
                                     String speciality = jsonObject.getString(AppGlobals.KEY_DOC_SPECIALITY);

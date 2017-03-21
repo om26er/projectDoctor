@@ -15,6 +15,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import java.util.Calendar;
+
 /**
  * Created by s9iper1 on 2/20/17.
  */
@@ -91,7 +93,7 @@ public class Helpers {
     public static void showSnackBar(View view, int id) {
         Snackbar.make(view, AppGlobals.getContext().getResources()
                 .getString(id), Snackbar.LENGTH_SHORT)
-                .setActionTextColor(AppGlobals.getContext().getResources().getColor(android.R.color.holo_red_light ))
+                .setActionTextColor(AppGlobals.getContext().getResources().getColor(android.R.color.holo_red_light))
                 .show();
     }
 
@@ -135,5 +137,23 @@ public class Helpers {
             }
         });
         dialog.show();
+    }
+
+    public static String getAge(int year, int month, int day) {
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+
+        return ageS;
     }
 }
