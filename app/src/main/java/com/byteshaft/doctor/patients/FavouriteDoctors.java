@@ -247,7 +247,7 @@ public class FavouriteDoctors extends Fragment {
         }
     }
 
-    class ViewHolder {
+    private class ViewHolder {
         CircleImageView circleImageView;
         TextView name;
         TextView specialist;
