@@ -193,8 +193,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     } else {
                         AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
                     }
-                } else {
-                    Helpers.showSnackBar(getView(), R.string.choose_your_gender);
                 }
                 break;
             case R.id.login_text_view:
@@ -299,7 +297,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
             mDateOfBirth.setError(null);
         }
         if (mAddressString.trim().isEmpty()) {
-            mAddress.setError("please provide your address");
+            mAddress.setError(getString(R.string.enter_address));
+            Helpers.showSnackBar(getView(), R.string.enter_address);
             valid = false;
         } else {
             mAddress.setError(null);
