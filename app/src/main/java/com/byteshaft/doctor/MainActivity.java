@@ -1,6 +1,5 @@
 package com.byteshaft.doctor;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -19,13 +18,12 @@ import android.widget.TextView;
 
 import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
 import com.byteshaft.doctor.accountfragments.DoctorsBasicInfo;
-import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.doctors.Appointments;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
-import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.introscreen.IntroScreen;
+import com.byteshaft.doctor.patients.MyAppointments;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 
@@ -169,11 +167,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_search_doctor) {
             loadFragment(new DoctorsList());
         } else if (id == R.id.nav_appointment) {
-            loadFragment(new UserBasicInfoStepOne());
+            loadFragment(new MyAppointments());
         } else if (id == R.id.nav_favt_doc) {
             loadFragment(new UserBasicInfoStepTwo());
-
-            startActivity(new Intent(getApplicationContext(), Services.class));
         } else if (id == R.id.nav_patients) {
             loadFragment(new MyPatients());
         } else if (id == R.id.nav_doc_appointment) {
