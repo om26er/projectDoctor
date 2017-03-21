@@ -14,9 +14,10 @@
 
         <ImageView
             android:id="@+id/time"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@android:drawable/ic_menu_recent_history" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_schedule" />
 
         <TextView
             android:id="@+id/appointment_date"
@@ -30,7 +31,7 @@
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
-        <TextClock
+        <TextView
             android:id="@+id/appointment_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

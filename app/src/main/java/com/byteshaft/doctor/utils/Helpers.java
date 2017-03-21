@@ -30,16 +30,6 @@ public class Helpers {
         return PreferenceManager.getDefaultSharedPreferences(AppGlobals.getContext());
     }
 
-    public static boolean isDoctor() {
-        SharedPreferences sharedPreferences = getPreferenceManager();
-        return sharedPreferences.getBoolean(AppGlobals.IS_DOCTOR, true);
-    }
-
-    public static void userType(boolean type) {
-        SharedPreferences sharedPreferences = getPreferenceManager();
-        sharedPreferences.edit().putBoolean(AppGlobals.IS_DOCTOR, type).apply();
-    }
-
     public static void showProgressDialog(Activity activity, String message) {
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage(message);
