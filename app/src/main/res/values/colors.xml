@@ -24,4 +24,5 @@
     <color name="total_appointments_today_background">#9B9B9B</color>
     <color name="tick_background">#417505</color>
     <color name="close_background">#FF5252</color>
+    <color name="fav_doc_color">#DBDBDB</color>
 </resources>

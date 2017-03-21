@@ -20,12 +20,12 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
-import com.byteshaft.doctor.accountfragments.UserBasicInfoStepTwo;
 import com.byteshaft.doctor.doctors.Appointments;
 import com.byteshaft.doctor.doctors.Dashboard;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.introscreen.IntroScreen;
+import com.byteshaft.doctor.patients.FavouriteDoctors;
 import com.byteshaft.doctor.patients.MyAppointments;
 import com.byteshaft.doctor.utils.AppGlobals;
 
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_appointment) {
             loadFragment(new MyAppointments());
         } else if (id == R.id.nav_favt_doc) {
-            loadFragment(new UserBasicInfoStepTwo());
+            loadFragment(new FavouriteDoctors());
         } else if (id == R.id.nav_patients) {
             loadFragment(new MyPatients());
         } else if (id == R.id.nav_doc_appointment) {
