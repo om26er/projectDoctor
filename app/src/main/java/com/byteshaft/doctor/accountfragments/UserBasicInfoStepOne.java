@@ -69,7 +69,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private static final int SELECT_FILE = 2;
     private File destination;
     private Uri selectedImageUri;
-    private String imageUrl = "";
+    private static String imageUrl = "";
     private Bitmap profilePic;
     private CircleImageView mProfilePicture;
     private EditText mDocID;
@@ -102,8 +102,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     private String address = "";
     private String zipCode = "";
     private String houseNumber = "";
-    private int locationCounter = 0;
 
+    private int locationCounter = 0;
     private static final int LOCATION_PERMISSION = 1;
 
 
@@ -142,6 +142,10 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
+        if (imageUrl.trim().isEmpty() && imageUrl != null) {
+            profilePic = Helpers.getBitMapOfProfilePic(imageUrl);
+            mProfilePicture.setImageBitmap(profilePic);
+        }
         return mBaseView;
     }
 
@@ -158,8 +162,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        mDateOfBirth.setText(i + "-" + (i1 + 1) + "-" + i2);
-
+        mDateOfBirth.setText(i2 + "/" + (i1 + 1) + "/" + i);
     }
 
     @Override
@@ -193,7 +196,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 } else {
                     Helpers.showSnackBar(getView(), R.string.choose_your_gender);
                 }
-
                 break;
             case R.id.login_text_view:
                 AccountManagerActivity.getInstance().loadFragment(new Login());
