@@ -277,6 +277,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mRequest.open("POST", String.format("%suser/profile", AppGlobals.BASE_URL));
         mRequest.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+        mRequest.setTimeout(200000);
         mRequest.send(data);
         Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
     }
@@ -310,6 +311,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
                             String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
+                            String imageUrl = jsonObject.getString(AppGlobals.KEY_IMAGE_URL);
 
                             String gender = jsonObject.getString(AppGlobals.KEY_GENDER);
                             String dateOfBirth = jsonObject.getString(AppGlobals.KEY_DATE_OF_BIRTH);
@@ -353,6 +355,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_SHOW_NOTIFICATION, showNotification);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT, emergencyContact);
                             Log.i("Emergency Contact", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.SERVER_PHOTO_URL, imageUrl);
                             AppGlobals.gotInfo(true);
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } catch (JSONException e) {
@@ -366,6 +369,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onFileUploadProgress(HttpRequest request, File file, long loaded, long total) {
+        Log.i("TAG", "file total" +total + " remaining " + loaded);
 
     }
 }

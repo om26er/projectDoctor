@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/board"
@@ -27,7 +28,7 @@
             android:layout_below="@+id/doctor_image"
             android:layout_marginTop="2dp"
             android:gravity="center"
-            android:text="Dr Drake Remore"
+            android:text="Anne Miller"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -40,18 +41,18 @@
             android:layout_below="@+id/doctor_name_dashboard"
             android:layout_marginTop="2dp"
             android:gravity="center"
-            android:text="drake@gmail.com"
+            android:text="test@gmail.com"
             android:textColor="@android:color/holo_orange_light"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/doctor_sp"
+            android:id="@+id/patient_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/doctor_email"
             android:layout_marginBottom="4dp"
             android:gravity="center"
-            android:text="Dermatology"
+            android:text="27 years"
             android:textColor="@android:color/darker_gray" />
 
     </RelativeLayout>

@@ -39,6 +39,7 @@ import android.widget.TextView;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.doctor.utils.RotateUtil;
 import com.byteshaft.requests.HttpRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -455,7 +456,8 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                     e.printStackTrace();
                 }
                 profilePic = Helpers.getBitMapOfProfilePic(destination.getAbsolutePath());
-                mProfilePicture.setImageBitmap(thumbnail);
+                Bitmap orientedBitmap = RotateUtil.rotateBitmap(destination.getAbsolutePath(), profilePic);
+                mProfilePicture.setImageBitmap(orientedBitmap);
             } else if (requestCode == SELECT_FILE) {
                 selectedImageUri = data.getData();
                 String[] projection = {MediaStore.MediaColumns.DATA};
@@ -466,8 +468,9 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
                 cursor.moveToFirst();
                 String selectedImagePath = cursor.getString(column_index);
-                profilePic = Helpers.getBitMapOfProfilePic(selectedImagePath);
-                mProfilePicture.setImageBitmap(profilePic);
+                profilePic = Helpers.getBitMapOfProfilePic(destination.getAbsolutePath());
+                Bitmap orientedBitmap = RotateUtil.rotateBitmap(selectedImagePath, profilePic);
+                mProfilePicture.setImageBitmap(orientedBitmap);
                 imageUrl = String.valueOf(selectedImagePath);
             }
         } else if (requestCode == AppGlobals.LOCATION_ENABLE) {

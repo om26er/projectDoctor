@@ -42,8 +42,9 @@ public class AppGlobals extends Application {
     public static Typeface robotoRegular;
     public static Typeface robotoThin;
     public static Typeface robotoThinItalic;
+    public static final String SERVER_IP = "https://46.101.34.116";
 
-    public static final String BASE_URL = "https://46.101.34.116/api/";
+    public static final String BASE_URL = String.format("%s/api/", SERVER_IP);
     public static final String KEY_USER_NAME = "user_name";
     public static final String KEY_FIRST_NAME = "first_name";
     public static final String KEY_LAST_NAME = "last_name";
@@ -55,6 +56,7 @@ public class AppGlobals extends Application {
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_IMAGE_URL = "photo";
+    public static final String SERVER_PHOTO_URL = "server_photo_url";
     public static final String KEY_LOGIN = "login";
     public static final String KEY_PHONE_NUMBER_PRIMARY = "phone_number_primary";
     public static final String KEY_PHONE_NUMBER_SECONDARY = "phone_number_secondary";
