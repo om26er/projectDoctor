@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -83,6 +85,7 @@ public class AppGlobals extends Application {
     public static final String KEY_TOKEN = "token";
     public static final String USER_ACTIVATION_KEY = "activation_key";
     public static final int LOCATION_ENABLE = 2;
+    public static ImageLoader sImageLoader;
 
 
     @Override
@@ -91,6 +94,8 @@ public class AppGlobals extends Application {
         FirebaseApp.initializeApp(getApplicationContext());
         FirebaseMessaging.getInstance().subscribeToTopic("admin");
         disableSSLCertificateChecking();
+        sImageLoader = ImageLoader.getInstance();
+        sImageLoader.init(ImageLoaderConfiguration.createDefault(getApplicationContext()));
         sContext = getApplicationContext();
         typefaceBold = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/bold.ttf");
         typefaceNormal = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/normal.ttf");
