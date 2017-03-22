@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -36,7 +37,6 @@ import com.byteshaft.doctor.utils.Helpers;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.byteshaft.doctor.utils.Helpers.getBitMap;
-
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
             docName.setTypeface(AppGlobals.typefaceNormal);
             docEmail.setTypeface(AppGlobals.typefaceNormal);
             docSpeciality.setTypeface(AppGlobals.typefaceNormal);
-            docExpDate.setTypeface(AppGlobals.typefaceNormal);
+//            docExpDate.setTypeface(AppGlobals.typefaceNormal);
 
             // setting up information
             docName.setText(AppGlobals.getStringFromSharedPreferences(
@@ -148,8 +148,17 @@ public class MainActivity extends AppCompatActivity
             patientName.setText(AppGlobals.getStringFromSharedPreferences(
                     AppGlobals.KEY_FIRST_NAME) + " " +
                     AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
+
             String age = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH);
-            patientAge.setText(age);
+            String[] dob = age.split("/");
+            Log.i("AGE", dob[0] + dob[1] + dob[2]);
+            System.out.println("age is : " + age);
+
+            int date = Integer.parseInt(dob[0]);
+            int month = Integer.parseInt(dob[1]);
+            int year = Integer.parseInt(dob[2]);
+            String years = Helpers.getAge(year, month, date);
+            patientAge.setText(years + " years");
             final SwitchCompat patientOnlineSwitch = (SwitchCompat) headerView.findViewById(R.id.patient_nav_online_switch);
             patientEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
             patientOnlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -251,6 +260,28 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new Appointments());
         } else if (id == R.id.nav_messages) {
             loadFragment(new MainMessages());
+        } else if (id == R.id.nav_exit) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Confirmation");
+            alertDialogBuilder.setMessage("Do you really want to exit?").setCancelable(false).setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+//                            SharedPreferences sharedpreferences = AppGlobals.getPreferenceManager();
+//                            SharedPreferences.Editor editor = sharedpreferences.edit();
+//                            editor.clear();
+//                            editor.commit();
+//                            AppGlobals.logout = true;
+                            finish();
+                        }
+                    });
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
