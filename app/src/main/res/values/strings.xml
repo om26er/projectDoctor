@@ -107,5 +107,8 @@
     <string name="online">Online</string>
     <string name="offline">Offline</string>
     <string name="dashboard">Dashboard</string>
+    <string name="storage_permission_message">For Offline usage of this application app needs to save some images and data on your mobile.
+    please grant storage permission</string>
+    <string name="storage_permission_dialog_title">Storage Permission Required</string>
 
 </resources>

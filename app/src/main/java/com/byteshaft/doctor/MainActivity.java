@@ -1,19 +1,21 @@
 package com.byteshaft.doctor;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -25,22 +27,22 @@ import com.byteshaft.doctor.doctors.Dashboard;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.introscreen.IntroScreen;
+import com.byteshaft.doctor.messages.MainMessages;
 import com.byteshaft.doctor.patients.FavouriteDoctors;
 import com.byteshaft.doctor.patients.MyAppointments;
 import com.byteshaft.doctor.utils.AppGlobals;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.byteshaft.doctor.utils.Helpers;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.byteshaft.doctor.utils.Helpers.getBitMap;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static MainActivity sInstance;
+    private static final int STORAGE_PERMISSION = 0;
 
     public static MainActivity getInstance() {
         return sInstance;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         if (IntroScreen.getInstance() != null) {
             IntroScreen.getInstance().finish();
         }
+
         sInstance = this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -165,8 +168,57 @@ public class MainActivity extends AppCompatActivity
             });
             loadFragment(new DoctorsList());
         }
-        if (AppGlobals.isLogin() && AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL) != null) {
-            new GetBitMap().execute();
+
+
+
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(getResources().getString(R.string.permission_dialog_title));
+            alertDialogBuilder.setMessage(getResources().getString(R.string.storage_permission_message))
+                    .setCancelable(false).setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            STORAGE_PERMISSION);
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+
+        } else {
+            if (AppGlobals.isLogin() && AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL) != null) {
+                String url = String.format("%s"+AppGlobals
+                        .getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL), AppGlobals.SERVER_IP);
+                getBitMap(url, profilePicture);
+            }
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case STORAGE_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    String url = String.format("%s"+AppGlobals
+                            .getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
+                            AppGlobals.SERVER_IP);
+                    getBitMap(url, profilePicture);
+                } else {
+                    Helpers.showSnackBar(findViewById(android.R.id.content), R.string.permission_denied);
+                }
+
+                break;
         }
     }
 
@@ -197,6 +249,8 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new MyPatients());
         } else if (id == R.id.nav_doc_appointment) {
             loadFragment(new Appointments());
+        } else if (id == R.id.nav_messages) {
+            loadFragment(new MainMessages());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -208,38 +262,5 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.container, fragment);
         tx.commit();
-    }
-
-    private class GetBitMap extends AsyncTask<String, String, Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            return getBitmapFromURL();
-        }
-
-        public Bitmap getBitmapFromURL() {
-            Log.i("TAG", "url " + AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL));
-            try {
-                URL url = new URL(String.format("%s"+
-                        AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
-                        AppGlobals.SERVER_IP));
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (IOException e) {
-                // Log exception
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            Log.i("TAG", " " + String.valueOf(bitmap == null));
-            profilePicture.setImageBitmap(bitmap);
-        }
     }
 }
