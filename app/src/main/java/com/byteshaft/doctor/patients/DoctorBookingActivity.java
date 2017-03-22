@@ -61,6 +61,7 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
                 // show returned day
                 DateFormat df = SimpleDateFormat.getDateInstance();
                 Toast.makeText(DoctorBookingActivity.this, df.format(date), Toast.LENGTH_SHORT).show();
+
             }
         });
 //        mDoctorName = (TextView) findViewById(R.id.doctor_name_booking);
@@ -130,8 +131,20 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             try {
-            JSONObject jsonObject = timeTable.getJSONObject(position);
+            final JSONObject jsonObject = timeTable.getJSONObject(position);
                 viewHolder.time.setText(jsonObject.getString("time"));
+                viewHolder.time.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            if (jsonObject.getInt("state") == 0) {
+//                                startActivity(new Intent(getApplicationContext(), ));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 if (jsonObject.getInt("state") == 0) {
                     viewHolder.time.setPressed(false);
                 } else {

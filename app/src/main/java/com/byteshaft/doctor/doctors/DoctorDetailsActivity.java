@@ -1,6 +1,7 @@
 package com.byteshaft.doctor.doctors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.patients.DoctorBookingActivity;
 
 public class DoctorDetailsActivity extends AppCompatActivity {
 
@@ -45,6 +47,12 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         bookingButton = (Button) findViewById(R.id.button_book);
         showallReviewButton = (Button) findViewById(R.id.review_all_button);
         textClock = (TextClock) findViewById(R.id.clock);
+        bookingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), DoctorBookingActivity.class));
+            }
+        });
     }
 
     private class ReviewAdapter extends ArrayAdapter {
