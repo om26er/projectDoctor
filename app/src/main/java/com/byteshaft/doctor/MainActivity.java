@@ -1,5 +1,6 @@
 package com.byteshaft.doctor;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +30,7 @@ import com.byteshaft.doctor.introscreen.IntroScreen;
 import com.byteshaft.doctor.patients.FavouriteDoctors;
 import com.byteshaft.doctor.patients.MyAppointments;
 import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.doctor.utils.Helpers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity
             docName.setTypeface(AppGlobals.typefaceNormal);
             docEmail.setTypeface(AppGlobals.typefaceNormal);
             docSpeciality.setTypeface(AppGlobals.typefaceNormal);
-            docExpDate.setTypeface(AppGlobals.typefaceNormal);
+//            docExpDate.setTypeface(AppGlobals.typefaceNormal);
 
             // setting up information
             docName.setText(AppGlobals.getStringFromSharedPreferences(
@@ -145,8 +148,17 @@ public class MainActivity extends AppCompatActivity
             patientName.setText(AppGlobals.getStringFromSharedPreferences(
                     AppGlobals.KEY_FIRST_NAME) + " " +
                     AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
+
             String age = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH);
-            patientAge.setText(age);
+            String[] dob = age.split("/");
+            Log.i("AGE", dob[0] + dob[1] + dob[2]);
+            System.out.println("age is : " + age);
+
+            int date = Integer.parseInt(dob[0]);
+            int month = Integer.parseInt(dob[1]);
+            int year = Integer.parseInt(dob[2]);
+            String years = Helpers.getAge(year, month, date);
+            patientAge.setText(years + " years");
             final SwitchCompat patientOnlineSwitch = (SwitchCompat) headerView.findViewById(R.id.patient_nav_online_switch);
             patientEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
             patientOnlineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -195,8 +207,25 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new FavouriteDoctors());
         } else if (id == R.id.nav_patients) {
             loadFragment(new MyPatients());
+        } else if (id == R.id.nav_doc_appointment) {
+            loadFragment(new Appointments());
         } else if (id == R.id.nav_exit) {
-
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Confirmation");
+            alertDialogBuilder.setMessage("Do you really want to exit?").setCancelable(false).setPositiveButton("Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    });
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

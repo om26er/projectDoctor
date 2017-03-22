@@ -79,6 +79,8 @@ public class AppGlobals extends Application {
     public static final String KEY_GOT_INFO = "got_info";
 
 
+    public static boolean logout = false;
+
     public static final String KEY_TOKEN = "token";
     public static final String USER_ACTIVATION_KEY = "activation_key";
     public static final int LOCATION_ENABLE = 2;
