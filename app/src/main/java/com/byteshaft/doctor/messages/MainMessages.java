@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.utils.AppGlobals;
 
 import java.util.ArrayList;
 
@@ -26,11 +27,26 @@ public class MainMessages extends Fragment {
 
     private View mBaseView;
     private ListView mMessagesList;
+    private ArrayList<String[]> mainMessages;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.activity_main_messages, container, false);
         mMessagesList = (ListView) mBaseView.findViewById(R.id.main_messages);
+        mainMessages = new ArrayList<>();
+        mainMessages.add(new String[]{AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
+        "Dr Bilal", "Dermatologist", "2-3-2017", "12:00"});
+        mainMessages.add(new String[]{AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
+                "Dr shahid", "ENT", "3-3-2017", "14:00"});
+        mainMessages.add(new String[]{AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
+                "Dr Omer", "Chest Specilist", "4-3-2017", "16:00"});
+        mainMessages.add(new String[]{AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
+                "Dr Imran", "ENT", "5-3-2017", "09:00"});
+        mainMessages.add(new String[]{AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
+                "Dr Zeshan", "Cest Specilist", "4-3-2017", "15:00"});
+        mainMessages.add(new String[]{AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
+                "Dr Arham", "Dermatologist", "7-3-2017", "16:00"});
+        mMessagesList.setAdapter(new Adapter(getActivity().getApplicationContext(), mainMessages));
         return mBaseView;
     }
 
@@ -44,9 +60,9 @@ public class MainMessages extends Fragment {
         private ArrayList<String[]> messagesList;
         private ViewHolder viewHolder;
 
-
         public Adapter(Context context,  ArrayList<String[]> messagesList) {
             super(context, R.layout.delegate_main_messages);
+            this.messagesList = messagesList;
         }
 
         @Override
@@ -64,8 +80,14 @@ public class MainMessages extends Fragment {
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
-
             }
+//            String url = String.format("%s"+messagesList.get(position)[0], AppGlobals.SERVER_IP);
+//            Helpers.getBitMap(url, viewHolder.profilePicture);
+            viewHolder.profilePicture.setImageResource(R.mipmap.image_placeholder);
+            viewHolder.drName.setText(messagesList.get(position)[1]);
+            viewHolder.specialist.setText(messagesList.get(position)[2]);
+            viewHolder.date.setText(messagesList.get(position)[3]);
+            viewHolder.time.setText(messagesList.get(position)[4]);
             return convertView;
         }
 
