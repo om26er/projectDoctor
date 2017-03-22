@@ -11,7 +11,7 @@
     <color name="seek_bar_background">#FF5252</color>
     <color name="appointment_available_bg">#AEAEAE</color>
     <color name="appointment_bg">#FF5252</color>
-    <color name="fav_doctor_calendar_background">#AEAEAE</color>
+    <color name="fav_doctor_calendar_background">#9f9fa0</color>
     <color name="summer">#44eebd82</color>
     <color name="fall">#44d8d27e</color>
     <color name="winter">#44a1c1da</color>
@@ -25,4 +25,8 @@
     <color name="tick_background">#417505</color>
     <color name="close_background">#FF5252</color>
     <color name="fav_doc_color">#DBDBDB</color>
+    <color name="time_color">#FF5252</color>
+    <color name="attended_background_color">#417505</color>
+    <color name="cancel_background_color">#FF5252</color>
+    <color name="pending_background_color">#F5A623</color>
 </resources>
