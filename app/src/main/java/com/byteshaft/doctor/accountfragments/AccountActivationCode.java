@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -26,14 +25,15 @@ import org.json.JSONObject;
 import java.net.HttpURLConnection;
 
 
-public class AccountActivationCode extends Fragment implements View.OnClickListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
+public class AccountActivationCode extends Fragment implements View.OnClickListener,
+        HttpRequest.OnReadyStateChangeListener, HttpRequest.OnErrorListener {
 
     private View mBaseView;
 
     private EditText mEmail;
     private EditText mVerificationCode;
     private Button mLoginButton;
-    private TextView mSignTextView;
+//    private TextView mSignTextView;
     private TextView mResendTextView;
     private String mEmailString;
     private String mVerificationCodeString;
@@ -47,18 +47,18 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
         setHasOptionsMenu(true);
         mEmail = (EditText) mBaseView.findViewById(R.id.email_edit_text);
         mVerificationCode = (EditText) mBaseView.findViewById(R.id.verification_code);
-        mLoginButton = (Button) mBaseView.findViewById(R.id.button_login);
-        mSignTextView = (TextView) mBaseView.findViewById(R.id.sign_up_text_view);
+        mLoginButton = (Button) mBaseView.findViewById(R.id.button_activate);
+//        mSignTextView = (TextView) mBaseView.findViewById(R.id.sign_up_text_view);
         mResendTextView = (TextView) mBaseView.findViewById(R.id.resend_text_view);
 
         mEmail.setTypeface(AppGlobals.typefaceNormal);
         mVerificationCode.setTypeface(AppGlobals.typefaceNormal);
         mLoginButton.setTypeface(AppGlobals.typefaceNormal);
-        mSignTextView.setTypeface(AppGlobals.typefaceNormal);
+//        mSignTextView.setTypeface(AppGlobals.typefaceNormal);
         mResendTextView.setTypeface(AppGlobals.typefaceBold);
 
         mLoginButton.setOnClickListener(this);
-        mSignTextView.setOnClickListener(this);
+//        mSignTextView.setOnClickListener(this);
         mResendTextView.setOnClickListener(this);
         mEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
         mEmailString = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL);
@@ -78,15 +78,15 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_login:
+            case R.id.button_activate:
                 if (validate()) {
                     activateUser(mEmailString, mVerificationCodeString);
                 }
 
                 break;
-            case R.id.sign_up_text_view:
-                MainActivity.getInstance().loadFragment(new SignUp());
-                break;
+//            case R.id.sign_up_text_view:
+//                MainActivity.getInstance().loadFragment(new SignUp());
+//                break;
             case R.id.resend_text_view:
                 if (validateFroResend()) {
                     resendVerificationCOde(mEmailString);

@@ -468,7 +468,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
                 cursor.moveToFirst();
                 String selectedImagePath = cursor.getString(column_index);
-                profilePic = Helpers.getBitMapOfProfilePic(destination.getAbsolutePath());
+                profilePic = Helpers.getBitMapOfProfilePic(selectedImagePath);
                 Bitmap orientedBitmap = RotateUtil.rotateBitmap(selectedImagePath, profilePic);
                 mProfilePicture.setImageBitmap(orientedBitmap);
                 imageUrl = String.valueOf(selectedImagePath);
