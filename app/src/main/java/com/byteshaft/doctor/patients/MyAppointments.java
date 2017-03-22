@@ -27,12 +27,12 @@ public class MyAppointments extends Fragment {
         mBaseView = inflater.inflate(R.layout.patient_my_appointment, container, false);
         appointments = new ArrayList<>();
         appointMentList = (ListView) mBaseView.findViewById(R.id.patient_appointment);
-        appointments.add(new String[]{"10-2-2017", "10:00", "Dr shahid", "Dermatology" , "Service details", "A"});
-        appointments.add(new String[]{"11-2-2017", "12:00", "Dr bilal", "ENT",  "Service details", "C"});
-        appointments.add(new String[]{"12-2-2017", "14:00", "Dr mohsin", "Child specialist",  "Service details", "P"});
-        appointments.add(new String[]{"12-2-2017", "16:00", "Dr zeshan", "Chest Specialist" , "Service details", "C"});
-        appointments.add(new String[]{"14-2-2017", "11:00", "Dr hussnain", "FCPS" ,  "Service details", "P"});
-        appointments.add(new String[]{"16-2-2017", "13:00", "Dr karobar","Dermatologist" , "Service details", "A"});
+        appointments.add(new String[]{"10-2-2017", "10:00", "Dr Shahid", "Dermatology" , "Service details", "A"});
+        appointments.add(new String[]{"11-2-2017", "12:00", "Dr Bilal", "ENT",  "Service details", "C"});
+        appointments.add(new String[]{"12-2-2017", "14:00", "Dr Mohsin", "Child specialist",  "Service details", "P"});
+        appointments.add(new String[]{"12-2-2017", "16:00", "Dr Zeshan", "Chest Specialist" , "Service details", "C"});
+        appointments.add(new String[]{"14-2-2017", "11:00", "Dr Hussnain", "FCPS" ,  "Service details", "P"});
+        appointments.add(new String[]{"16-2-2017", "13:00", "Dr Karobar","Dermatologist" , "Service details", "A"});
         appointMentList.setAdapter(new Adapter(getContext(), appointments));
         return mBaseView;
     }
@@ -83,12 +83,18 @@ public class MyAppointments extends Fragment {
             switch (appointmentsList.get(position)[5]) {
                 case "A":
                     viewHolder.appointmentStatus.setText("A");
+                    viewHolder.appointmentStatus.setBackgroundColor(getResources()
+                            .getColor(R.color.attended_background_color));
                     break;
                 case "C":
                     viewHolder.appointmentStatus.setText("C");
+                    viewHolder.appointmentStatus.setBackgroundColor(getResources()
+                            .getColor(R.color.cancel_background_color));
                     break;
                 case "P":
                     viewHolder.appointmentStatus.setText("P");
+                    viewHolder.appointmentStatus.setBackgroundColor(getResources()
+                            .getColor(R.color.pending_background_color));
                     break;
 
             }
