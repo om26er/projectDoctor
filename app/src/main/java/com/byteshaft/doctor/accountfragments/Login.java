@@ -153,7 +153,6 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                 AppGlobals.userType(true);
                             }
                             gettingUserData();
-
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
@@ -205,7 +204,6 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.SERVER_PHOTO_URL, imageUrl);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, gender);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, dateOfBirth);
-
                                     AppGlobals.gotInfo(true);
                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                 } catch (JSONException e) {

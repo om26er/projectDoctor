@@ -1,6 +1,7 @@
 package com.byteshaft.doctor.doctors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -31,6 +32,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.patients.DoctorsLocator;
+import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.FilterDialog;
 
 import java.lang.reflect.Field;
@@ -185,14 +188,13 @@ public class DoctorsList extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-
                 return true;
             case R.id.action_filter:
                 FilterDialog filterDialog = new FilterDialog(getActivity());
                 filterDialog.show();
                 return true;
             case R.id.action_location:
-
+                startActivity(new Intent(AppGlobals.getContext(), DoctorsLocator.class));
                 return true;
             default:return false;
         }
