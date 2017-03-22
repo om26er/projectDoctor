@@ -55,22 +55,13 @@
             android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/button_login"
+            android:id="@+id/button_activate"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="20dp"
             android:text="@string/activate"
             android:theme="@style/MyButton" />
-
-        <TextView
-            android:id="@+id/sign_up_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="25dp"
-            android:text="@string/signup_string"
-            android:textSize="15sp" />
 
     </LinearLayout>
 </ScrollView>
