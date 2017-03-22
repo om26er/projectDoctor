@@ -165,15 +165,14 @@
 
                 <Button
                     android:id="@+id/plus_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:background="@mipmap/ic_plus_blue" />
                 <Button
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="4dp"
                     android:layout_toRightOf="@+id/plus_button"
                     android:background="@mipmap/ic_plus_blue" />
             </RelativeLayout>
@@ -230,8 +229,8 @@
 
                 <Button
                     android:id="@+id/medication_plus_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/qty_textview"
                     android:background="@mipmap/ic_plus_blue" />

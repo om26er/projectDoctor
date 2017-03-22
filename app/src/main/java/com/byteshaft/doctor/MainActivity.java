@@ -195,8 +195,8 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new FavouriteDoctors());
         } else if (id == R.id.nav_patients) {
             loadFragment(new MyPatients());
-        } else if (id == R.id.nav_doc_appointment) {
-            loadFragment(new Appointments());
+        } else if (id == R.id.nav_exit) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
