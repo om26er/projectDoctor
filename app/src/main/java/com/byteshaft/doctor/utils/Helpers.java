@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.byteshaft.doctor.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -166,11 +167,11 @@ public class Helpers {
         DisplayImageOptions options;
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.progress_image)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
                 .cacheInMemory(true)
                 .cacheOnDisc(true).considerExifParams(true).build();
         animateFirstListener = new AnimateFirstDisplayListener();
         sImageLoader.displayImage(url, circleImageView, options, animateFirstListener);
-
     }
 
     private static class AnimateFirstDisplayListener extends
