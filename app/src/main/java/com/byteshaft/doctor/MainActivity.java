@@ -263,18 +263,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_exit) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle("Confirmation");
-            alertDialogBuilder.setMessage("Do you really want to exit?").setCancelable(false).setPositiveButton("Ok",
+            alertDialogBuilder.setMessage("Do you really want to exit?").setCancelable(false).setPositiveButton("Yes",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-//                            SharedPreferences sharedpreferences = AppGlobals.getPreferenceManager();
-//                            SharedPreferences.Editor editor = sharedpreferences.edit();
-//                            editor.clear();
-//                            editor.commit();
-//                            AppGlobals.logout = true;
                             finish();
                         }
                     });
-            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
