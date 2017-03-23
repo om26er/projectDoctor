@@ -115,7 +115,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mBaseView = inflater.inflate(R.layout.fragment_user_basic_info_step_one, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(getResources().getString(R.string.sign_up));
-        setHasOptionsMenu(true);
         mProfilePicture = (CircleImageView) mBaseView.findViewById(R.id.user_dp);
         mDocID = (EditText) mBaseView.findViewById(R.id.doctor_id_edit_text);
         mFirstName = (EditText) mBaseView.findViewById(R.id.first_name_edit_text);

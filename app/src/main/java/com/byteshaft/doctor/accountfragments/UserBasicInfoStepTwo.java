@@ -3,6 +3,7 @@ package com.byteshaft.doctor.accountfragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
 import com.byteshaft.requests.HttpRequest;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,6 +67,8 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     private String mTermsConditionCheckBoxString;
     private Button mSaveButton;
     private HttpRequest mRequest;
+    private DonutProgress donutProgress;
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -264,6 +268,18 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         data.append(FormData.TYPE_CONTENT_TEXT, "address", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ADDRESS));
         if (!AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL).trim().isEmpty()) {
             data.append(FormData.TYPE_CONTENT_FILE, "photo", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL));
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+            alertDialogBuilder.setTitle(getResources().getString(R.string.updating));
+            alertDialogBuilder.setCancelable(false);
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.progress_alert_dialog, null);
+            alertDialogBuilder.setView(dialogView);
+            donutProgress = (DonutProgress) dialogView.findViewById(R.id.upload_progress);
+
+            alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } else {
+            Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
         }
         data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
@@ -283,14 +299,18 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         mRequest.setTimeout(200000);
         mRequest.send(data);
-        Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
     }
 
     @Override
     public void onReadyStateChange(HttpRequest request, int readyState) {
         switch (readyState) {
             case HttpRequest.STATE_DONE:
-                Helpers.dismissProgressDialog();
+                if (alertDialog != null) {
+                    donutProgress.setProgress(100);
+                    alertDialog.dismiss();
+                } else {
+                    Helpers.dismissProgressDialog();
+                }
                 switch (request.getStatus()) {
                     case HttpRequest.ERROR_NETWORK_UNREACHABLE:
                         AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "please check your internet connection");
@@ -373,7 +393,10 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onFileUploadProgress(HttpRequest request, File file, long loaded, long total) {
-        Log.i("TAG", "file total" +total + " remaining " + loaded);
+        double progress = (loaded/(double)total) *100;
+        Log.i("current progress", "" +(int) progress);
+        donutProgress.setProgress((int) progress);
+
 
     }
 }

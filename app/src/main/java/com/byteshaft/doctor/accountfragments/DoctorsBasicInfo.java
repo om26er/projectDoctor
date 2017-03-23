@@ -3,6 +3,7 @@ package com.byteshaft.doctor.accountfragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
@@ -24,6 +24,7 @@ import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
 import com.byteshaft.requests.HttpRequest;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +68,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     private String mTermsConditionCheckBoxString;
 
     private HttpRequest mRequest;
+    private DonutProgress donutProgress;
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -170,6 +173,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                getFragmentManager().popBackStack();
                 return true;
             default:
                 return false;
@@ -283,6 +287,18 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         data.append(FormData.TYPE_CONTENT_TEXT, "address", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ADDRESS));
         if (!AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL).trim().isEmpty()) {
             data.append(FormData.TYPE_CONTENT_FILE, "photo", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_IMAGE_URL));
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+            alertDialogBuilder.setTitle(getResources().getString(R.string.updating));
+            alertDialogBuilder.setCancelable(false);
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.progress_alert_dialog, null);
+            alertDialogBuilder.setView(dialogView);
+            donutProgress = (DonutProgress) dialogView.findViewById(R.id.upload_progress);
+
+            alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } else {
+            Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
         }
         data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
@@ -310,7 +326,12 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     public void onReadyStateChange(HttpRequest request, int readyState) {
         switch (readyState) {
             case HttpRequest.STATE_DONE:
-                Helpers.dismissProgressDialog();
+                if (alertDialog != null) {
+                    donutProgress.setProgress(100);
+                    alertDialog.dismiss();
+                } else {
+                    Helpers.dismissProgressDialog();
+                }
                 switch (request.getStatus()) {
                     case HttpRequest.ERROR_NETWORK_UNREACHABLE:
                         AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "please check your internet connection");
@@ -396,6 +417,9 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void onFileUploadProgress(HttpRequest request, File file, long loaded, long total) {
+        double progress = (loaded/(double)total) * 100;
+        Log.i("current progress", "" +(int) progress);
+        donutProgress.setProgress((int) progress);
 
     }
 }
