@@ -16,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
@@ -95,6 +94,11 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         mPhoneTwoEditText.setTypeface(AppGlobals.typefaceNormal);
         mConsultationTimeEditText.setTypeface(AppGlobals.typefaceNormal);
         mCollegeIdEditText.setTypeface(AppGlobals.typefaceNormal);
+
+        mPhoneOneEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY));
+        mPhoneTwoEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY));
+        mConsultationTimeEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_CONSULTATION_TIME));
+        mCollegeIdEditText  .setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_COLLEGE_ID));
 
 
         List<String> StateList = new ArrayList<>();

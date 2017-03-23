@@ -84,7 +84,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
 
         mPhoneOneEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY));
         mPhoneTwoEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY));
-        mEmergencyContactEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_COLLEGE_ID));
+        mEmergencyContactEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
 
         mNotificationCheckBox = (CheckBox) mBaseView.findViewById(R.id.notifications_check_box);
         mNewsCheckBox = (CheckBox) mBaseView.findViewById(R.id.news_check_box);
