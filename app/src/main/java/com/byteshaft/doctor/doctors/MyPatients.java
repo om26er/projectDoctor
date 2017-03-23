@@ -162,7 +162,7 @@ public class MyPatients extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.my_patients_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
     }
 
     @Override

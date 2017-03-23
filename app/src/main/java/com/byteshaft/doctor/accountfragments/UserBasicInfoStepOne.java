@@ -65,7 +65,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         View.OnClickListener, RadioGroup.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnFileUploadProgressListener {
 
-
     private View mBaseView;
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;
@@ -132,6 +131,12 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName.setTypeface(AppGlobals.typefaceNormal);
         mDateOfBirth.setTypeface(AppGlobals.typefaceNormal);
         mAddress.setTypeface(AppGlobals.typefaceNormal);
+
+        mDocID.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DOC_ID));
+        mFirstName.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_FIRST_NAME));
+        mLastName.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
+        mDateOfBirth.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH));
+        mAddress.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ADDRESS));
 
         mNextButton.setOnClickListener(this);
         mAddressTextView.setOnClickListener(this);
@@ -218,7 +223,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
                     alertDialogBuilder.setTitle(getResources().getString(R.string.permission_dialog_title));
                     alertDialogBuilder.setMessage(getResources().getString(R.string.permission_dialog_message))
                             .setCancelable(false).setPositiveButton("Continue", new DialogInterface.OnClickListener() {

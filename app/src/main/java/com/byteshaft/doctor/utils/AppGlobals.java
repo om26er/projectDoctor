@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 
+import com.byteshaft.doctor.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -199,7 +200,7 @@ public class AppGlobals extends Application {
     }
 
     public static void alertDialog(Activity activity, String title, String msg) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity, R.style.MyAlertDialogTheme);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage(msg).setCancelable(false).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

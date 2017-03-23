@@ -1,6 +1,7 @@
 package com.byteshaft.doctor.patients;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.FilterDialog;
+import com.byteshaft.doctor.utils.Helpers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -209,30 +211,30 @@ public class FavouriteDoctors extends Fragment {
             viewHolder.distance.setText(" " + doctorsList.get(position)[2] + " km");
             viewHolder.review.setRating(Float.parseFloat(doctorsList.get(position)[3]));
             ArrayList<String> arrayList = new ArrayList();
-            arrayList.add("1am");
-            arrayList.add("2am");
-            arrayList.add("3am");
-            arrayList.add("4am");
-            arrayList.add("5am");
-            arrayList.add("6am");
-            arrayList.add("7am");
-            arrayList.add("8am");
-            arrayList.add("9am");
-            arrayList.add("10am");
-            arrayList.add("11am");
-            arrayList.add("12pm");
-            arrayList.add("1pm");
-            arrayList.add("2pm");
-            arrayList.add("3pm");
-            arrayList.add("4pm");
-            arrayList.add("5pm");
-            arrayList.add("6pm");
-            arrayList.add("7pm");
-            arrayList.add("8pm");
-            arrayList.add("9pm");
-            arrayList.add("10pm");
-            arrayList.add("11pm");
-            arrayList.add("12pm");
+            arrayList.add("01:00");
+            arrayList.add("01:30");
+            arrayList.add("02:00");
+            arrayList.add("02:30");
+            arrayList.add("03:00");
+            arrayList.add("03:30");
+            arrayList.add("04:00");
+            arrayList.add("04:30");
+            arrayList.add("05:00");
+            arrayList.add("05:30");
+            arrayList.add("06:00");
+            arrayList.add("06:30");
+            arrayList.add("07:00");
+            arrayList.add("07:30");
+            arrayList.add("08:00");
+            arrayList.add("08:30");
+            arrayList.add("09:00");
+            arrayList.add("09:30");
+            arrayList.add("10:00");
+            arrayList.add("10:30");
+            arrayList.add("11:00");
+            arrayList.add("11:30");
+            arrayList.add("12:00");
+            arrayList.add("12:30");
 
             TimingAdapter timingAdapter = new TimingAdapter(arrayList);
             viewHolder.timingList.canScrollVertically(LinearLayoutManager.VERTICAL);
@@ -276,7 +278,7 @@ public class FavouriteDoctors extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(Holder holder, int position) {
+        public void onBindViewHolder(final Holder holder, final int position) {
             holder.setIsRecyclable(false);
             holder.timeButton.setText(timingList.get(position));
             if (position % 2 == 0) {
@@ -284,6 +286,17 @@ public class FavouriteDoctors extends Fragment {
             } else {
                 holder.timeButton.setPressed(false);
             }
+            holder.timeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (position % 2 == 0) {
+                        holder.timeButton.setPressed(true);
+                        startActivity(new Intent(getActivity(), CreateAppointmentActivity.class));
+                    } else {
+                        Helpers.showSnackBar(getView(), R.string.time_slot_booked);
+                    }
+                }
+            });
         }
 
         @Override
