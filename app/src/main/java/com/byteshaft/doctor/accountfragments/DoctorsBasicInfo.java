@@ -62,8 +62,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     private String mSpecialitySpinnerValueString;
     private String mAffiliatedClinicsSpinnerValueString;
     private String mSubscriptionSpinnerValueString;
-    private String mNotificationCheckBoxString;
-    private String mNewsCheckBoxString;
+    private String mNotificationCheckBoxString = "true";
+    private String mNewsCheckBoxString = "true";
     private String mTermsConditionCheckBoxString;
 
     private HttpRequest mRequest;

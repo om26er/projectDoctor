@@ -60,8 +60,8 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     private String mCitiesSpinnerValueString;
     private String mAffiliatedClinicsSpinnerValueString;
     private String mInsuranceCarrierSpinnerValueString;
-    private String mNotificationCheckBoxString;
-    private String mNewsCheckBoxString;
+    private String mNotificationCheckBoxString = "true";
+    private String mNewsCheckBoxString = "true";
     private String mTermsConditionCheckBoxString;
     private Button mSaveButton;
     private HttpRequest mRequest;
@@ -207,12 +207,16 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 if (mNotificationCheckBox.isChecked()) {
                     mNotificationCheckBoxString = "true";
                     System.out.println(mNotificationCheckBoxString);
+                } else {
+                    mNotificationCheckBoxString = "false";
                 }
                 break;
             case R.id.news_check_box:
                 if (mNewsCheckBox.isChecked()) {
                     mNewsCheckBoxString = "true";
                     System.out.println(mNewsCheckBoxString);
+                } else {
+                    mNewsCheckBoxString = "false";
                 }
                 break;
             case R.id.terms_check_box:
