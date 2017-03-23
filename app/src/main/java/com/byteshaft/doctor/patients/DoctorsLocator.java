@@ -108,10 +108,9 @@ public class DoctorsLocator extends AppCompatActivity implements OnMapReadyCallb
         @Override
         public void onMyLocationChange(Location location) {
             if (location != null) {
-                Log.i("TAG", "location " + location.getLatitude());
                 addressString = new LatLng(location.getLatitude(), location.getLongitude());
                 Log.i("TAG", "current location " + addressString);
-                if (zoomCounter > 1) {
+                if (zoomCounter < 1) {
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(new LatLng(location.getLatitude(), location.getLongitude()))
                             .zoom(6).build();
