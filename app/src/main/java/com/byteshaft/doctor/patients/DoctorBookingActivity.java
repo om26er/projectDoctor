@@ -1,12 +1,15 @@
 package com.byteshaft.doctor.patients;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +49,8 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_doctor_booking);
         timeTableGrid = (GridView) findViewById(R.id.time_table);
         HashSet<Date> events = new HashSet<>();
@@ -61,6 +67,7 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
                 // show returned day
                 DateFormat df = SimpleDateFormat.getDateInstance();
                 Toast.makeText(DoctorBookingActivity.this, df.format(date), Toast.LENGTH_SHORT).show();
+
             }
         });
 //        mDoctorName = (TextView) findViewById(R.id.doctor_name_booking);
@@ -78,18 +85,52 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
         try {
 
             JSONObject time = new JSONObject();
-            time.put("time", "9:30");
+            time.put("time", "9:00");
             time.put("state", 0);
             jsonArray.put(time);
             JSONObject timeTwo = new JSONObject();
             timeTwo.put("time", "9:30");
             timeTwo.put("state", 1);
             jsonArray.put(timeTwo);
+            JSONObject timeThree = new JSONObject();
+            timeThree.put("time", "10:00");
+            timeThree.put("state", 0);
+            jsonArray.put(timeThree);
+
+            JSONObject timeFour = new JSONObject();
+            timeFour.put("time", "10:30");
+            timeFour.put("state", 1);
+            jsonArray.put(timeFour);
+
+            JSONObject timeFive = new JSONObject();
+            timeFive.put("time", "11:00");
+            timeFive.put("state", 0);
+            jsonArray.put(timeFive);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Log.i("TAG", "array " + jsonArray);
         timeTableGrid.setAdapter(new TimeTableAdapter(getApplicationContext(), jsonArray));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_locator, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_location:
+                startActivity(new Intent(getApplicationContext(), DoctorsLocator.class));
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default: return false;
+        }
     }
 
     @Override
@@ -130,8 +171,24 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             try {
-            JSONObject jsonObject = timeTable.getJSONObject(position);
+            final JSONObject jsonObject = timeTable.getJSONObject(position);
                 viewHolder.time.setText(jsonObject.getString("time"));
+                viewHolder.time.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            if (jsonObject.getInt("state") == 0) {
+                                viewHolder.time.setBackgroundColor(getResources().getColor(R.color.appointment_bg));
+                                viewHolder.time.setPressed(true);
+//                                startActivity(new Intent(getApplicationContext(), ));
+                            } else {
+                                Helpers.showSnackBar(findViewById(android.R.id.content), R.string.time_slot_booked);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 if (jsonObject.getInt("state") == 0) {
                     viewHolder.time.setPressed(false);
                 } else {
