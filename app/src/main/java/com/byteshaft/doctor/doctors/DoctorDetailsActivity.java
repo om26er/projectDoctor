@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -35,12 +36,12 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_doctor_details);
-
         doctorName = (TextView) findViewById(R.id.doctor_name);
         doctorSpeciality = (TextView) findViewById(R.id.doctor_sp);
         ratingBar = (RatingBar) findViewById(R.id.user_ratings);
-
         callButton = (ImageButton) findViewById(R.id.call_button);
         chatButton = (ImageButton) findViewById(R.id.message_button);
 
@@ -53,6 +54,16 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), DoctorBookingActivity.class));
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default: return false;
+        }
     }
 
     private class ReviewAdapter extends ArrayAdapter {

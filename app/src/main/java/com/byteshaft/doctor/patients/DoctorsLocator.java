@@ -6,13 +6,13 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.TextView;
+import android.view.MenuItem;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.utils.Helpers;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,9 +23,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-/**
- * Created by husnain on 2/22/17.
- */
 
 public class DoctorsLocator extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -35,18 +32,59 @@ public class DoctorsLocator extends AppCompatActivity implements OnMapReadyCallb
     public static LatLng addressString;
     private Marker currLocationMarker;
     private int zoomCounter = 0;
+    private static final int PERMISSIONS_REQUEST_LOCATION = 2;
+    SupportMapFragment mapFragment;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_doctors_locator);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        setTitle("Doctors");
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_LOCATION);
+
+        } else {
+            mapFragment.getMapAsync(this);
+        }
+        setTitle("Dr Rosse Marthins");
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default: return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_LOCATION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (Helpers.locationEnabled()) {
+                        mapFragment.getMapAsync(this);
+                    } else {
+                        Helpers.dialogForLocationEnableManually(this);
+                    }
+                } else {
+                    Helpers.showSnackBar(findViewById(android.R.id.content), R.string.permission_denied);
+                }
+                break;
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -73,7 +111,7 @@ public class DoctorsLocator extends AppCompatActivity implements OnMapReadyCallb
                 Log.i("TAG", "location " + location.getLatitude());
                 addressString = new LatLng(location.getLatitude(), location.getLongitude());
                 Log.i("TAG", "current location " + addressString);
-                if (zoomCounter < 1) {
+                if (zoomCounter > 1) {
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(new LatLng(location.getLatitude(), location.getLongitude()))
                             .zoom(6).build();
