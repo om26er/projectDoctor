@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
@@ -22,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+
+import static android.R.attr.accountType;
 
 public class Login extends Fragment implements View.OnClickListener, HttpRequest.OnErrorListener,
         HttpRequest.OnReadyStateChangeListener {
@@ -138,8 +141,21 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                         AppGlobals.alertDialog(getActivity(), getString(R.string.login_faild), getString(R.string.check_password));
                         break;
                     case HttpURLConnection.HTTP_FORBIDDEN:
-                        Helpers.showSnackBar(getView(), R.string.activate_your_account);
-                        AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
+                        JSONObject object = null;
+                        try {
+                            object = new JSONObject(request.getResponseText());
+                            System.out.println(object.toString() + "working");
+                            if (object.getString("detail").equals("User deactivated by admin.")) {
+                                AppGlobals.alertDialog(getActivity(), getString(R.string.login_faild), "After admins approval you can use your Account !");
+
+                            } else {
+                                Helpers.showSnackBar(getView(), R.string.activate_your_account);
+                                AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                    }
+
                         break;
 
                     case HttpURLConnection.HTTP_OK:
@@ -173,6 +189,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
 
     @Override
     public void onError(HttpRequest request, int readyState, short error, Exception exception) {
+
 
     }
 
@@ -217,7 +234,6 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY, phoneOne);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY, phoneTwo);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, docID);
-
                                     AppGlobals.gotInfo(true);
                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                 } catch (JSONException e) {
