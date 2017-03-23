@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,18 +14,21 @@
         android:gravity="center"
         android:padding="15dp">
 
-        <ImageView
-            android:id="@+id/doctor_image"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/patient_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            app:civ_border_width="2dp"
+            app:civ_fill_color="@android:color/white"
+            app:civ_border_color="#FFF"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/image_placeholder" />
 
         <TextView
-            android:id="@+id/doctor_name_dashboard"
+            android:id="@+id/patient_name_dashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctor_image"
+            android:layout_below="@+id/patient_image"
             android:layout_marginTop="2dp"
             android:gravity="center"
             android:text="Anne Miller"
@@ -34,10 +38,10 @@
 
 
         <TextView
-            android:id="@+id/doctor_email"
+            android:id="@+id/patient_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctor_name_dashboard"
+            android:layout_below="@+id/patient_name_dashboard"
             android:layout_marginTop="2dp"
             android:gravity="center"
             android:text="test@gmail.com"
@@ -48,7 +52,7 @@
             android:id="@+id/patient_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctor_email"
+            android:layout_below="@+id/patient_email"
             android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="27 years"
