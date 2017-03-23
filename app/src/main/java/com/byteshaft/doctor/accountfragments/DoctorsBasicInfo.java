@@ -99,6 +99,11 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         mConsultationTimeEditText.setTypeface(AppGlobals.typefaceNormal);
         mCollegeIdEditText.setTypeface(AppGlobals.typefaceNormal);
 
+        mPhoneOneEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY));
+        mPhoneTwoEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY));
+        mConsultationTimeEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_CONSULTATION_TIME));
+        mCollegeIdEditText  .setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_COLLEGE_ID));
+
 
         List<String> StateList = new ArrayList<>();
         StateList.add("state1");

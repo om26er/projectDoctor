@@ -191,10 +191,19 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                     String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
                                     String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
                                     String gender = jsonObject.getString(AppGlobals.KEY_GENDER);
+                                    String docID = jsonObject.getString(AppGlobals.KEY_DOC_ID);
                                     String dateOfBirth = jsonObject.getString(AppGlobals.KEY_DATE_OF_BIRTH);
+                                    String address = jsonObject.getString(AppGlobals.KEY_ADDRESS);
+                                    String phoneOne = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_PRIMARY);
+                                    String phoneTwo = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_SECONDARY);
+
                                     if (AppGlobals.isDoctor()) {
                                         String speciality = jsonObject.getString(AppGlobals.KEY_DOC_SPECIALITY);
+                                        String collageId = jsonObject.getString(AppGlobals.KEY_COLLEGE_ID);
+                                        String consultationTime = jsonObject.getString(AppGlobals.KEY_CONSULTATION_TIME);
+                                        AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CONSULTATION_TIME, consultationTime);
                                         AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_SPECIALITY, speciality);
+                                        AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_COLLEGE_ID, collageId);
                                     }
                                     String imageUrl = jsonObject.getString(AppGlobals.KEY_IMAGE_URL);
 
@@ -204,6 +213,11 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.SERVER_PHOTO_URL, imageUrl);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_GENDER, gender);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH, dateOfBirth);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ADDRESS, address);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY, phoneOne);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY, phoneTwo);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, docID);
+
                                     AppGlobals.gotInfo(true);
                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                 } catch (JSONException e) {
