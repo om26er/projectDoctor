@@ -212,7 +212,7 @@ public class CalendarView extends LinearLayout {
                 final Bitmap letterTile = tileProvider.getLetterTile(String.valueOf(day),
                         String.valueOf(array[0]), 100, 100);
                 ((ImageView) view).setImageBitmap(letterTile);
-            } else if (day == today.getDate() && selectedDate == null) {
+            } else if (day == today.getDate() && selectedDate == null && month == today.getMonth()) {
                 int[] array = getResources().getIntArray(R.array.selected);
                 final Resources resources = AppGlobals.getContext().getResources();
                 final BitmapWithCharacter tileProvider = new BitmapWithCharacter
@@ -277,7 +277,6 @@ public class CalendarView extends LinearLayout {
             if (dayOfTheWeek.equals("Sun")) {
                 ((TextView) view).setTextColor(getResources().getColor(R.color.appointment_bg));
             }
-
             return view;
         }
     }

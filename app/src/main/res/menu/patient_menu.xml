@@ -31,6 +31,10 @@
                 android:id="@+id/nav_exit"
                 android:icon="@mipmap/exit"
                 android:title="Exit" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@mipmap/logout"
+                android:title="Logout" />
         </menu>
     </item>
 </menu>

@@ -81,14 +81,10 @@ public class AppGlobals extends Application {
     public static final String KEY_USER = "user";
     public static final String KEY_GOT_INFO = "got_info";
 
-
-    public static boolean logout = false;
-
     public static final String KEY_TOKEN = "token";
     public static final String USER_ACTIVATION_KEY = "activation_key";
     public static final int LOCATION_ENABLE = 2;
     public static ImageLoader sImageLoader;
-
 
     @Override
     public void onCreate() {
@@ -173,6 +169,11 @@ public class AppGlobals extends Application {
 
     public static SharedPreferences getPreferenceManager() {
         return getContext().getSharedPreferences("shared_prefs", MODE_PRIVATE);
+    }
+
+    public static void clearSettings() {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().clear().apply();
     }
 
     public static void saveDataToSharedPreferences(String key, String value) {

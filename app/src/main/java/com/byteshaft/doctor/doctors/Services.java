@@ -7,14 +7,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -35,30 +38,31 @@ import java.util.ArrayList;
  * Created by s9iper1 on 3/15/17.
  */
 
-public class Services extends AppCompatActivity {
+public class Services extends Fragment {
 
     private LinearLayout searchContainer;
     private ListView serviceList;
+    private View mBaseView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.services_layout);
-        serviceList = (ListView) findViewById(R.id.service_list);
-        searchContainer = new LinearLayout(this);
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mBaseView = inflater.inflate(R.layout.services_layout, container, false);
+        setHasOptionsMenu(true);
+        serviceList = (ListView) mBaseView.findViewById(R.id.service_list);
+        searchContainer = new LinearLayout(getActivity());
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         Toolbar.LayoutParams containerParams = new Toolbar.LayoutParams
                 (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         containerParams.gravity = Gravity.CENTER_VERTICAL;
         containerParams.setMargins(20, 20, 10, 20);
         searchContainer.setLayoutParams(containerParams);
         // Setup search view
-        EditText toolbarSearchView = new EditText(this);
+        final EditText toolbarSearchView = new EditText(getActivity());
         toolbarSearchView.setBackgroundColor(getResources().getColor(R.color.search_background));
         // Set width / height / gravity
         int[] textSizeAttr = new int[]{android.R.attr.actionBarSize};
         int indexOfAttrTextSize = 0;
-        TypedArray a = obtainStyledAttributes(new TypedValue().data, textSizeAttr);
+        TypedArray a = getActivity().obtainStyledAttributes(new TypedValue().data, textSizeAttr);
         int actionBarHeight = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
         a.recycle();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, actionBarHeight);
@@ -103,6 +107,16 @@ public class Services extends AppCompatActivity {
                 }
             }
         });
+        toolbarSearchView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                toolbarSearchView.setFocusable(true);
+                toolbarSearchView.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+        toolbarSearchView.setFocusableInTouchMode(false);
+        toolbarSearchView.setFocusable(false);
         (searchContainer).addView(toolbarSearchView);
 
         // Setup the clear button
@@ -111,26 +125,23 @@ public class Services extends AppCompatActivity {
         LinearLayout.LayoutParams clearParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         clearParams.gravity = Gravity.CENTER;
         // Add search view to toolbar and hide it
-        setSupportActionBar(toolbar);
         toolbar.addView(searchContainer);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ArrayList<String[]> data = new ArrayList<>();
         data.add(new String[]{"service bla bla ", "120.00", "0"});
         data.add(new String[]{"service abc ", "125.00", "1"});
-        data.add(new String[]{"service bcd ", "130.00", "0"});
-        data.add(new String[]{"service efg ", "150.00", "1"});
-        serviceList.setAdapter(new ServiceAdapter(getApplicationContext(), data));
+        data.add(new String[]{"service abc ", "125.00", "2"});
+        data.add(new String[]{"service abc ", "125.00", "1"});
+        data.add(new String[]{"service bcd ", "130.00", "2"});
+        data.add(new String[]{"service efg ", "150.00", "0"});
+        serviceList.setAdapter(new ServiceAdapter(getActivity().getApplicationContext(), data));
+        return mBaseView;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        return true;
-
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.search_menu, menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -138,15 +149,12 @@ public class Services extends AppCompatActivity {
             case R.id.action_search:
 
                 return true;
-            case android.R.id.home:
-                onBackPressed();
-                return true;
             default:
                 return false;
         }
     }
 
-    class ServiceAdapter extends ArrayAdapter<ArrayList<String[]>> {
+    private class ServiceAdapter extends ArrayAdapter<ArrayList<String[]>> {
 
         private ViewHolder viewHolder;
         private ArrayList<String[]> data;
@@ -160,12 +168,13 @@ public class Services extends AppCompatActivity {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.delegate_service, parent, false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_service, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.serviceName = (TextView) convertView.findViewById(R.id.service_name);
                 viewHolder.servicePrice = (TextView) convertView.findViewById(R.id.service_price);
                 viewHolder.serviceStatus = (CheckBox) convertView.findViewById(R.id.service_checkbox);
                 viewHolder.removeService = (ImageButton) convertView.findViewById(R.id.remove_service);
+                viewHolder.addService = (ImageButton) convertView.findViewById(R.id.add_service);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
@@ -174,8 +183,15 @@ public class Services extends AppCompatActivity {
             viewHolder.servicePrice.setText(data.get(position)[1]);
             if (Integer.valueOf(data.get(position)[2]) == 0) {
                 viewHolder.serviceStatus.setChecked(false);
-            } else {
+            } else if (Integer.valueOf(data.get(position)[2]) == 2){
+                viewHolder.serviceStatus.setVisibility(View.GONE);
+                viewHolder.addService.setVisibility(View.VISIBLE);
+                viewHolder.removeService.setVisibility(View.GONE);
+            } else if (Integer.valueOf(data.get(position)[2]) == 1) {
+                viewHolder.serviceStatus.setVisibility(View.VISIBLE);
                 viewHolder.serviceStatus.setChecked(true);
+                viewHolder.addService.setVisibility(View.GONE);
+                viewHolder.removeService.setVisibility(View.VISIBLE);
             }
             return convertView;
         }
@@ -191,6 +207,7 @@ public class Services extends AppCompatActivity {
         TextView servicePrice;
         CheckBox serviceStatus;
         ImageButton removeService;
+        ImageButton addService;
 
     }
 }

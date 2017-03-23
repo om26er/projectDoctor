@@ -1,16 +1,19 @@
 package com.byteshaft.doctor.doctors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +24,7 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.patients.DoctorsAppointment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,6 +40,8 @@ public class Appointments extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.appointments, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(getResources().getString(R.string.appointments));
         mListView = (SwipeMenuListView) mBaseView.findViewById(R.id.listView);
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());
@@ -98,6 +104,12 @@ public class Appointments extends Fragment {
         arrayList.add(new String[]{"shahid" , "26", "ENT checkup"});
         arrayList.add(new String[]{"hussi" , "24", "ENT checkup"});
         mListView.setAdapter(new Adapter(getContext(), arrayList));
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startActivity(new Intent(getActivity().getApplicationContext(), DoctorsAppointment.class));
+            }
+        });
         return mBaseView;
     }
 
