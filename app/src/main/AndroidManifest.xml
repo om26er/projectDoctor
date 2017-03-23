@@ -68,6 +68,9 @@
         <activity
             android:name=".patients.CreateAppointmentActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".messages.ConversationActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <service android:name=".fcm.FireBaseService">
             <intent-filter>

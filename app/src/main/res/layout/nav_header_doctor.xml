@@ -69,6 +69,7 @@
             android:id="@+id/doc_nav_online_switch"
             android:layout_width="120dp"
             android:padding="2dp"
+            android:checked="true"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:text="off-line"
@@ -77,6 +78,8 @@
         <TextView
             android:id="@+id/doc_nav_expiry_date"
             android:padding="2dp"
+            android:maxLines="1"
+            android:textSize="10sp"
             android:textColor="@color/orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

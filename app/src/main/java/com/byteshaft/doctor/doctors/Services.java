@@ -126,7 +126,7 @@ public class Services extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.my_patients_menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
 
     }
