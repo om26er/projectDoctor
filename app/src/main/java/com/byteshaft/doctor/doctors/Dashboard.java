@@ -18,13 +18,17 @@ import com.byteshaft.doctor.utils.AppGlobals;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.byteshaft.doctor.utils.Helpers.getBitMap;
+
 public class Dashboard extends Fragment {
 
     private View mBaseView;
     private TextView doctorName;
     private TextView doctorEmail;
     private TextView doctorSp;
-    private ImageView doctorImage;
+    private CircleImageView doctorImage;
     private RecyclerView list;
 
     @Override
@@ -36,7 +40,7 @@ public class Dashboard extends Fragment {
         doctorName = (TextView) mBaseView.findViewById(R.id.doctor_name_dashboard);
         doctorEmail = (TextView) mBaseView.findViewById(R.id.doctor_email);
         doctorSp = (TextView) mBaseView.findViewById(R.id.doctor_sp);
-        doctorImage = (ImageView) mBaseView.findViewById(R.id.doctor_image);
+        doctorImage = (CircleImageView) mBaseView.findViewById(R.id.doctor_image);
 
         doctorName.setTypeface(AppGlobals.typefaceNormal);
         doctorEmail.setTypeface(AppGlobals.typefaceNormal);
@@ -47,6 +51,11 @@ public class Dashboard extends Fragment {
                 + " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
         doctorEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
         doctorSp.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DOC_SPECIALITY));
+        if (AppGlobals.isLogin() && AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL) != null) {
+            String url = String.format("%s"+AppGlobals
+                    .getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL), AppGlobals.SERVER_IP);
+            getBitMap(url, doctorImage);
+        }
         return mBaseView;
     }
 
