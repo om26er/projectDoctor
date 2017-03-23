@@ -171,6 +171,7 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
                     case HttpURLConnection.HTTP_OK:
                         try {
                             JSONObject jsonObject = new JSONObject(request.getResponseText());
+                            System.out.println( "data" + jsonObject);
                             String accountType = jsonObject.getString(AppGlobals.KEY_ACCOUNT_TYPE);
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);

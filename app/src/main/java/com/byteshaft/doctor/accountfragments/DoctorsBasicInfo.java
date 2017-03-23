@@ -303,6 +303,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         mRequest.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         mRequest.send(data);
+        Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
     }
 
     @Override
@@ -352,6 +353,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                             String showNotification = jsonObject.getString(AppGlobals.KEY_SHOW_NOTIFICATION);
                             String consultationTime = jsonObject.getString(AppGlobals.KEY_CONSULTATION_TIME);
                             String reviewStars = jsonObject.getString(AppGlobals.KEY_REVIEW_STARS);
+                            String imageUrl = jsonObject.getString(AppGlobals.KEY_IMAGE_URL);
 
 
                             //saving values
@@ -379,6 +381,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CONSULTATION_TIME, consultationTime);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_REVIEW_STARS, reviewStars);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_COLLEGE_ID, collegeId);
+                            AppGlobals.saveDataToSharedPreferences(AppGlobals.SERVER_PHOTO_URL, imageUrl);
                             Log.i("Emergency Contact", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMERGENCY_CONTACT));
                             AppGlobals.gotInfo(true);
                             startActivity(new Intent(getActivity(), MainActivity.class));
