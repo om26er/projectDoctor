@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
@@ -18,13 +17,17 @@ import com.byteshaft.doctor.utils.AppGlobals;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.byteshaft.doctor.utils.Helpers.getBitMap;
+
 public class Dashboard extends Fragment {
 
     private View mBaseView;
     private TextView doctorName;
     private TextView doctorEmail;
     private TextView doctorSp;
-    private ImageView doctorImage;
+    private CircleImageView doctorImage;
     private RecyclerView list;
 
     @Override
@@ -36,11 +39,15 @@ public class Dashboard extends Fragment {
         doctorName = (TextView) mBaseView.findViewById(R.id.doctor_name_dashboard);
         doctorEmail = (TextView) mBaseView.findViewById(R.id.doctor_email);
         doctorSp = (TextView) mBaseView.findViewById(R.id.doctor_sp);
-        doctorImage = (ImageView) mBaseView.findViewById(R.id.doctor_image);
+        doctorImage = (CircleImageView) mBaseView.findViewById(R.id.doctor_image);
 
         doctorName.setTypeface(AppGlobals.typefaceNormal);
         doctorEmail.setTypeface(AppGlobals.typefaceNormal);
         doctorSp.setTypeface(AppGlobals.typefaceNormal);
+        String url = String.format("%s"+AppGlobals
+                        .getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
+                AppGlobals.SERVER_IP);
+        getBitMap(url, doctorImage);
         
         list = (RecyclerView) mBaseView.findViewById(R.id.dashboard_list);
         doctorName.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_FIRST_NAME)
