@@ -1,6 +1,7 @@
 package com.byteshaft.doctor;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity
         if (IntroScreen.getInstance() != null) {
             IntroScreen.getInstance().finish();
         }
-
         sInstance = this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity
                     this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawer.setDrawerListener(toggle);
             toggle.syncState();
-
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
@@ -229,7 +228,6 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     Helpers.showSnackBar(findViewById(android.R.id.content), R.string.permission_denied);
                 }
-
                 break;
         }
     }
@@ -265,7 +263,7 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new MainMessages());
         } else if (id == R.id.nav_profile) {
             loadFragment(new UserBasicInfoStepOne());
-        } else if (id == R.id.nav_schedule){
+        } else if (id == R.id.nav_schedule) {
             loadFragment(new MySchedule());
         } else if (id == R.id.nav_my_services) {
             loadFragment(new Services());
@@ -276,6 +274,27 @@ public class MainActivity extends AppCompatActivity
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             finish();
+                        }
+                    });
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } else if (id == R.id.nav_logout) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme);
+            alertDialogBuilder.setTitle("Confirmation");
+            alertDialogBuilder.setMessage("Do you really want to logout?")
+                    .setCancelable(false).setPositiveButton("Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            AppGlobals.clearSettings();
+                            AppGlobals.firstTimeLaunch(true);
+                            dialog.dismiss();
+                            startActivity(new Intent(getApplicationContext(), IntroScreen.class));
                         }
                     });
             alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
