@@ -60,6 +60,7 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.byteshaft.doctor.utils.Helpers.getBitMap;
 
 public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.OnDateSetListener,
         View.OnClickListener, RadioGroup.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks,
@@ -114,7 +115,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mBaseView = inflater.inflate(R.layout.fragment_user_basic_info_step_one, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(getResources().getString(R.string.sign_up));
-        setHasOptionsMenu(true);
         mProfilePicture = (CircleImageView) mBaseView.findViewById(R.id.user_dp);
         mDocID = (EditText) mBaseView.findViewById(R.id.doctor_id_edit_text);
         mFirstName = (EditText) mBaseView.findViewById(R.id.first_name_edit_text);
@@ -137,7 +137,21 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
         mDateOfBirth.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH));
         mAddress.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ADDRESS));
+        String gender = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_GENDER);
 
+        if (gender.contains("Male")) {
+            mRadioGroup.check(R.id.radio_button_male);
+            mGenderButtonSting = gender;
+        } else {
+            mRadioGroup.check(R.id.radio_button_female);
+            mGenderButtonSting = gender;
+        }
+
+        if (AppGlobals.isLogin() && AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL) != null) {
+            String url = String.format("%s" + AppGlobals
+                    .getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL), AppGlobals.SERVER_IP);
+            getBitMap(url, mProfilePicture);
+        }
         mNextButton.setOnClickListener(this);
         mAddressTextView.setOnClickListener(this);
         mDateOfBirth.setOnClickListener(this);
@@ -289,7 +303,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
         genderButton = (RadioButton) mBaseView.findViewById(checkedId);
         mGenderButtonSting = genderButton.getText().toString();
-
     }
 
     private boolean validateEditText() {

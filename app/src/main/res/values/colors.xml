@@ -29,4 +29,6 @@
     <color name="attended_background_color">#417505</color>
     <color name="cancel_background_color">#FF5252</color>
     <color name="pending_background_color">#F5A623</color>
+    <color name="unfinished_progress_color">#ffa8a8</color>
+    <color name="finished_progress_color">#e54949</color>
 </resources>
