@@ -69,6 +69,7 @@
             android:id="@+id/patient_nav_online_switch"
             android:layout_width="120dp"
             android:padding="2dp"
+            android:checked="true"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:text="On-line"

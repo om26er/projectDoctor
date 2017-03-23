@@ -1,12 +1,14 @@
 package com.byteshaft.doctor.messages;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -46,6 +48,12 @@ public class MainMessages extends Fragment {
                 "Dr Zeshan", "Cest Specilist", "4-3-2017", "15:00"});
         mainMessages.add(new String[]{AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
                 "Dr Arham", "Dermatologist", "7-3-2017", "16:00"});
+        mMessagesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startActivity(new Intent(getActivity().getApplicationContext(), ConversationActivity.class));
+            }
+        });
         mMessagesList.setAdapter(new Adapter(getActivity().getApplicationContext(), mainMessages));
         return mBaseView;
     }
