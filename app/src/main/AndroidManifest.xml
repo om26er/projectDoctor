@@ -67,6 +67,9 @@
             android:name=".doctors.Services"
             android:theme="@style/AppTheme.ServiceActionBar"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.CreateAppointmentActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <service android:name=".fcm.FireBaseService">
             <intent-filter>
@@ -78,8 +81,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <activity android:name=".patients.CreateAppointActivity"></activity>
     </application>
 
 </manifest>
