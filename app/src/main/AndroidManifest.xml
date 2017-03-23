@@ -83,7 +83,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".patients.CreateAppointActivity" />
     </application>
 
 </manifest>

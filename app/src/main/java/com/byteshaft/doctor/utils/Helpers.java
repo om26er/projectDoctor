@@ -122,7 +122,7 @@ public class Helpers {
     }
 
     public static void dialogForLocationEnableManually(final Activity activity) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity, R.style.MyAlertDialogTheme);
         dialog.setMessage("Location is not enabled");
         dialog.setPositiveButton("Turn on", new DialogInterface.OnClickListener() {
             @Override

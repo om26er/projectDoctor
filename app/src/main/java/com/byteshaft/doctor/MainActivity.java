@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme);
             alertDialogBuilder.setTitle(getResources().getString(R.string.permission_dialog_title));
             alertDialogBuilder.setMessage(getResources().getString(R.string.storage_permission_message))
                     .setCancelable(false).setPositiveButton("Continue", new DialogInterface.OnClickListener() {
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new UserBasicInfoStepOne());
         }
         else if (id == R.id.nav_exit) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme);
             alertDialogBuilder.setTitle("Confirmation");
             alertDialogBuilder.setMessage("Do you really want to exit?").setCancelable(false).setPositiveButton("Yes",
                     new DialogInterface.OnClickListener() {
@@ -282,7 +282,6 @@ public class MainActivity extends AppCompatActivity
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -218,7 +218,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
                     alertDialogBuilder.setTitle(getResources().getString(R.string.permission_dialog_title));
                     alertDialogBuilder.setMessage(getResources().getString(R.string.permission_dialog_message))
                             .setCancelable(false).setPositiveButton("Continue", new DialogInterface.OnClickListener() {
