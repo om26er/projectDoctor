@@ -319,7 +319,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         } else {
             mDateOfBirth.setError(null);
         }
-        if (mGenderButtonSting == null && mGenderButtonSting.isEmpty()) {
+        if (mGenderButtonSting == null) {
             Helpers.showSnackBar(getView(), R.string.choose_your_gender);
             valid = false;
         }
