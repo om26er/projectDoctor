@@ -1,6 +1,7 @@
 package com.byteshaft.doctor.doctors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.patients.PatientDetails;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -146,6 +149,12 @@ public class MyPatients extends Fragment {
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
 
+            }
+        });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startActivity(new Intent(getActivity().getApplicationContext(), PatientDetails.class));
             }
         });
         return mBaseView;

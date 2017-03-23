@@ -167,6 +167,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/consultation_time"
+                        android:maxLength="2"
                         android:inputType="phone"
                         android:textSize="15sp" />
                 </android.support.design.widget.TextInputLayout>

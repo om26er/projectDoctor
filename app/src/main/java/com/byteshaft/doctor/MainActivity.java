@@ -28,6 +28,7 @@ import com.byteshaft.doctor.doctors.Appointments;
 import com.byteshaft.doctor.doctors.Dashboard;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
+import com.byteshaft.doctor.doctors.MySchedule;
 import com.byteshaft.doctor.introscreen.IntroScreen;
 import com.byteshaft.doctor.messages.MainMessages;
 import com.byteshaft.doctor.patients.FavouriteDoctors;
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             });
+            loadFragment(new Dashboard());
 
         } else {
             View headerView;
@@ -263,6 +265,8 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new MainMessages());
         } else if (id == R.id.nav_profile) {
             loadFragment(new UserBasicInfoStepOne());
+        } else if (id == R.id.nav_schedule){
+            loadFragment(new MySchedule());
         }
         else if (id == R.id.nav_exit) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme);

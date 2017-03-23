@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.byteshaft.doctor.uihelpers.CalendarView
+        xmlns:calendarNS="http://schemas.android.com/apk/res/com.byteshaft.doctor"
+        android:id="@+id/calendar_view"
+        android:background="@color/fav_doctor_calendar_background"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        calendarNS:dateFormat="MMM yyyy" />
+
+    <ListView
+        android:id="@+id/schedule_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
