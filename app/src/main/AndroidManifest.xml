@@ -31,9 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".doctors.Dashboard"
-            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -67,6 +65,9 @@
             android:name=".doctors.Services"
             android:theme="@style/AppTheme.ServiceActionBar"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.CreateAppointmentActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <service android:name=".fcm.FireBaseService">
             <intent-filter>
@@ -79,7 +80,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".patients.CreateAppointActivity"></activity>
+        <activity android:name=".patients.CreateAppointActivity" />
     </application>
 
 </manifest>
