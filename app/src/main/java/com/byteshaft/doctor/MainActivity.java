@@ -29,6 +29,7 @@ import com.byteshaft.doctor.doctors.Dashboard;
 import com.byteshaft.doctor.doctors.DoctorsList;
 import com.byteshaft.doctor.doctors.MyPatients;
 import com.byteshaft.doctor.doctors.MySchedule;
+import com.byteshaft.doctor.doctors.Services;
 import com.byteshaft.doctor.introscreen.IntroScreen;
 import com.byteshaft.doctor.messages.MainMessages;
 import com.byteshaft.doctor.patients.FavouriteDoctors;
@@ -267,8 +268,9 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new UserBasicInfoStepOne());
         } else if (id == R.id.nav_schedule){
             loadFragment(new MySchedule());
-        }
-        else if (id == R.id.nav_exit) {
+        } else if (id == R.id.nav_my_services) {
+            loadFragment(new Services());
+        } else if (id == R.id.nav_exit) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme);
             alertDialogBuilder.setTitle("Confirmation");
             alertDialogBuilder.setMessage("Do you really want to exit?").setCancelable(false).setPositiveButton("Yes",
