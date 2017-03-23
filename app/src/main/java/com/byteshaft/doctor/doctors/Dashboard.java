@@ -44,18 +44,13 @@ public class Dashboard extends Fragment {
         doctorName.setTypeface(AppGlobals.typefaceNormal);
         doctorEmail.setTypeface(AppGlobals.typefaceNormal);
         doctorSp.setTypeface(AppGlobals.typefaceNormal);
-        String url = String.format("%s"+AppGlobals
-                        .getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL),
-                AppGlobals.SERVER_IP);
-        getBitMap(url, doctorImage);
-        
         list = (RecyclerView) mBaseView.findViewById(R.id.dashboard_list);
         doctorName.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_FIRST_NAME)
                 + " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
         doctorEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
         doctorSp.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DOC_SPECIALITY));
         if (AppGlobals.isLogin() && AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL) != null) {
-            String url = String.format("%s"+AppGlobals
+            String url = String.format("%s" + AppGlobals
                     .getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL), AppGlobals.SERVER_IP);
             getBitMap(url, doctorImage);
         }
