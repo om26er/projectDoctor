@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.byteshaft.doctor">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".utils.AppGlobals"
@@ -16,7 +16,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -24,47 +23,63 @@
         <activity
             android:name=".introscreen.IntroScreen"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:windowSoftInputMode="adjustResize" android:name=".doctors.Dashboard" />
         <activity
-            android:windowSoftInputMode="adjustResize"
+            android:name=".doctors.Dashboard"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:windowSoftInputMode="adjustResize" android:name=".accountfragments.AccountManagerActivity"/>
-        <activity android:windowSoftInputMode="adjustResize" android:name=".doctors.DoctorDetailsActivity" />
-        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.DoctorsAppointment" />
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".accountfragments.AccountManagerActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".doctors.DoctorDetailsActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.DoctorsAppointment"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.DoctorsLocator"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.DoctorsRoute"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.PatientsRecentHistory"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.PatientDetails"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.DoctorBookingActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".doctors.Services"
+            android:theme="@style/AppTheme.ServiceActionBar"
+            android:windowSoftInputMode="adjustResize" />
 
-
-        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.DoctorsLocator" />
-        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.DoctorsRoute" />
-
-        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.PatientsRecentHistory" />
-        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.PatientDetails" />
-        <activity android:windowSoftInputMode="adjustResize" android:name=".patients.DoctorBookingActivity"/>
-        <activity android:windowSoftInputMode="adjustResize" android:name=".doctors.Services" android:theme="@style/AppTheme.ServiceActionBar"/>
-
-        <service
-            android:name=".fcm.FireBaseService">
+        <service android:name=".fcm.FireBaseService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name=".fcm.Service">
+        <service android:name=".fcm.Service">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
+        <activity android:name=".patients.CreateAppointActivity"></activity>
     </application>
 
 </manifest>
