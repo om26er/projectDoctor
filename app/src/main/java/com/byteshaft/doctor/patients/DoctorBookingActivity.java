@@ -180,7 +180,7 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
                             if (jsonObject.getInt("state") == 0) {
                                 viewHolder.time.setBackgroundColor(getResources().getColor(R.color.appointment_bg));
                                 viewHolder.time.setPressed(true);
-//                                startActivity(new Intent(getApplicationContext(), ));
+                                startActivity(new Intent(getApplicationContext(), CreateAppointmentActivity.class));
                             } else {
                                 Helpers.showSnackBar(findViewById(android.R.id.content), R.string.time_slot_booked);
                             }
