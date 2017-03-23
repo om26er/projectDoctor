@@ -65,7 +65,6 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         View.OnClickListener, RadioGroup.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnFileUploadProgressListener {
 
-
     private View mBaseView;
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;
@@ -131,6 +130,12 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
         mLastName.setTypeface(AppGlobals.typefaceNormal);
         mDateOfBirth.setTypeface(AppGlobals.typefaceNormal);
         mAddress.setTypeface(AppGlobals.typefaceNormal);
+
+        mDocID.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DOC_ID));
+        mFirstName.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_FIRST_NAME));
+        mLastName.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
+        mDateOfBirth.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH));
+        mAddress.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ADDRESS));
 
         mNextButton.setOnClickListener(this);
         mAddressTextView.setOnClickListener(this);

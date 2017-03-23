@@ -8,11 +8,11 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,18 +30,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.doctor.utils.Helpers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.byteshaft.doctor.utils.Helpers.getBitMap;
 
 
 public class MyAppointments extends Fragment {
 
     private View mBaseView;
-    private ListView appointMentList;
+    private ListView appointmentList;
     private ArrayList<String[]> appointments;
     private LinearLayout searchContainer;
     private EditText toolbarSearchView;
+
+    private TextView patientName;
+    private TextView patientEmail;
+    private TextView patientAge;
+    private CircleImageView profilePicture;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,14 +138,45 @@ public class MyAppointments extends Fragment {
         // Add search view to toolbar and hide it
         toolbar.addView(searchContainer);
         appointments = new ArrayList<>();
-        appointMentList = (ListView) mBaseView.findViewById(R.id.patient_appointment);
-        appointments.add(new String[]{"10-2-2017", "10:00", "Dr Shahid", "Dermatologyyyyyyyyyy" , "Service details", "A"});
+        appointmentList = (ListView) mBaseView.findViewById(R.id.patient_appointment);
+        appointments.add(new String[]{"10-2-2017", "10:00", "Dr Shahid", "Dermatology" , "Service details", "A"});
         appointments.add(new String[]{"11-2-2017", "12:00", "Dr Bilal", "ENT",  "Service details", "C"});
         appointments.add(new String[]{"12-2-2017", "14:00", "Dr Mohsin", "Child specialist",  "Service details", "P"});
         appointments.add(new String[]{"12-2-2017", "16:00", "Dr Zeshan", "Chest Specialist" , "Service details", "C"});
         appointments.add(new String[]{"14-2-2017", "11:00", "Dr Hussnain", "FCPS" ,  "Service details", "P"});
         appointments.add(new String[]{"16-2-2017", "13:00", "Dr Karobar","Dermatologist" , "Service details", "A"});
-        appointMentList.setAdapter(new Adapter(getContext(), appointments));
+        appointmentList.setAdapter(new Adapter(getContext(), appointments));
+
+        patientName = (TextView) mBaseView.findViewById(R.id.patient_name_dashboard);
+        patientEmail = (TextView) mBaseView.findViewById(R.id.patient_email);
+        patientAge = (TextView) mBaseView.findViewById(R.id.patient_age);
+        profilePicture = (CircleImageView) mBaseView.findViewById(R.id.patient_image);
+
+        //setting typeface
+        patientName.setTypeface(AppGlobals.typefaceNormal);
+        patientEmail.setTypeface(AppGlobals.typefaceNormal);
+        patientAge.setTypeface(AppGlobals.typefaceNormal);
+
+        // setting up information
+        patientName.setText(AppGlobals.getStringFromSharedPreferences(
+                AppGlobals.KEY_FIRST_NAME) + " " +
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_LAST_NAME));
+        patientEmail.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
+        if (AppGlobals.isLogin() && AppGlobals.getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL) != null) {
+            String url = String.format("%s"+AppGlobals
+                    .getStringFromSharedPreferences(AppGlobals.SERVER_PHOTO_URL), AppGlobals.SERVER_IP);
+            getBitMap(url, profilePicture);
+        }
+        String age = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE_OF_BIRTH);
+        String[] dob = age.split("/");
+        Log.i("AGE", dob[0] + dob[1] + dob[2]);
+        System.out.println("age is : " + age);
+
+        int date = Integer.parseInt(dob[0]);
+        int month = Integer.parseInt(dob[1]);
+        int year = Integer.parseInt(dob[2]);
+        String years = Helpers.getAge(year, month, date);
+        patientAge.setText(years + " years");
         return mBaseView;
     }
 
