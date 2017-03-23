@@ -65,6 +65,9 @@
             android:name=".doctors.Services"
             android:theme="@style/AppTheme.ServiceActionBar"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".patients.CreateAppointmentActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <service android:name=".fcm.FireBaseService">
             <intent-filter>

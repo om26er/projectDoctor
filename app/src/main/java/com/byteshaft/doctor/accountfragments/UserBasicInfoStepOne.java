@@ -36,6 +36,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -106,6 +107,7 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
 
     private int locationCounter = 0;
     private static final int LOCATION_PERMISSION = 1;
+    private static final int STORAGE_PERMISSION = 2;
 
 
     @Override
@@ -170,7 +172,14 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_dp:
-                selectImage();
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            STORAGE_PERMISSION);
+                } else {
+                    selectImage();
+                }
                 break;
             case R.id.next_button:
                 if (validateEditText() && mGenderButtonSting != null && !mGenderButtonSting.isEmpty()) {
@@ -190,14 +199,19 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                         AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_IMAGE_URL, imageUrl);
                     }
                     if (!AppGlobals.isDoctor()) {
-                        AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                        if (AccountManagerActivity.getInstance() != null) {
+                            AccountManagerActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                        } else {
+                            MainActivity.getInstance().loadFragment(new UserBasicInfoStepTwo());
+                        }
                     } else {
-                        AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
+                        if (AccountManagerActivity.getInstance() != null) {
+                            AccountManagerActivity.getInstance().loadFragment(new DoctorsBasicInfo());
+                        } else {
+                            MainActivity.getInstance().loadFragment(new DoctorsBasicInfo());
+                        }
                     }
                 }
-                break;
-            case R.id.login_text_view:
-                AccountManagerActivity.getInstance().loadFragment(new Login());
                 break;
             case R.id.pick_for_current_location:
                 locationCounter = 0;
@@ -255,6 +269,14 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
                 }
 
                 break;
+            case STORAGE_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    selectImage();
+                } else {
+                    Helpers.showSnackBar(getView(), R.string.permission_denied);
+                }
+                break;
         }
     }
 
@@ -296,6 +318,10 @@ public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.O
             valid = false;
         } else {
             mDateOfBirth.setError(null);
+        }
+        if (mGenderButtonSting == null && mGenderButtonSting.isEmpty()) {
+            Helpers.showSnackBar(getView(), R.string.choose_your_gender);
+            valid = false;
         }
         if (mAddressString.trim().isEmpty()) {
             mAddress.setError(getString(R.string.enter_address));

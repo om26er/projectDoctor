@@ -7,13 +7,8 @@
     android:layout_height="match_parent"
     tools:context="com.byteshaft.doctor.patients.DoctorBookingActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        >
-
     <LinearLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -154,19 +149,17 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        calendarNS:dateFormat="MMMM yyyy" />
+        calendarNS:dateFormat="MMM yyyy" />
+    </LinearLayout>
 
     <GridView
         android:id="@+id/time_table"
+        android:layout_below="@+id/header_layout"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:verticalSpacing="0dp"
+        android:layout_height="match_parent"
+        android:verticalSpacing="1dp"
         android:horizontalSpacing="0dp"
-        android:numColumns="4"
-        tools:ignore="NestedScrolling" />
-
-    </LinearLayout>
-    </ScrollView>
+        android:numColumns="4" />
 
 </RelativeLayout>

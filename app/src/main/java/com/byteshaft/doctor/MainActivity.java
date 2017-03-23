@@ -23,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
+import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
 import com.byteshaft.doctor.doctors.Appointments;
 import com.byteshaft.doctor.doctors.Dashboard;
 import com.byteshaft.doctor.doctors.DoctorsList;
@@ -260,7 +261,10 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new Appointments());
         } else if (id == R.id.nav_messages) {
             loadFragment(new MainMessages());
-        } else if (id == R.id.nav_exit) {
+        } else if (id == R.id.nav_profile) {
+            loadFragment(new UserBasicInfoStepOne());
+        }
+        else if (id == R.id.nav_exit) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle("Confirmation");
             alertDialogBuilder.setMessage("Do you really want to exit?").setCancelable(false).setPositiveButton("Yes",
