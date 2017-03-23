@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Doctor</string>
+    <string name="app_name">Doctors</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -110,5 +110,6 @@
     <string name="storage_permission_message">For Offline usage of this application app needs to save some images and data on your mobile.
     please grant storage permission</string>
     <string name="storage_permission_dialog_title">Storage Permission Required</string>
+    <string name="time_slot_booked">Time Slot already Booked</string>
 
 </resources>
