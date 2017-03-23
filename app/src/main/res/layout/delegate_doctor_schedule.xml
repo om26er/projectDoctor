@@ -14,8 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp">
 
-            <TextClock
-                android:id="@+id/clock_from"
+            <TextView
+                android:id="@+id/start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -26,11 +26,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:layout_toEndOf="@+id/clock_from"
+                android:layout_toEndOf="@+id/start_time"
                 android:background="@android:color/black" />
 
-            <TextClock
-                android:id="@+id/clock_to"
+            <TextView
+                android:id="@+id/end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"

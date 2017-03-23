@@ -324,7 +324,6 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         mRequest.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         mRequest.send(data);
-        Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
     }
 
     @Override

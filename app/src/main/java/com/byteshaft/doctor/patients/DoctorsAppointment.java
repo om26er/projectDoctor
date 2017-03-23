@@ -4,11 +4,13 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
@@ -39,11 +41,15 @@ public class DoctorsAppointment extends AppCompatActivity implements View.OnClic
     private TimePickerDialog mTimePickerDialog;
 
     private boolean isSetForReturn = false;
+    private ImageButton backPress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle(R.string.my_patient_details);
         setContentView(R.layout.activity_doctors_appointment);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
         mAppointmentReasonSpinner = (Spinner) findViewById(R.id.appointment_reason);
         mDiagnosticsSpinner = (Spinner) findViewById(R.id.diagnostics_spinner);
         mMedicationSpinner = (Spinner) findViewById(R.id.medication_spinner);
@@ -54,6 +60,9 @@ public class DoctorsAppointment extends AppCompatActivity implements View.OnClic
         mReturnDateEditText = (EditText) findViewById(R.id.return_date_edit_text);
         mEexplanationEditText = (EditText) findViewById(R.id.explanation_edit_text);
         mConclusionsEditText = (EditText) findViewById(R.id.conclusions_edit_text);
+        backPress = (ImageButton) findViewById(R.id.back_press);
+        backPress.setOnClickListener(this);
+
 
         mDateEditText.setOnClickListener(this);
         mTimeEditText.setOnClickListener(this);
@@ -121,6 +130,7 @@ public class DoctorsAppointment extends AppCompatActivity implements View.OnClic
                 }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false);
     }
 
+
     public String convertDate(int input) {
         if (input >= 10) {
             return String.valueOf(input);
@@ -141,6 +151,9 @@ public class DoctorsAppointment extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.return_date_edit_text:
                 datePickerDialog.show();
+                break;
+            case R.id.back_press:
+                onBackPressed();
                 break;
         }
     }

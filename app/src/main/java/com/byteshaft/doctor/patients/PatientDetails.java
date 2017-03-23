@@ -2,6 +2,7 @@ package com.byteshaft.doctor.patients;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ public class PatientDetails extends AppCompatActivity {
     private ImageButton chatButton;
     private Button appointmentButton;
 
+
     private EditText docId;
     private EditText birthDate;
     private EditText patientAddress;
@@ -24,6 +26,8 @@ public class PatientDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_patient_details);
         patientName = (TextView) findViewById(R.id.patient_name_);
         patientAge = (TextView) findViewById(R.id.patient_age_);
@@ -34,5 +38,15 @@ public class PatientDetails extends AppCompatActivity {
         docId = (EditText) findViewById(R.id.doc_id);
         birthDate = (EditText) findViewById(R.id.birth_date);
         patientAddress = (EditText) findViewById(R.id.patient_address);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default: return false;
+        }
     }
 }
