@@ -111,5 +111,6 @@
     please grant storage permission</string>
     <string name="storage_permission_dialog_title">Storage Permission Required</string>
     <string name="time_slot_booked">Time Slot already Booked</string>
+    <string name="sample_message">Sample Message</string>
 
 </resources>
