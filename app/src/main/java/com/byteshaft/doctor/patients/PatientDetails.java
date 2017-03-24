@@ -1,7 +1,13 @@
 package com.byteshaft.doctor.patients;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +17,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.messages.ConversationActivity;
+import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.doctor.utils.Helpers;
 
 public class PatientDetails extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,6 +49,8 @@ public class PatientDetails extends AppCompatActivity implements View.OnClickLis
         docId = (EditText) findViewById(R.id.doc_id);
         birthDate = (EditText) findViewById(R.id.birth_date);
         patientAddress = (EditText) findViewById(R.id.patient_address);
+        callButton.setOnClickListener(this);
+        chatButton.setOnClickListener(this);
     }
 
     @Override
@@ -48,7 +59,8 @@ public class PatientDetails extends AppCompatActivity implements View.OnClickLis
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            default: return false;
+            default:
+                return false;
         }
     }
 
@@ -57,6 +69,48 @@ public class PatientDetails extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.button_appointment:
                 startActivity(new Intent(getApplicationContext(), DoctorBookingActivity.class));
+                break;
+            case R.id.call_button_:
+                if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+                            AppGlobals.CALL_PERMISSION);
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "03120676767"));
+                    startActivity(intent);
+                }
+
+                break;
+            case R.id.chat_button_:
+                startActivity(new Intent(getApplicationContext(),
+                        ConversationActivity.class));
+                break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case AppGlobals.CALL_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "03120676767"));
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    startActivity(intent);
+                } else {
+                    Helpers.showSnackBar(findViewById(android.R.id.content), R.string.permission_denied);
+                }
                 break;
         }
     }
