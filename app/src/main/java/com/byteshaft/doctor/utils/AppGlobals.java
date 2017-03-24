@@ -85,6 +85,7 @@ public class AppGlobals extends Application {
     public static final String USER_ACTIVATION_KEY = "activation_key";
     public static final int LOCATION_ENABLE = 3;
     public static ImageLoader sImageLoader;
+    public static final int CALL_PERMISSION = 4;
 
     @Override
     public void onCreate() {
