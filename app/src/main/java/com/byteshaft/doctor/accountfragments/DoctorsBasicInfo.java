@@ -172,23 +172,28 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                 Log.i("Tagf", " pre");
                 States states = statesList.get(i);
                 getCities(states.getId());
+                mStatesSpinnerValueString = String.valueOf(states.getId());
                 System.out.println(states.getId());
                 Log.i("Tagf", " post");
                 break;
             case R.id.cities_spinner:
                 Cities city = citiesList.get(i);
+                mCitiesSpinnerValueString = String.valueOf(city.getCityId());
                 System.out.println(city.getCityId());
                 break;
             case R.id.speciality_spinner:
                 Specialities specialities = specialitiesList.get(i);
+                mSpecialitySpinnerValueString = String.valueOf(specialities.getSpecialitiesId());
                 System.out.println(specialities.getSpecialitiesId());
                 break;
             case R.id.clinics_spinner:
                 AffiliateClinic affiliateClinic = affiliateClinicsList.get(i);
+                mAffiliatedClinicsSpinnerValueString = String.valueOf(affiliateClinic.getId());
                 System.out.println(affiliateClinic.getId());
                 break;
             case R.id.subscriptions_spinner:
                 SubscriptionType subscriptionType = subscriptionTypesList.get(i);
+                mSubscriptionSpinnerValueString = String.valueOf(subscriptionType.getId());
                 System.out.println(subscriptionType.getId() + "  " + subscriptionType.getPrice());
                 break;
         }
@@ -289,17 +294,18 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         } else {
             Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
         }
-        data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "speciality", mSpecialitySpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic", mAffiliatedClinicsSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "subscription_type", mSubscriptionSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "state_id", mStatesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "city_id", mCitiesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "speciality_id", mSpecialitySpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic_id", mAffiliatedClinicsSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "subscription_plan_id", mSubscriptionSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_primary", mPhoneOneEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_secondary", mPhoneTwoEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "consultation_time", mConsultationTimeEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "college_id", mCollegeIdEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "show_notification", mNotificationCheckBoxString);
         data.append(FormData.TYPE_CONTENT_TEXT, "show_news", mNewsCheckBoxString);
+        Log.i( "send test data" , data.toString());
 
         mRequest = new HttpRequest(getActivity().getApplicationContext());
         mRequest.setOnReadyStateChangeListener(this);
@@ -507,6 +513,10 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                         break;
                     case HttpURLConnection.HTTP_UNAUTHORIZED:
                         AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "Please enter correct password");
+                        break;
+
+                    case HttpURLConnection.HTTP_BAD_REQUEST:
+                        Log.i("TAG", " " + request.getResponseText());
                         break;
                     case HttpURLConnection.HTTP_FORBIDDEN:
                         AppGlobals.alertDialog(getActivity(), "Inactive Account", "Please activate your account");
