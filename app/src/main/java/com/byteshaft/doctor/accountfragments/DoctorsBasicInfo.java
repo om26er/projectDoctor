@@ -22,8 +22,10 @@ import android.widget.TextView;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.adapters.AffiliateClinicAdapter;
 import com.byteshaft.doctor.adapters.CitiesAdapter;
 import com.byteshaft.doctor.adapters.StatesAdapter;
+import com.byteshaft.doctor.adapters.SubscriptionTypeAdapter;
 import com.byteshaft.doctor.gettersetter.AffiliateClinic;
 import com.byteshaft.doctor.gettersetter.Cities;
 import com.byteshaft.doctor.gettersetter.Specialities;
@@ -338,7 +340,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                                         affiliateClinic.setName(jsonObject.getString("name"));
                                         affiliateClinicsList.add(affiliateClinic);
                                     }
-                                    affiliateClinicAdapter = new AffiliateClinicAdapter(affiliateClinicsList);
+                                    affiliateClinicAdapter = new AffiliateClinicAdapter(
+                                            getActivity(), affiliateClinicsList);
                                     mAffiliatedClinicsSpinner.setAdapter(affiliateClinicAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -409,7 +412,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                                         states.setName(jsonObject.getString("name"));
                                         statesList.add(states);
                                     }
-                                    statesAdapter = new StatesAdapter(getActivity() ,statesList);
+                                    statesAdapter = new StatesAdapter(getActivity(), statesList);
                                     mStateSpinner.setAdapter(statesAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -483,7 +486,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                                         subscriptionType.setId(jsonObject.getInt("id"));
                                         subscriptionTypesList.add(subscriptionType);
                                     }
-                                    subscriptionTypeAdapter = new SubscriptionTypeAdapter(subscriptionTypesList);
+                                    subscriptionTypeAdapter = new SubscriptionTypeAdapter(
+                                            getActivity(), subscriptionTypesList);
                                     mSubscriptionSpinner.setAdapter(subscriptionTypeAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -634,90 +638,6 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         @Override
         public int getCount() {
             return specialities.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-    }
-
-    private class AffiliateClinicAdapter extends BaseAdapter {
-
-        private ViewHolder viewHolder;
-        private ArrayList<AffiliateClinic> affiliateClinics;
-
-        public AffiliateClinicAdapter(ArrayList<AffiliateClinic> affiliateClinics) {
-            this.affiliateClinics = affiliateClinics;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_spinner, parent, false);
-                viewHolder = new ViewHolder();
-                viewHolder.spinnerText = (TextView) convertView.findViewById(R.id.spinner_text);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            AffiliateClinic affiliateClinic = affiliateClinics.get(position);
-            viewHolder.spinnerText.setText(affiliateClinic.getName());
-            Log.i("TAF", affiliateClinic.getName());
-            return convertView;
-        }
-
-        @Override
-        public int getCount() {
-            return affiliateClinics.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-    }
-
-    private class SubscriptionTypeAdapter extends BaseAdapter {
-
-        private ViewHolder viewHolder;
-        private ArrayList<SubscriptionType> subscriptionTypes;
-
-        public SubscriptionTypeAdapter(ArrayList<SubscriptionType> subscriptionTypes) {
-            this.subscriptionTypes = subscriptionTypes;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_spinner, parent, false);
-                viewHolder = new ViewHolder();
-                viewHolder.spinnerText = (TextView) convertView.findViewById(R.id.spinner_text);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            SubscriptionType subscriptionType = subscriptionTypes.get(position);
-            viewHolder.spinnerText.setText(subscriptionType.getPlanType());
-            Log.i("TAF", subscriptionType.getPlanType());
-            return convertView;
-        }
-
-        @Override
-        public int getCount() {
-            return subscriptionTypes.size();
         }
 
         @Override
