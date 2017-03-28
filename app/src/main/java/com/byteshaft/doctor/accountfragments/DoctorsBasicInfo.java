@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.adapters.CitiesAdapter;
+import com.byteshaft.doctor.adapters.StatesAdapter;
 import com.byteshaft.doctor.gettersetter.AffiliateClinic;
 import com.byteshaft.doctor.gettersetter.Cities;
 import com.byteshaft.doctor.gettersetter.Specialities;
@@ -82,7 +84,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     private AlertDialog alertDialog;
     // Date lists
     private ArrayList<States> statesList;
-    private StatesAdapter adapter;
+    private StatesAdapter statesAdapter;
     private ArrayList<Cities> citiesList;
     private CitiesAdapter citiesAdapter;
 
@@ -305,7 +307,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         data.append(FormData.TYPE_CONTENT_TEXT, "college_id", mCollegeIdEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "show_notification", mNotificationCheckBoxString);
         data.append(FormData.TYPE_CONTENT_TEXT, "show_news", mNewsCheckBoxString);
-        Log.i( "send test data" , data.toString());
+        Log.i("send test data", data.toString());
 
         mRequest = new HttpRequest(getActivity().getApplicationContext());
         mRequest.setOnReadyStateChangeListener(this);
@@ -407,8 +409,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                                         states.setName(jsonObject.getString("name"));
                                         statesList.add(states);
                                     }
-                                    adapter = new StatesAdapter(statesList);
-                                    mStateSpinner.setAdapter(adapter);
+                                    statesAdapter = new StatesAdapter(getActivity() ,statesList);
+                                    mStateSpinner.setAdapter(statesAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -444,7 +446,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                                         cities.setStateName(jsonObject.getString("state_name"));
                                         citiesList.add(cities);
                                     }
-                                    citiesAdapter = new CitiesAdapter(citiesList);
+                                    citiesAdapter = new CitiesAdapter(getActivity(), citiesList);
                                     mCitySpinner.setAdapter(citiesAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -597,90 +599,6 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         Log.i("current progress", "" + (int) progress);
         donutProgress.setProgress((int) progress);
 
-    }
-
-    private class StatesAdapter extends BaseAdapter {
-
-        private ViewHolder viewHolder;
-        private ArrayList<States> states;
-
-        public StatesAdapter(ArrayList<States> states) {
-            this.states = states;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_spinner, parent, false);
-                viewHolder = new ViewHolder();
-                viewHolder.spinnerText = (TextView) convertView.findViewById(R.id.spinner_text);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            States singleState = states.get(position);
-            viewHolder.spinnerText.setText(singleState.getName());
-            Log.i("TAF", singleState.getName());
-            return convertView;
-        }
-
-        @Override
-        public int getCount() {
-            return states.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-    }
-
-    private class CitiesAdapter extends BaseAdapter {
-
-        private ViewHolder viewHolder;
-        private ArrayList<Cities> cities;
-
-        public CitiesAdapter(ArrayList<Cities> cities) {
-            this.cities = cities;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_spinner, parent, false);
-                viewHolder = new ViewHolder();
-                viewHolder.spinnerText = (TextView) convertView.findViewById(R.id.spinner_text);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            Cities singleCity = cities.get(position);
-            viewHolder.spinnerText.setText(singleCity.getCityName());
-            Log.i("TAF", singleCity.getCityName());
-            return convertView;
-        }
-
-        @Override
-        public int getCount() {
-            return cities.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
     }
 
     private class ViewHolder {

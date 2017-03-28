@@ -22,12 +22,17 @@ import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.adapters.CitiesAdapter;
+import com.byteshaft.doctor.adapters.StatesAdapter;
+import com.byteshaft.doctor.gettersetter.Cities;
+import com.byteshaft.doctor.gettersetter.States;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
 import com.byteshaft.requests.HttpRequest;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +49,7 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     private Spinner mStateSpinner;
     private Spinner mCitySpinner;
     private Spinner mInsuranceCarrierSpinner;
-//    private Spinner mAffiliatedClinicsSpinner;
+    //    private Spinner mAffiliatedClinicsSpinner;
     private TextView mStateSpinnerTextView;
     private EditText mPhoneOneEditText;
     private EditText mPhoneTwoEditText;
@@ -67,12 +72,24 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     private DonutProgress donutProgress;
     private AlertDialog alertDialog;
 
+
+    private ArrayList<States> statesList;
+    private StatesAdapter statesAdapter;
+    private ArrayList<Cities> citiesList;
+    private CitiesAdapter citiesAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_user_basic_info_step_two, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(getResources().getString(R.string.sign_up));
         setHasOptionsMenu(true);
+
+        getStates();
+        /// data list work
+        statesList = new ArrayList<>();
+        citiesList = new ArrayList<>();
+
         mStateSpinner = (Spinner) mBaseView.findViewById(R.id.states_spinner);
         mCitySpinner = (Spinner) mBaseView.findViewById(R.id.cities_spinner);
         mInsuranceCarrierSpinner = (Spinner) mBaseView.findViewById(R.id.insurance_spinner);
@@ -100,28 +117,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mNewsCheckBox.setTypeface(AppGlobals.typefaceNormal);
         mTermsConditionCheckBox.setTypeface(AppGlobals.typefaceNormal);
 
-        List<String> StateList = new ArrayList<>();
-        StateList.add("State1");
-        StateList.add("State2");
-        StateList.add("State3");
-        StateList.add("State4");
-        StateList.add("State5");
-        ArrayAdapter<String> StateListAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, StateList);
-        StateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mStateSpinner.setAdapter(StateListAdapter);
-
-        List<String> citiesList = new ArrayList<String>();
-        citiesList.add("city1");
-        citiesList.add("city2");
-        citiesList.add("city3");
-        citiesList.add("city4");
-        citiesList.add("city5");
-        ArrayAdapter<String> CitiesListAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, citiesList);
-        CitiesListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mCitySpinner.setAdapter(CitiesListAdapter);
-
         List<String> InsuranceCarrierList = new ArrayList<>();
         InsuranceCarrierList.add("Insurance Carrier-1");
         InsuranceCarrierList.add("Insurance Carrier-2");
@@ -133,20 +128,8 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mInsuranceCarrierSpinner.setAdapter(InsuranceCarrierListAdapter);
 
 
-//        List<String> clinicList = new ArrayList<>();
-//        clinicList.add("Doctor dray clinic");
-//        clinicList.add("Cantt clinic");
-//        clinicList.add("City hospital");
-//        clinicList.add("Medicare");
-//        clinicList.add("Patient care");
-//        ArrayAdapter<String> clinicListAdapter = new ArrayAdapter<>(getActivity(),
-//                android.R.layout.simple_list_item_1, clinicList);
-//        clinicListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        mAffiliatedClinicsSpinner.setAdapter(clinicListAdapter);
-
         mStateSpinner.setOnItemSelectedListener(this);
         mCitySpinner.setOnItemSelectedListener(this);
-//        mAffiliatedClinicsSpinner.setOnItemSelectedListener(this);
         mInsuranceCarrierSpinner.setOnItemSelectedListener(this);
 
         mNotificationCheckBox.setOnCheckedChangeListener(this);
@@ -156,6 +139,77 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mSaveButton.setOnClickListener(this);
 
         return mBaseView;
+    }
+
+    private void getStates() {
+        HttpRequest getStateRequest = new HttpRequest(getActivity().getApplicationContext());
+        getStateRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest request, int readyState) {
+                switch (readyState) {
+                    case HttpRequest.STATE_DONE:
+                        switch (request.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                try {
+                                    JSONObject object = new JSONObject(request.getResponseText());
+                                    JSONArray jsonArray = object.getJSONArray("results");
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        System.out.println("Test " + jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        States states = new States();
+                                        states.setCode(jsonObject.getString("code"));
+                                        states.setId(jsonObject.getInt("id"));
+                                        states.setName(jsonObject.getString("name"));
+                                        statesList.add(states);
+                                    }
+                                    statesAdapter = new StatesAdapter(getActivity(), statesList);
+                                    mStateSpinner.setAdapter(statesAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                        }
+                }
+            }
+        });
+        getStateRequest.open("GET", String.format("%spublic/states", AppGlobals.BASE_URL));
+        getStateRequest.send();
+    }
+
+    private void getCities(int id) {
+        HttpRequest getCitiesRequest = new HttpRequest(getActivity().getApplicationContext());
+        getCitiesRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest request, int readyState) {
+                switch (readyState) {
+                    case HttpRequest.STATE_DONE:
+                        switch (request.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                System.out.println(request.getResponseText());
+                                try {
+                                    JSONObject object = new JSONObject(request.getResponseText());
+                                    JSONArray jsonArray = object.getJSONArray("results");
+                                    citiesList = new ArrayList<>();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        System.out.println("Test " + jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        Cities cities = new Cities();
+                                        cities.setCityId(jsonObject.getInt("id"));
+                                        cities.setCityName(jsonObject.getString("name"));
+                                        cities.setStateId(jsonObject.getInt("state"));
+                                        cities.setStateName(jsonObject.getString("state_name"));
+                                        citiesList.add(cities);
+                                    }
+                                    citiesAdapter = new CitiesAdapter(getActivity(), citiesList);
+                                    mCitySpinner.setAdapter(citiesAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                        }
+                }
+            }
+        });
+        getCitiesRequest.open("GET", String.format("%spublic/states/%s/cities", AppGlobals.BASE_URL, id));
+        getCitiesRequest.send();
     }
 
     @Override
@@ -172,12 +226,15 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
             case R.id.states_spinner:
-                mStatesSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(mStatesSpinnerValueString);
+                States states = statesList.get(i);
+                getCities(states.getId());
+                mStatesSpinnerValueString = String.valueOf(states.getId());
+                System.out.println(states.getId());
                 break;
             case R.id.cities_spinner:
-                mCitiesSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(mCitiesSpinnerValueString);
+                Cities city = citiesList.get(i);
+                mCitiesSpinnerValueString = String.valueOf(city.getCityId());
+                System.out.println(city.getCityId());
                 break;
             case R.id.insurance_spinner:
                 mInsuranceCarrierSpinnerValueString = adapterView.getItemAtPosition(i).toString();
