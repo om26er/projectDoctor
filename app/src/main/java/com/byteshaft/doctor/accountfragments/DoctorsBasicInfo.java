@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,8 +22,15 @@ import android.widget.TextView;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
+import com.byteshaft.doctor.adapters.AffiliateClinicAdapter;
+import com.byteshaft.doctor.adapters.CitiesAdapter;
+import com.byteshaft.doctor.adapters.StatesAdapter;
+import com.byteshaft.doctor.adapters.SubscriptionTypeAdapter;
+import com.byteshaft.doctor.gettersetter.AffiliateClinic;
 import com.byteshaft.doctor.gettersetter.Cities;
+import com.byteshaft.doctor.gettersetter.Specialities;
 import com.byteshaft.doctor.gettersetter.States;
+import com.byteshaft.doctor.gettersetter.SubscriptionType;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
@@ -36,9 +42,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.List;
+
+import static android.R.attr.id;
 
 public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSelectedListener,
         CompoundButton.OnCheckedChangeListener, View.OnClickListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnFileUploadProgressListener {
@@ -78,9 +86,18 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     private AlertDialog alertDialog;
     // Date lists
     private ArrayList<States> statesList;
+    private StatesAdapter statesAdapter;
     private ArrayList<Cities> citiesList;
-    private StatesAdapter adapter;
     private CitiesAdapter citiesAdapter;
+
+    private ArrayList<Specialities> specialitiesList;
+    private SpecialitiesAdapter specialitiesAdapter;
+
+    private ArrayList<AffiliateClinic> affiliateClinicsList;
+    private AffiliateClinicAdapter affiliateClinicAdapter;
+
+    private ArrayList<SubscriptionType> subscriptionTypesList;
+    private SubscriptionTypeAdapter subscriptionTypeAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,9 +106,15 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                 .setTitle(getResources().getString(R.string.sign_up));
         setHasOptionsMenu(true);
         getStates();
+        getSpecialities();
+        getAffiliateClinic();
+        getSubscriptionType();
         /// data list work
         statesList = new ArrayList<>();
         citiesList = new ArrayList<>();
+        specialitiesList = new ArrayList<>();
+        affiliateClinicsList = new ArrayList<>();
+        subscriptionTypesList = new ArrayList<>();
 
         mSaveButton = (Button) mBaseView.findViewById(R.id.save_button);
         mStateSpinner = (Spinner) mBaseView.findViewById(R.id.states_spinner);
@@ -119,39 +142,6 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         mPhoneTwoEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY));
         mConsultationTimeEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_CONSULTATION_TIME));
         mCollegeIdEditText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_COLLEGE_ID));
-
-        List<String> specialityList = new ArrayList<>();
-        specialityList.add("Test");
-        specialityList.add("dermatologist");
-        specialityList.add("surgeon");
-        specialityList.add("physiotherapist");
-        specialityList.add("dentist");
-        ArrayAdapter<String> SpecialityListAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, specialityList);
-        SpecialityListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpecialitySpinner.setAdapter(SpecialityListAdapter);
-
-        List<String> clinicList = new ArrayList<>();
-        clinicList.add("dray clinic");
-        clinicList.add("cantt clinic");
-        clinicList.add("city hospital");
-        clinicList.add("medicare");
-        clinicList.add("patient care");
-        ArrayAdapter<String> clinicListAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, clinicList);
-        clinicListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mAffiliatedClinicsSpinner.setAdapter(clinicListAdapter);
-
-        List<String> subscriptionList = new ArrayList<>();
-        subscriptionList.add("basic plan");
-        subscriptionList.add("monthly plan");
-        subscriptionList.add("Premium plan");
-        subscriptionList.add("professional plan");
-        ArrayAdapter<String> subscriptionListAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, subscriptionList);
-        subscriptionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSubscriptionSpinner.setAdapter(subscriptionListAdapter);
-
 
         mStateSpinner.setOnItemSelectedListener(this);
         mCitySpinner.setOnItemSelectedListener(this);
@@ -186,24 +176,29 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                 Log.i("Tagf", " pre");
                 States states = statesList.get(i);
                 getCities(states.getId());
+                mStatesSpinnerValueString = String.valueOf(states.getId());
                 System.out.println(states.getId());
                 Log.i("Tagf", " post");
                 break;
             case R.id.cities_spinner:
                 Cities city = citiesList.get(i);
+                mCitiesSpinnerValueString = String.valueOf(city.getCityId());
                 System.out.println(city.getCityId());
                 break;
             case R.id.speciality_spinner:
-                mSpecialitySpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(mSpecialitySpinnerValueString);
+                Specialities specialities = specialitiesList.get(i);
+                mSpecialitySpinnerValueString = String.valueOf(specialities.getSpecialitiesId());
+                System.out.println(specialities.getSpecialitiesId());
                 break;
             case R.id.clinics_spinner:
-                mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(mAffiliatedClinicsSpinnerValueString);
+                AffiliateClinic affiliateClinic = affiliateClinicsList.get(i);
+                mAffiliatedClinicsSpinnerValueString = String.valueOf(affiliateClinic.getId());
+                System.out.println(affiliateClinic.getId());
                 break;
             case R.id.subscriptions_spinner:
-                mSubscriptionSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(mSubscriptionSpinnerValueString);
+                SubscriptionType subscriptionType = subscriptionTypesList.get(i);
+                mSubscriptionSpinnerValueString = String.valueOf(subscriptionType.getId());
+                System.out.println(subscriptionType.getId() + "  " + subscriptionType.getPrice());
                 break;
         }
 
@@ -303,17 +298,18 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         } else {
             Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
         }
-        data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "speciality", mSpecialitySpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic", mAffiliatedClinicsSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "subscription_type", mSubscriptionSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "state_id", mStatesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "city_id", mCitiesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "speciality_id", mSpecialitySpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic_id", mAffiliatedClinicsSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "subscription_plan_id", mSubscriptionSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_primary", mPhoneOneEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_secondary", mPhoneTwoEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "consultation_time", mConsultationTimeEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "college_id", mCollegeIdEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "show_notification", mNotificationCheckBoxString);
         data.append(FormData.TYPE_CONTENT_TEXT, "show_news", mNewsCheckBoxString);
+        Log.i("send test data", data.toString());
 
         mRequest = new HttpRequest(getActivity().getApplicationContext());
         mRequest.setOnReadyStateChangeListener(this);
@@ -322,6 +318,77 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         mRequest.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         mRequest.send(data);
+    }
+
+    private void getAffiliateClinic() {
+
+        HttpRequest affiliateClinicRequest = new HttpRequest(getActivity().getApplicationContext());
+        affiliateClinicRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest request, int readyState) {
+                switch (readyState) {
+                    case HttpRequest.STATE_DONE:
+                        switch (request.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                try {
+                                    JSONObject spObject = new JSONObject(request.getResponseText());
+                                    JSONArray spArray = spObject.getJSONArray("results");
+                                    for (int i = 0; i < spArray.length(); i++) {
+                                        JSONObject jsonObject = spArray.getJSONObject(i);
+                                        AffiliateClinic affiliateClinic = new AffiliateClinic();
+                                        affiliateClinic.setId(jsonObject.getInt("id"));
+                                        affiliateClinic.setName(jsonObject.getString("name"));
+                                        affiliateClinicsList.add(affiliateClinic);
+                                    }
+                                    affiliateClinicAdapter = new AffiliateClinicAdapter(
+                                            getActivity(), affiliateClinicsList);
+                                    mAffiliatedClinicsSpinner.setAdapter(affiliateClinicAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                        }
+                }
+            }
+        });
+
+        affiliateClinicRequest.open("GET", String.format("%spublic/clinics/", AppGlobals.BASE_URL));
+        affiliateClinicRequest.send();
+    }
+
+    private void getSpecialities() {
+
+        HttpRequest specialitiesRequest = new HttpRequest(getActivity().getApplicationContext());
+        specialitiesRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest request, int readyState) {
+                switch (readyState) {
+                    case HttpRequest.STATE_DONE:
+                        switch (request.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                try {
+                                    JSONObject spObject = new JSONObject(request.getResponseText());
+                                    JSONArray spArray = spObject.getJSONArray("results");
+                                    for (int i = 0; i < spArray.length(); i++) {
+                                        JSONObject jsonObject = spArray.getJSONObject(i);
+                                        Specialities specialities = new Specialities();
+                                        specialities.setSpecialitiesId(jsonObject.getInt("id"));
+                                        specialities.setSpeciality(jsonObject.getString("name"));
+                                        specialitiesList.add(specialities);
+                                    }
+                                    specialitiesAdapter = new SpecialitiesAdapter(specialitiesList);
+                                    mSpecialitySpinner.setAdapter(specialitiesAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                        }
+                }
+            }
+        });
+
+        specialitiesRequest.open("GET", String.format("%spublic/specialities", AppGlobals.BASE_URL));
+        specialitiesRequest.send();
     }
 
     private void getStates() {
@@ -345,8 +412,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                                         states.setName(jsonObject.getString("name"));
                                         statesList.add(states);
                                     }
-                                    adapter = new StatesAdapter(statesList);
-                                    mStateSpinner.setAdapter(adapter);
+                                    statesAdapter = new StatesAdapter(getActivity(), statesList);
+                                    mStateSpinner.setAdapter(statesAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -359,8 +426,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     }
 
     private void getCities(int id) {
-        HttpRequest getStateRequest = new HttpRequest(getActivity().getApplicationContext());
-        getStateRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+        HttpRequest getCitiesRequest = new HttpRequest(getActivity().getApplicationContext());
+        getCitiesRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
             @Override
             public void onReadyStateChange(HttpRequest request, int readyState) {
                 switch (readyState) {
@@ -382,7 +449,7 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                                         cities.setStateName(jsonObject.getString("state_name"));
                                         citiesList.add(cities);
                                     }
-                                    citiesAdapter = new CitiesAdapter(citiesList);
+                                    citiesAdapter = new CitiesAdapter(getActivity(), citiesList);
                                     mCitySpinner.setAdapter(citiesAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -391,8 +458,46 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                 }
             }
         });
-        getStateRequest.open("GET", String.format("%spublic/states/%s/cities", AppGlobals.BASE_URL, id));
-        getStateRequest.send();
+        getCitiesRequest.open("GET", String.format("%spublic/states/%s/cities", AppGlobals.BASE_URL, id));
+        getCitiesRequest.send();
+    }
+
+    private void getSubscriptionType() {
+        HttpRequest getsubTypeRequest = new HttpRequest(getActivity().getApplicationContext());
+        getsubTypeRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest request, int readyState) {
+                switch (readyState) {
+                    case HttpRequest.STATE_DONE:
+                        switch (request.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                System.out.println(request.getResponseText());
+                                try {
+                                    JSONObject object = new JSONObject(request.getResponseText());
+                                    JSONArray jsonArray = object.getJSONArray("results");
+                                    citiesList = new ArrayList<>();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        System.out.println("Test " + jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        SubscriptionType subscriptionType = new SubscriptionType();
+                                        subscriptionType.setPlanType(jsonObject.getString("plan_type"));
+                                        subscriptionType.setDescription(jsonObject.getString("description"));
+                                        subscriptionType.setPrice(BigDecimal.valueOf(jsonObject.getDouble("price")).floatValue());
+                                        subscriptionType.setId(jsonObject.getInt("id"));
+                                        subscriptionTypesList.add(subscriptionType);
+                                    }
+                                    subscriptionTypeAdapter = new SubscriptionTypeAdapter(
+                                            getActivity(), subscriptionTypesList);
+                                    mSubscriptionSpinner.setAdapter(subscriptionTypeAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                        }
+                }
+            }
+        });
+        getsubTypeRequest.open("GET", String.format("%spublic/subscriptions/", AppGlobals.BASE_URL, id));
+        getsubTypeRequest.send();
     }
 
     @Override
@@ -414,6 +519,10 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                         break;
                     case HttpURLConnection.HTTP_UNAUTHORIZED:
                         AppGlobals.alertDialog(getActivity(), "Profile update Failed!", "Please enter correct password");
+                        break;
+
+                    case HttpURLConnection.HTTP_BAD_REQUEST:
+                        Log.i("TAG", " " + request.getResponseText());
                         break;
                     case HttpURLConnection.HTTP_FORBIDDEN:
                         AppGlobals.alertDialog(getActivity(), "Inactive Account", "Please activate your account");
@@ -496,91 +605,49 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
 
     }
 
-    private class StatesAdapter extends BaseAdapter {
-
-        private ViewHolder viewHolder;
-        private ArrayList<States> states;
-
-        public StatesAdapter(ArrayList<States> states) {
-            this.states = states;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_spinner, parent, false);
-                viewHolder = new ViewHolder();
-                viewHolder.spinnerText = (TextView) convertView.findViewById(R.id.spinner_text);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            States singleState = states.get(position);
-            viewHolder.spinnerText.setText(singleState.getName());
-            Log.i("TAF", singleState.getName());
-            return convertView;
-        }
-
-        @Override
-        public int getCount() {
-            return states.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-    }
-
-    private class CitiesAdapter extends BaseAdapter {
-        private ViewHolder viewHolder;
-        private ArrayList<Cities> cities;
-
-        public CitiesAdapter(ArrayList<Cities> cities) {
-            this.cities = cities;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_spinner, parent, false);
-                viewHolder = new ViewHolder();
-                viewHolder.spinnerText = (TextView) convertView.findViewById(R.id.spinner_text);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            Cities singleCity = cities.get(position);
-            viewHolder.spinnerText.setText(singleCity.getCityName());
-            Log.i("TAF", singleCity.getCityName());
-            return convertView;
-        }
-
-        @Override
-        public int getCount() {
-            return cities.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-    }
-
     private class ViewHolder {
         private TextView spinnerText;
     }
 
+    private class SpecialitiesAdapter extends BaseAdapter {
+
+        private ViewHolder viewHolder;
+        private ArrayList<Specialities> specialities;
+
+        public SpecialitiesAdapter(ArrayList<Specialities> specialities) {
+            this.specialities = specialities;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_spinner, parent, false);
+                viewHolder = new ViewHolder();
+                viewHolder.spinnerText = (TextView) convertView.findViewById(R.id.spinner_text);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            Specialities speciality = specialities.get(position);
+            viewHolder.spinnerText.setText(speciality.getSpeciality());
+            Log.i("TAF", speciality.getSpeciality());
+            return convertView;
+        }
+
+        @Override
+        public int getCount() {
+            return specialities.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+    }
 }

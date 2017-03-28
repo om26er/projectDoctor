@@ -71,7 +71,7 @@ public class AppGlobals extends Application {
     public static final String KEY_CHAT_STATUS = "available_to_chat";
     public static final String KEY_INSURANCE_CARRIER = "insurance_carrier";
     public static final String KEY_EMERGENCY_CONTACT = "emergency_contact";
-    public static final String KEY_SUBSCRIPTION_TYPE = "subscription_type";
+    public static final String KEY_SUBSCRIPTION_TYPE = "subscription_plan";
     public static final String KEY_CONSULTATION_TIME = "consultation_time";
     public static final String KEY_REVIEW_STARS = "review_stars";
     public static final String KEY_SHOW_NEWS = "show_news";
