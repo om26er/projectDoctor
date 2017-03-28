@@ -358,9 +358,9 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         } else {
             Helpers.showProgressDialog(getActivity(), "Updating your Profile...");
         }
-        data.append(FormData.TYPE_CONTENT_TEXT, "state", mStatesSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "city", mCitiesSpinnerValueString);
-        data.append(FormData.TYPE_CONTENT_TEXT, "insurance_carrier", mInsuranceCarrierSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "state_id", mStatesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "city_id", mCitiesSpinnerValueString);
+        data.append(FormData.TYPE_CONTENT_TEXT, "insurance_carrier_id", mInsuranceCarrierSpinnerValueString);
 //        data.append(FormData.TYPE_CONTENT_TEXT, "affiliate_clinic", mAffiliatedClinicsSpinnerValueString);
         data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_primary", mPhoneOneEditTextString);
         data.append(FormData.TYPE_CONTENT_TEXT, "phone_number_secondary", mPhoneTwoEditTextString);
@@ -419,7 +419,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                             String phoneNumberPrimary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_PRIMARY);
                             String phoneNumberSecondary = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_SECONDARY);
 
-//                            String affiliateClinic = jsonObject.getString(AppGlobals.KEY_AFFILIATE_CLINIC_ID);
                             String insuranceCarrier = jsonObject.getString(AppGlobals.KEY_INSURANCE_CARRIER);
                             String address = jsonObject.getString(AppGlobals.KEY_ADDRESS);
                             String location = jsonObject.getString(AppGlobals.KEY_LOCATION);
