@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -23,8 +22,10 @@ import android.widget.Toast;
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
 import com.byteshaft.doctor.adapters.CitiesAdapter;
+import com.byteshaft.doctor.adapters.InsuranceCarriersAdapter;
 import com.byteshaft.doctor.adapters.StatesAdapter;
 import com.byteshaft.doctor.gettersetter.Cities;
+import com.byteshaft.doctor.gettersetter.InsuranceCarriers;
 import com.byteshaft.doctor.gettersetter.States;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
@@ -39,7 +40,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItemSelectedListener,
@@ -49,7 +49,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     private Spinner mStateSpinner;
     private Spinner mCitySpinner;
     private Spinner mInsuranceCarrierSpinner;
-    //    private Spinner mAffiliatedClinicsSpinner;
     private TextView mStateSpinnerTextView;
     private EditText mPhoneOneEditText;
     private EditText mPhoneTwoEditText;
@@ -62,7 +61,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     private String mEmergencyContactString;
     private String mStatesSpinnerValueString;
     private String mCitiesSpinnerValueString;
-    private String mAffiliatedClinicsSpinnerValueString;
     private String mInsuranceCarrierSpinnerValueString;
     private String mNotificationCheckBoxString = "true";
     private String mNewsCheckBoxString = "true";
@@ -78,6 +76,9 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
     private ArrayList<Cities> citiesList;
     private CitiesAdapter citiesAdapter;
 
+    private ArrayList<InsuranceCarriers> insuranceCarriersesList;
+    private InsuranceCarriersAdapter insuranceCarriersAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.fragment_user_basic_info_step_two, container, false);
@@ -86,14 +87,15 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         setHasOptionsMenu(true);
 
         getStates();
+        getInsuranceCarriers();
         /// data list work
         statesList = new ArrayList<>();
         citiesList = new ArrayList<>();
+        insuranceCarriersesList = new ArrayList<>();
 
         mStateSpinner = (Spinner) mBaseView.findViewById(R.id.states_spinner);
         mCitySpinner = (Spinner) mBaseView.findViewById(R.id.cities_spinner);
         mInsuranceCarrierSpinner = (Spinner) mBaseView.findViewById(R.id.insurance_spinner);
-//        mAffiliatedClinicsSpinner = (Spinner) mBaseView.findViewById(R.id.clinic_spinner);
         mStateSpinnerTextView = (TextView) mBaseView.findViewById(R.id.states_spinner_text_view);
 
         mPhoneOneEditText = (EditText) mBaseView.findViewById(R.id.phone_one_edit_text);
@@ -117,17 +119,6 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mNewsCheckBox.setTypeface(AppGlobals.typefaceNormal);
         mTermsConditionCheckBox.setTypeface(AppGlobals.typefaceNormal);
 
-        List<String> InsuranceCarrierList = new ArrayList<>();
-        InsuranceCarrierList.add("Insurance Carrier-1");
-        InsuranceCarrierList.add("Insurance Carrier-2");
-        InsuranceCarrierList.add("Insurance Carrier-3");
-        InsuranceCarrierList.add("Insurance Carrier-4");
-        ArrayAdapter<String> InsuranceCarrierListAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, InsuranceCarrierList);
-        InsuranceCarrierListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mInsuranceCarrierSpinner.setAdapter(InsuranceCarrierListAdapter);
-
-
         mStateSpinner.setOnItemSelectedListener(this);
         mCitySpinner.setOnItemSelectedListener(this);
         mInsuranceCarrierSpinner.setOnItemSelectedListener(this);
@@ -139,6 +130,39 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
         mSaveButton.setOnClickListener(this);
 
         return mBaseView;
+    }
+
+    private void getInsuranceCarriers() {
+        HttpRequest getStateRequest = new HttpRequest(getActivity().getApplicationContext());
+        getStateRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest request, int readyState) {
+                switch (readyState) {
+                    case HttpRequest.STATE_DONE:
+                        switch (request.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                try {
+                                    JSONObject object = new JSONObject(request.getResponseText());
+                                    JSONArray jsonArray = object.getJSONArray("results");
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        System.out.println("Test " + jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        InsuranceCarriers insuranceCarriers = new InsuranceCarriers();
+                                        insuranceCarriers.setId(jsonObject.getInt("id"));
+                                        insuranceCarriers.setName(jsonObject.getString("name"));
+                                        insuranceCarriersesList.add(insuranceCarriers);
+                                    }
+                                    insuranceCarriersAdapter = new InsuranceCarriersAdapter(getActivity(), insuranceCarriersesList);
+                                    mInsuranceCarrierSpinner.setAdapter(insuranceCarriersAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                        }
+                }
+            }
+        });
+        getStateRequest.open("GET", String.format("%spublic/insurance-carriers/", AppGlobals.BASE_URL));
+        getStateRequest.send();
     }
 
     private void getStates() {
@@ -237,15 +261,10 @@ public class UserBasicInfoStepTwo extends Fragment implements AdapterView.OnItem
                 System.out.println(city.getCityId());
                 break;
             case R.id.insurance_spinner:
-                mInsuranceCarrierSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-                System.out.println(mInsuranceCarrierSpinnerValueString);
+                InsuranceCarriers insuranceCarriers = insuranceCarriersesList.get(i);
+                mInsuranceCarrierSpinnerValueString = String.valueOf(insuranceCarriers.getId());
                 break;
-//            case R.id.clinic_spinner:
-//                mAffiliatedClinicsSpinnerValueString = adapterView.getItemAtPosition(i).toString();
-//                System.out.println(mAffiliatedClinicsSpinnerValueString);
-//                break;
         }
-
     }
 
     @Override
