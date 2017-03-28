@@ -26,6 +26,7 @@ import com.byteshaft.doctor.gettersetter.AffiliateClinic;
 import com.byteshaft.doctor.gettersetter.Cities;
 import com.byteshaft.doctor.gettersetter.Specialities;
 import com.byteshaft.doctor.gettersetter.States;
+import com.byteshaft.doctor.gettersetter.SubscriptionType;
 import com.byteshaft.doctor.utils.AppGlobals;
 import com.byteshaft.doctor.utils.Helpers;
 import com.byteshaft.requests.FormData;
@@ -37,8 +38,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+
+import static android.R.attr.id;
 
 public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSelectedListener,
         CompoundButton.OnCheckedChangeListener, View.OnClickListener, HttpRequest.OnReadyStateChangeListener, HttpRequest.OnFileUploadProgressListener {
@@ -88,6 +92,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
     private ArrayList<AffiliateClinic> affiliateClinicsList;
     private AffiliateClinicAdapter affiliateClinicAdapter;
 
+    private ArrayList<SubscriptionType> subscriptionTypesList;
+    private SubscriptionTypeAdapter subscriptionTypeAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,11 +104,13 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         getStates();
         getSpecialities();
         getAffiliateClinic();
+        getSubscriptionType();
         /// data list work
         statesList = new ArrayList<>();
         citiesList = new ArrayList<>();
         specialitiesList = new ArrayList<>();
         affiliateClinicsList = new ArrayList<>();
+        subscriptionTypesList = new ArrayList<>();
 
         mSaveButton = (Button) mBaseView.findViewById(R.id.save_button);
         mStateSpinner = (Spinner) mBaseView.findViewById(R.id.states_spinner);
@@ -180,7 +188,8 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                 System.out.println(affiliateClinic.getId());
                 break;
             case R.id.subscriptions_spinner:
-                // TODO: 28/03/2017  
+                SubscriptionType subscriptionType = subscriptionTypesList.get(i);
+                System.out.println(subscriptionType.getId() + "  " + subscriptionType.getPrice());
                 break;
         }
 
@@ -440,6 +449,43 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         });
         getCitiesRequest.open("GET", String.format("%spublic/states/%s/cities", AppGlobals.BASE_URL, id));
         getCitiesRequest.send();
+    }
+
+    private void getSubscriptionType() {
+        HttpRequest getsubTypeRequest = new HttpRequest(getActivity().getApplicationContext());
+        getsubTypeRequest.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest request, int readyState) {
+                switch (readyState) {
+                    case HttpRequest.STATE_DONE:
+                        switch (request.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                System.out.println(request.getResponseText());
+                                try {
+                                    JSONObject object = new JSONObject(request.getResponseText());
+                                    JSONArray jsonArray = object.getJSONArray("results");
+                                    citiesList = new ArrayList<>();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        System.out.println("Test " + jsonArray.getJSONObject(i));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        SubscriptionType subscriptionType = new SubscriptionType();
+                                        subscriptionType.setPlanType(jsonObject.getString("plan_type"));
+                                        subscriptionType.setDescription(jsonObject.getString("description"));
+                                        subscriptionType.setPrice(BigDecimal.valueOf(jsonObject.getDouble("price")).floatValue());
+                                        subscriptionType.setId(jsonObject.getInt("id"));
+                                        subscriptionTypesList.add(subscriptionType);
+                                    }
+                                    subscriptionTypeAdapter = new SubscriptionTypeAdapter(subscriptionTypesList);
+                                    mSubscriptionSpinner.setAdapter(subscriptionTypeAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                        }
+                }
+            }
+        });
+        getsubTypeRequest.open("GET", String.format("%spublic/subscriptions/", AppGlobals.BASE_URL, id));
+        getsubTypeRequest.send();
     }
 
     @Override
@@ -702,6 +748,48 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
         @Override
         public int getCount() {
             return affiliateClinics.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+    }
+
+    private class SubscriptionTypeAdapter extends BaseAdapter {
+
+        private ViewHolder viewHolder;
+        private ArrayList<SubscriptionType> subscriptionTypes;
+
+        public SubscriptionTypeAdapter(ArrayList<SubscriptionType> subscriptionTypes) {
+            this.subscriptionTypes = subscriptionTypes;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.delegate_spinner, parent, false);
+                viewHolder = new ViewHolder();
+                viewHolder.spinnerText = (TextView) convertView.findViewById(R.id.spinner_text);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            SubscriptionType subscriptionType = subscriptionTypes.get(position);
+            viewHolder.spinnerText.setText(subscriptionType.getPlanType());
+            Log.i("TAF", subscriptionType.getPlanType());
+            return convertView;
+        }
+
+        @Override
+        public int getCount() {
+            return subscriptionTypes.size();
         }
 
         @Override
