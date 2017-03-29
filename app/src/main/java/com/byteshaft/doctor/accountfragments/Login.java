@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.byteshaft.doctor.MainActivity;
 import com.byteshaft.doctor.R;
@@ -23,8 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
-
-import static android.R.attr.accountType;
 
 public class Login extends Fragment implements View.OnClickListener, HttpRequest.OnErrorListener,
         HttpRequest.OnReadyStateChangeListener {
@@ -172,6 +169,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                             String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
                             String email = jsonObject.getString(AppGlobals.KEY_EMAIL);
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_EMAIL, email);
+
                             //saving values
                             AppGlobals.loginState(true);
                             AppGlobals.gotInfo(true);
@@ -213,6 +211,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                     String address = jsonObject.getString(AppGlobals.KEY_ADDRESS);
                                     String phoneOne = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_PRIMARY);
                                     String phoneTwo = jsonObject.getString(AppGlobals.KEY_PHONE_NUMBER_SECONDARY);
+                                    String profileId = jsonObject.getString(AppGlobals.KEY_PROFILE_ID);
 
                                     if (AppGlobals.isDoctor()) {
                                         String speciality = jsonObject.getString(AppGlobals.KEY_DOC_SPECIALITY);
@@ -234,6 +233,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_PRIMARY, phoneOne);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PHONE_NUMBER_SECONDARY, phoneTwo);
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_DOC_ID, docID);
+                                    AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_PROFILE_ID, profileId);
                                     AppGlobals.gotInfo(true);
                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                 } catch (JSONException e) {
