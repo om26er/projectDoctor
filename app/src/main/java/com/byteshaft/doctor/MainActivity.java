@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (!AppGlobals.isDoctor()) {
+        Log.i("Token ",  AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+        Log.i("DOC ID", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_USER_ID));
+        if (AppGlobals.isDoctor()) {
             View headerView;
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
