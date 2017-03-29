@@ -169,16 +169,12 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.i("TAG", "id " + adapterView.getId());
-        Log.i("TAG", "id " + String.valueOf(adapterView.getId() == R.id.states_spinner));
         switch (adapterView.getId()) {
             case R.id.states_spinner:
-                Log.i("Tagf", " pre");
                 States states = statesList.get(i);
                 getCities(states.getId());
                 mStatesSpinnerValueString = String.valueOf(states.getId());
                 System.out.println(states.getId());
-                Log.i("Tagf", " post");
                 break;
             case R.id.cities_spinner:
                 Cities city = citiesList.get(i);
@@ -529,10 +525,11 @@ public class DoctorsBasicInfo extends Fragment implements AdapterView.OnItemSele
                         AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
                         break;
                     case HttpURLConnection.HTTP_CREATED:
+                        Log.i("TAG", "res" + request.getResponseText());
                         try {
                             JSONObject jsonObject = new JSONObject(request.getResponseText());
 
-                            String userId = jsonObject.getString(AppGlobals.KEY_USER_ID);
+                            String userId = jsonObject.getString(AppGlobals.KEY_PROFILE_ID);
                             String firstName = jsonObject.getString(AppGlobals.KEY_FIRST_NAME);
                             String lastName = jsonObject.getString(AppGlobals.KEY_LAST_NAME);
 
