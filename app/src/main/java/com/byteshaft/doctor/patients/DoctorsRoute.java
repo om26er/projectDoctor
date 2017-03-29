@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.patients;
+package com.byteshaft.patient.patients;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -9,7 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.byteshaft.doctor.R;
+import com.byteshaft.patient.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;

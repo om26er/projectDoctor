@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.uihelpers;
+package com.byteshaft.patient.uihelpers;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.AppGlobals;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

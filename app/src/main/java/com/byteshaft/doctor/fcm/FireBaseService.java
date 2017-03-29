@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.fcm;
+package com.byteshaft.patient.fcm;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.utils;
+package com.byteshaft.patient.utils;
 
 import android.app.Activity;
 import android.app.Application;
@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 
-import com.byteshaft.doctor.R;
+import com.byteshaft.patient.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.core.ImageLoader;

@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.patients;
+package com.byteshaft.patient.patients;
 
 import android.Manifest;
 import android.content.Context;
@@ -25,10 +25,10 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.messages.ConversationActivity;
-import com.byteshaft.doctor.utils.AppGlobals;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.messages.ConversationActivity;
+import com.byteshaft.patient.utils.AppGlobals;
+import com.byteshaft.patient.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,12 +62,12 @@ public class DoctorBookingActivity extends AppCompatActivity implements View.OnC
         timeTableGrid = (GridView) findViewById(R.id.time_table);
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());
-        com.byteshaft.doctor.uihelpers.CalendarView cv = ((com.byteshaft.doctor.uihelpers.CalendarView)
+        com.byteshaft.patient.uihelpers.CalendarView cv = ((com.byteshaft.patient.uihelpers.CalendarView)
                 findViewById(R.id.calendar_view));
         cv.updateCalendar(events);
 
         // assign event handler
-        cv.setEventHandler(new com.byteshaft.doctor.uihelpers.CalendarView.EventHandler() {
+        cv.setEventHandler(new com.byteshaft.patient.uihelpers.CalendarView.EventHandler() {
             @Override
             public void onDayPress(Date date) {
                 Log.i("TAG", "click");

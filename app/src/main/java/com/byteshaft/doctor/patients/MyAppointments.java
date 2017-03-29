@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.patients;
+package com.byteshaft.patient.patients;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -29,16 +29,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.AppGlobals;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.AppGlobals;
+import com.byteshaft.patient.utils.Helpers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.byteshaft.doctor.utils.Helpers.getBitMap;
+import static com.byteshaft.patient.utils.Helpers.getBitMap;
 
 
 public class MyAppointments extends Fragment {

@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.utils;
+package com.byteshaft.patient.utils;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
+import com.byteshaft.patient.R;
 
 /**
  * Created by s9iper1 on 2/14/17.

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:245879769579:android:9c9099e0f164048e",
         "android_client_info": {
-          "package_name": "com.byteshaft.doctor"
+          "package_name": "com.byteshaft.patient"
         }
       },
       "oauth_client": [

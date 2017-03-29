@@ -1,10 +1,10 @@
-package com.byteshaft.doctor.messages;
+package com.byteshaft.patient.messages;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
-import com.byteshaft.doctor.R;
+import com.byteshaft.patient.R;
 
 /**
  * Created by s9iper1 on 3/23/17.

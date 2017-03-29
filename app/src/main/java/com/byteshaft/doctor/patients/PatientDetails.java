@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.patients;
+package com.byteshaft.patient.patients;
 
 import android.Manifest;
 import android.content.Intent;
@@ -16,10 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.messages.ConversationActivity;
-import com.byteshaft.doctor.utils.AppGlobals;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.messages.ConversationActivity;
+import com.byteshaft.patient.utils.AppGlobals;
+import com.byteshaft.patient.utils.Helpers;
 
 public class PatientDetails extends AppCompatActivity implements View.OnClickListener {
 

@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.patients;
+package com.byteshaft.patient.patients;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
+import com.byteshaft.patient.R;
 
 public class PatientsRecentHistory extends AppCompatActivity {
 

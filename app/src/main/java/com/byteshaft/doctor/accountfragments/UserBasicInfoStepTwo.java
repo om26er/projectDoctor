@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.accountfragments;
+package com.byteshaft.patient.accountfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,16 +19,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.byteshaft.doctor.MainActivity;
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.adapters.CitiesAdapter;
-import com.byteshaft.doctor.adapters.InsuranceCarriersAdapter;
-import com.byteshaft.doctor.adapters.StatesAdapter;
-import com.byteshaft.doctor.gettersetter.Cities;
-import com.byteshaft.doctor.gettersetter.InsuranceCarriers;
-import com.byteshaft.doctor.gettersetter.States;
-import com.byteshaft.doctor.utils.AppGlobals;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.MainActivity;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.adapters.CitiesAdapter;
+import com.byteshaft.patient.adapters.InsuranceCarriersAdapter;
+import com.byteshaft.patient.adapters.StatesAdapter;
+import com.byteshaft.patient.gettersetter.Cities;
+import com.byteshaft.patient.gettersetter.InsuranceCarriers;
+import com.byteshaft.patient.gettersetter.States;
+import com.byteshaft.patient.utils.AppGlobals;
+import com.byteshaft.patient.utils.Helpers;
 import com.byteshaft.requests.FormData;
 import com.byteshaft.requests.HttpRequest;
 import com.github.lzyzsd.circleprogress.DonutProgress;

@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.accountfragments;
+package com.byteshaft.patient.accountfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.MainActivity;
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.AppGlobals;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.MainActivity;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.AppGlobals;
+import com.byteshaft.patient.utils.Helpers;
 import com.byteshaft.requests.HttpRequest;
 
 import org.json.JSONException;

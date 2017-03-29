@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.utils;
+package com.byteshaft.patient.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;

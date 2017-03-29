@@ -9,7 +9,7 @@
         android:id="@+id/activity_patient_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.byteshaft.doctor.patients.PatientDetails">
+        tools:context="com.byteshaft.patient.patients.PatientDetails">
 
         <RelativeLayout
             android:id="@+id/board"

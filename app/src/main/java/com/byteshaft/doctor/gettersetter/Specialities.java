@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.gettersetter;
+package com.byteshaft.patient.gettersetter;
 
 /**
  * Created by shahid on 27/03/2017.

@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.doctors;
+package com.byteshaft.patient.doctors;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -29,8 +29,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.Helpers;
 
 import org.json.JSONException;
 import org.json.JSONObject;

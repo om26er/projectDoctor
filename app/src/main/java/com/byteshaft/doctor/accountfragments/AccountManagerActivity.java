@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.accountfragments;
+package com.byteshaft.patient.accountfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +8,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.byteshaft.doctor.MainActivity;
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.introscreen.IntroScreen;
-import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.patient.MainActivity;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.introscreen.IntroScreen;
+import com.byteshaft.patient.utils.AppGlobals;
 
 /**
  * Created by s9iper1 on 3/16/17.
@@ -64,7 +64,7 @@ public class AccountManagerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager()
-                .findFragmentByTag("com.byteshaft.doctor.accountfragments.AccountActivationCode");
+                .findFragmentByTag("com.byteshaft.patient.accountfragments.AccountActivationCode");
         if (fragment instanceof AccountActivationCode) {
             Log.i("TAG", "fragment " + fragment.isVisible());
 
@@ -74,9 +74,9 @@ public class AccountManagerActivity extends AppCompatActivity {
                 getFragmentManager().popBackStack();
                 Log.i("TAG", "count again" + getSupportFragmentManager().getBackStackEntryCount());
                 Fragment accountActivation = getSupportFragmentManager()
-                        .findFragmentByTag("com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne");
+                        .findFragmentByTag("com.byteshaft.patient.accountfragments.UserBasicInfoStepOne");
                 Fragment closeLogin = getSupportFragmentManager()
-                        .findFragmentByTag("com.byteshaft.doctor.accountfragments.Login");
+                        .findFragmentByTag("com.byteshaft.patient.accountfragments.Login");
                 if (getSupportFragmentManager().getBackStackEntryCount() == 1 && accountActivation != null &&
                         accountActivation.isVisible()) {
                     super.onBackPressed();

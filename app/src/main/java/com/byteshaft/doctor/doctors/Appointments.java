@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.doctors;
+package com.byteshaft.patient.doctors;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,8 +23,8 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.patients.DoctorsAppointment;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.patients.DoctorsAppointment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,7 +45,7 @@ public class Appointments extends Fragment {
         mListView = (SwipeMenuListView) mBaseView.findViewById(R.id.listView);
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());
-        com.byteshaft.doctor.uihelpers.CalendarView calendarView = ((com.byteshaft.doctor.uihelpers.CalendarView)
+        com.byteshaft.patient.uihelpers.CalendarView calendarView = ((com.byteshaft.patient.uihelpers.CalendarView)
                 mBaseView.findViewById(R.id.calendar_view));
         calendarView.updateCalendar(events);
         TextView dateTextview = (TextView) calendarView.findViewById(R.id.calendar_date_display);
@@ -53,7 +53,7 @@ public class Appointments extends Fragment {
         dateTextview.setTextColor(getResources().getColor(R.color.header_background));
 
         // assign event handler
-        calendarView.setEventHandler(new com.byteshaft.doctor.uihelpers.CalendarView.EventHandler() {
+        calendarView.setEventHandler(new com.byteshaft.patient.uihelpers.CalendarView.EventHandler() {
             @Override
             public void onDayPress(Date date) {
                 Log.i("TAG", "click");

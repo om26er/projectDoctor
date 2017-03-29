@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.adapters;
+package com.byteshaft.patient.adapters;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.gettersetter.InsuranceCarriers;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.gettersetter.InsuranceCarriers;
 
 import java.util.ArrayList;
 

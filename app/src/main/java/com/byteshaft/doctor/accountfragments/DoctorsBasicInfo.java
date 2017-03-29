@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.accountfragments;
+package com.byteshaft.patient.accountfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,19 +20,19 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.MainActivity;
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.adapters.AffiliateClinicAdapter;
-import com.byteshaft.doctor.adapters.CitiesAdapter;
-import com.byteshaft.doctor.adapters.StatesAdapter;
-import com.byteshaft.doctor.adapters.SubscriptionTypeAdapter;
-import com.byteshaft.doctor.gettersetter.AffiliateClinic;
-import com.byteshaft.doctor.gettersetter.Cities;
-import com.byteshaft.doctor.gettersetter.Specialities;
-import com.byteshaft.doctor.gettersetter.States;
-import com.byteshaft.doctor.gettersetter.SubscriptionType;
-import com.byteshaft.doctor.utils.AppGlobals;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.MainActivity;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.adapters.AffiliateClinicAdapter;
+import com.byteshaft.patient.adapters.CitiesAdapter;
+import com.byteshaft.patient.adapters.StatesAdapter;
+import com.byteshaft.patient.adapters.SubscriptionTypeAdapter;
+import com.byteshaft.patient.gettersetter.AffiliateClinic;
+import com.byteshaft.patient.gettersetter.Cities;
+import com.byteshaft.patient.gettersetter.Specialities;
+import com.byteshaft.patient.gettersetter.States;
+import com.byteshaft.patient.gettersetter.SubscriptionType;
+import com.byteshaft.patient.utils.AppGlobals;
+import com.byteshaft.patient.utils.Helpers;
 import com.byteshaft.requests.FormData;
 import com.byteshaft.requests.HttpRequest;
 import com.github.lzyzsd.circleprogress.DonutProgress;

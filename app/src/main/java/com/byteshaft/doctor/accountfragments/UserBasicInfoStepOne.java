@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.accountfragments;
+package com.byteshaft.patient.accountfragments;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -36,11 +36,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.MainActivity;
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.AppGlobals;
-import com.byteshaft.doctor.utils.Helpers;
-import com.byteshaft.doctor.utils.RotateUtil;
+import com.byteshaft.patient.MainActivity;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.AppGlobals;
+import com.byteshaft.patient.utils.Helpers;
+import com.byteshaft.patient.utils.RotateUtil;
 import com.byteshaft.requests.HttpRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -60,7 +60,7 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
-import static com.byteshaft.doctor.utils.Helpers.getBitMap;
+import static com.byteshaft.patient.utils.Helpers.getBitMap;
 
 public class UserBasicInfoStepOne extends Fragment implements DatePickerDialog.OnDateSetListener,
         View.OnClickListener, RadioGroup.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks,

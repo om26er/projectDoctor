@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.uihelpers;
+package com.byteshaft.patient.uihelpers;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -11,8 +11,8 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.AppGlobals;
 
 
 /**

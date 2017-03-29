@@ -4,7 +4,7 @@
     android:id="@+id/activity_patients_recent_history"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.byteshaft.doctor.patients.PatientsRecentHistory">
+    tools:context="com.byteshaft.patient.patients.PatientsRecentHistory">
 
     <RelativeLayout
         android:id="@+id/board"

@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.patients;
+package com.byteshaft.patient.patients;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,9 +31,9 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.FilterDialog;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.FilterDialog;
+import com.byteshaft.patient.utils.Helpers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.doctors;
+package com.byteshaft.patient.doctors;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.AppGlobals;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.byteshaft.doctor.utils.Helpers.getBitMap;
+import static com.byteshaft.patient.utils.Helpers.getBitMap;
 
 public class Dashboard extends Fragment {
 

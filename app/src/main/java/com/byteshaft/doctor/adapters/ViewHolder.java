@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.adapters;
+package com.byteshaft.patient.adapters;
 
 import android.widget.TextView;
 

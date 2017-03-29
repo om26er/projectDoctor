@@ -1,4 +1,4 @@
-package com.byteshaft.doctor;
+package com.byteshaft.patient;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,24 +23,24 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
-import com.byteshaft.doctor.accountfragments.UserBasicInfoStepOne;
-import com.byteshaft.doctor.doctors.Appointments;
-import com.byteshaft.doctor.doctors.Dashboard;
-import com.byteshaft.doctor.doctors.DoctorsList;
-import com.byteshaft.doctor.doctors.MyPatients;
-import com.byteshaft.doctor.doctors.MySchedule;
-import com.byteshaft.doctor.doctors.Services;
-import com.byteshaft.doctor.introscreen.IntroScreen;
-import com.byteshaft.doctor.messages.MainMessages;
-import com.byteshaft.doctor.patients.FavouriteDoctors;
-import com.byteshaft.doctor.patients.MyAppointments;
-import com.byteshaft.doctor.utils.AppGlobals;
-import com.byteshaft.doctor.utils.Helpers;
+import com.byteshaft.patient.accountfragments.AccountManagerActivity;
+import com.byteshaft.patient.accountfragments.UserBasicInfoStepOne;
+import com.byteshaft.patient.doctors.Appointments;
+import com.byteshaft.patient.doctors.Dashboard;
+import com.byteshaft.patient.doctors.DoctorsList;
+import com.byteshaft.patient.doctors.MyPatients;
+import com.byteshaft.patient.doctors.MySchedule;
+import com.byteshaft.patient.doctors.Services;
+import com.byteshaft.patient.introscreen.IntroScreen;
+import com.byteshaft.patient.messages.MainMessages;
+import com.byteshaft.patient.patients.FavouriteDoctors;
+import com.byteshaft.patient.patients.MyAppointments;
+import com.byteshaft.patient.utils.AppGlobals;
+import com.byteshaft.patient.utils.Helpers;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.byteshaft.doctor.utils.Helpers.getBitMap;
+import static com.byteshaft.patient.utils.Helpers.getBitMap;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

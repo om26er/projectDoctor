@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.fcm;
+package com.byteshaft.patient.fcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,8 +10,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
-import com.byteshaft.doctor.MainActivity;
-import com.byteshaft.doctor.R;
+import com.byteshaft.patient.MainActivity;
+import com.byteshaft.patient.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

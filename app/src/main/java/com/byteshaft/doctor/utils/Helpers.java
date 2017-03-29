@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.utils;
+package com.byteshaft.patient.utils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -16,7 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.byteshaft.doctor.R;
+import com.byteshaft.patient.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -31,7 +31,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.byteshaft.doctor.utils.AppGlobals.sImageLoader;
+import static com.byteshaft.patient.utils.AppGlobals.sImageLoader;
 
 /**
  * Created by s9iper1 on 2/20/17.

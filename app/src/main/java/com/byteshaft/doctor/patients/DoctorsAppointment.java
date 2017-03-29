@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.patients;
+package com.byteshaft.patient.patients;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
-import com.byteshaft.doctor.R;
+import com.byteshaft.patient.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

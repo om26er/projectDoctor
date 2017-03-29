@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.messages;
+package com.byteshaft.patient.messages;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.utils.AppGlobals;
 
 import java.util.ArrayList;
 

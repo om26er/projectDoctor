@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.uihelpers;
+package com.byteshaft.patient.uihelpers;
 
 import android.content.Context;
 import android.graphics.Canvas;

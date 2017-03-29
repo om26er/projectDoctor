@@ -5,7 +5,7 @@
     android:id="@+id/activity_doctor_booking"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.byteshaft.doctor.patients.DoctorBookingActivity">
+    tools:context="com.byteshaft.patient.patients.DoctorBookingActivity">
 
     <LinearLayout
         android:id="@+id/header_layout"
@@ -142,8 +142,8 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <com.byteshaft.doctor.uihelpers.CalendarView
-        xmlns:calendarNS="http://schemas.android.com/apk/res/com.byteshaft.doctor"
+    <com.byteshaft.patient.uihelpers.CalendarView
+        xmlns:calendarNS="http://schemas.android.com/apk/res/com.byteshaft.patient"
         android:id="@+id/calendar_view"
         android:background="@color/fav_doctor_calendar_background"
         android:layout_marginTop="20dp"

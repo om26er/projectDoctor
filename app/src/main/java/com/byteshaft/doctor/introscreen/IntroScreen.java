@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.introscreen;
+package com.byteshaft.patient.introscreen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +18,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.byteshaft.doctor.MainActivity;
-import com.byteshaft.doctor.R;
-import com.byteshaft.doctor.accountfragments.AccountManagerActivity;
-import com.byteshaft.doctor.utils.AppGlobals;
+import com.byteshaft.patient.MainActivity;
+import com.byteshaft.patient.R;
+import com.byteshaft.patient.accountfragments.AccountManagerActivity;
+import com.byteshaft.patient.utils.AppGlobals;
 
 public class IntroScreen extends AppCompatActivity {
 

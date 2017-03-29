@@ -1,4 +1,4 @@
-package com.byteshaft.doctor.gettersetter;
+package com.byteshaft.patient.gettersetter;
 
 
 public class AffiliateClinic {
